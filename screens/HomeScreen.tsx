@@ -3,7 +3,7 @@ import React from "react";
 import Cabinet from "../screens/Cabinet";
 import Load from "../screens/Load";
 import Mail from "./Mail/Mail";
-import Transport from "../screens/Transport";
+import Transport from "./Transport";
 import { Image, Text, View } from "react-native";
 import { CabinetStack } from "../navigation/CabinetStack";
 import Passenger from "./Taksi/Passenger";

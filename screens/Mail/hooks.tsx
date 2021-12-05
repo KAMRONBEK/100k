@@ -15,7 +15,7 @@ export let useMailHook = () => {
 
             dispatch(setMail({ payload: res.data.data }));
             console.log({ data: res.data });
-        } catch (err) {
+        } catch (err: any) {
             console.log(err.response.data, "error in mail");
         }
     };
