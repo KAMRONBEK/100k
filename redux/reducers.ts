@@ -1,6 +1,6 @@
-import {combineReducers} from "redux";
-import user from './slices/user'
+import { combineReducers } from "redux";
+import user from "./slices/user";
 import mail from "./slices/mail";
-import taksi from "./slices/taksi";
+import taxi from "./slices/taxi";
 
-export default combineReducers({user,mail,taksi})
+export default combineReducers({ user, mail, taxi });

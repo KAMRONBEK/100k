@@ -2,11 +2,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import Cabinet from "../screens/Cabinet";
 import Load from "../screens/Load";
-import Mail from "./Mail/Mail";
-import Transport from "./Transport";
+import Mail from "../screens/Mail/Mail";
+import Transport from "../screens/Transport";
 import { Image, Text, View } from "react-native";
-import { CabinetStack } from "../navigation/CabinetStack";
-import Passenger from "./Taksi/Passenger";
+import { CabinetStack } from "./CabinetStack";
+import Passenger from "../screens/Taxi/Passenger";
+import { routes } from "./routes";
+
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
@@ -55,7 +57,7 @@ const Tabs = () => {
                         </View>
                     ),
                 }}
-                name="Mail"
+                name={routes.MAIL}
                 component={Mail}
             />
             <Tab.Screen
@@ -92,7 +94,7 @@ const Tabs = () => {
                         </View>
                     ),
                 }}
-                name="Passenger"
+                name={routes.PASSENGER}
                 component={Passenger}
             />
             <Tab.Screen
@@ -129,7 +131,7 @@ const Tabs = () => {
                         </View>
                     ),
                 }}
-                name="Load"
+                name={routes.LOAD}
                 component={Load}
             />
             <Tab.Screen
@@ -166,7 +168,7 @@ const Tabs = () => {
                         </View>
                     ),
                 }}
-                name="Transport"
+                name={routes.TRANSPORT}
                 component={Transport}
             />
             <Tab.Screen
@@ -203,7 +205,7 @@ const Tabs = () => {
                         </View>
                     ),
                 }}
-                name="Cabinet"
+                name={routes.CABINET_STACK}
                 component={CabinetStack}
             />
         </Tab.Navigator>

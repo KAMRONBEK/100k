@@ -1,27 +1,26 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    mail: []
-}
+    mail: [],
+};
 
 const mailSlice = createSlice({
-    name: 'counter',
+    name: "mail",
     initialState,
     reducers: {
-        setMail: (state, {payload}) => {
-            state = {...state,...payload}
+        setMail: (state, { payload }) => {
+            state = { ...state, ...payload };
             //asyncstorage save token
             return state;
         },
-        update: (state, {payload}) => {
-            state = {...state, ...payload}
+        update: (state, { payload }) => {
+            state = { ...state, ...payload };
             return state;
         },
     },
-})
-
+});
 
 export const selectMail = (state) => state.mail;
 
-export const {setMail, update} = mailSlice.actions
-export default mailSlice.reducer
+export const { setMail, update } = mailSlice.actions;
+export default mailSlice.reducer;

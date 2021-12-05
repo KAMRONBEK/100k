@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/user";
 import reactotron from "reactotron-react-native";
+import { routes } from "../../navigation/routes";
 
 export let useRequestPasswordHook = () => {
     const [username, changeUsername] = useState("+998");
@@ -13,16 +14,12 @@ export let useRequestPasswordHook = () => {
         //TODO validate username
         setLoading(true);
         try {
-            reactotron.log!("starting res");
             let res = await requests.auth.requestPassword(username);
-            reactotron.log!(res);
-            console.log(res);
-            navigation.navigate("Kod", {
+            navigation.navigate(routes.CODE as never, {
                 username: username,
             });
         } catch (err) {
             console.log(err.response);
-            reactotron.log(err.response);
 
             //TODO Handle error
         } finally {
@@ -41,17 +38,18 @@ export let useLoginHook = () => {
     let navigation = useNavigation();
     let dispatch = useDispatch();
 
-    const onSubmitPassword = async (username) => {
+    const onSubmitPassword = async (username: any) => {
         setLoading(true);
         try {
             let res = await requests.auth.login({
                 username: username,
                 password: password,
             });
-            console.log({ res });
             dispatch(setUser(res.data));
-            navigation.navigate("My");
-        } catch (e) {}
+            navigation.navigate(routes.MY as never);
+        } catch (e) {
+            console.log({ e });
+        }
     };
     return { loading, password, setPassword, onSubmitPassword };
 };

@@ -58,7 +58,7 @@ const Login = ({ navigation }) => {
             <View style={{ width: "80%", marginTop: 40 }}>
                 <TouchableOpacity
                     onPress={onSubmit}
-                    // onPress={() => navigation.navigate('Kod')}
+                    // onPress={() => navigation.navigate(routes.CODE)}
                     style={{
                         borderRadius: 8,
                         width: "100%",

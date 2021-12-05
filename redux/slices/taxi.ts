@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    taksi: [],
+    taxi: [],
 };
 
-const taksiSlice = createSlice({
-    name: "counter",
+const taxiSlice = createSlice({
+    name: "taxi",
     initialState,
     reducers: {
-        setTaksi: (state, { payload }) => {
+        setTaxi: (state, { payload }) => {
             state = { ...state, ...payload };
             //asyncstorage save token
             return state;
@@ -20,7 +20,7 @@ const taksiSlice = createSlice({
     },
 });
 
-export const selectTaksi = (state) => state.taksi;
+export const selectTaxi = (state) => state.taxi;
 
-export const { setTaksi, update } = taksiSlice.actions;
-export default taksiSlice.reducer;
+export const { setTaxi, update } = taxiSlice.actions;
+export default taxiSlice.reducer;

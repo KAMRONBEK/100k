@@ -1,12 +1,22 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createSlice } from "@reduxjs/toolkit";
+import reactotron from "reactotron-react-native";
+import { IRoot } from "../configureStore";
+
+interface IUser {
+    profile: {};
+    message: string;
+    data: string;
+}
 
 const initialState = {
-    user: {},
+    profile: {},
+    message: "",
+    data: undefined,
 };
 
 const userSlice = createSlice({
-    name: "counter",
+    name: "user",
     initialState,
     reducers: {
         setUser: (state, { payload }) => {
@@ -14,7 +24,7 @@ const userSlice = createSlice({
             let jsonUser = JSON.stringify(newState);
             //asyncstorage save token
             AsyncStorage.setItem("@user", jsonUser);
-            return state;
+            return newState;
         },
         logoutUser: (state) => {
             state = initialState;
@@ -29,7 +39,8 @@ const userSlice = createSlice({
     },
 });
 
-export const selectUser = (state) => state.user;
+export const selectUser = (state: IRoot) => state.user.profile;
+export const selectToken = (state: IRoot) => state.user.data;
 
 export const { setUser, logoutUser, update } = userSlice.actions;
 export default userSlice.reducer;

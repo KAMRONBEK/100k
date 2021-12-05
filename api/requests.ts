@@ -1,4 +1,5 @@
 import axios from "axios";
+import reactotron from "reactotron-react-native";
 import { store } from "../redux/configureStore";
 
 export let url = "https://dev.100k.uz/api";
@@ -13,7 +14,6 @@ axios.interceptors.request.use(
             e.data = form;
         }
         let token = store.getState().user.data;
-
         console.log({ token });
         if (!!token) {
             e.headers = { ...e.headers, Authorization: `Bearer ${token}` };
@@ -35,7 +35,7 @@ export let requests = {
     mail: {
         getMail: () => axios.get(`${url}/user/packages`),
     },
-    taksi: {
-        getTaksi: () => axios.get(`${url}/user/caborders?status=new`),
+    taxi: {
+        getTaxi: () => axios.get(`${url}/user/caborders?status=new`),
     },
 };

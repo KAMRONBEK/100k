@@ -1,18 +1,18 @@
-import { configureStore } from "@reduxjs/toolkit";
+// import { configureStore } from "@reduxjs/toolkit";
 import reducers from "./reducers";
 import { persistStore, persistReducer } from "redux-persist";
-import Reactotron from "./ReactotronConfig";
-import { compose, createStore } from "redux";
+import { compose, createStore, Store } from "redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 const persistConfig = {
     key: "root",
     storage: AsyncStorage,
 };
-let createdEnhancer = Reactotron.createEnhancer();
+
 const persistedReducer = persistReducer(persistConfig, reducers);
+let composeEnhancer = __DEV__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : compose;
 
-let composer = __DEV__ ? compose(createdEnhancer) : null;
-
-export let store = createStore(persistedReducer, composer);
+export let store = createStore(persistedReducer, composeEnhancer());
 export let persistor = persistStore(store);
+export type IRoot = ReturnType<typeof store.getState>;
