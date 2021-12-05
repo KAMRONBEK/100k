@@ -9,7 +9,7 @@ const mailSlice = createSlice({
     initialState,
     reducers: {
         setMail: (state, { payload }) => {
-            state = { ...state, ...payload };
+            state = { ...state, mail: { ...payload } };
             //asyncstorage save token
             return state;
         },

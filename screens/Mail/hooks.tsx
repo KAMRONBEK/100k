@@ -13,7 +13,7 @@ export let useMailHook = () => {
             console.log({ res });
             console.log("loading mails");
 
-            dispatch(setMail({ payload: res.data.data }));
+            dispatch(setMail(res.data.data));
             console.log({ data: res.data });
         } catch (err: any) {
             console.log(err.response.data, "error in mail");
