@@ -46,7 +46,12 @@ export let useLoginHook = () => {
                 password: password,
             });
             dispatch(setUser(res.data));
-            navigation.navigate(routes.MY as never);
+            navigation.navigate(
+                routes.TAB_STACK as never,
+                {
+                    screen: routes.MY as never,
+                } as never
+            );
         } catch (e) {
             console.log({ e });
         }
