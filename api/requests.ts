@@ -73,6 +73,6 @@ export let requests = {
         getMail: () => axios.get(`${url}/user/packages`),
     },
     taxi: {
-        getTaxi: () => axios.get(`${url}/user/caborders?status=new`),
+        getTaxi: (status='') => axios.get(`${url}/user/caborders?status=${status}`),
     },
 };
