@@ -5,4 +5,5 @@ export const images = {
   security: require("./security.png"),
   coin: require("./coin.png"),
   plus: require("./plus.png"),
+  lines:require('./line.png')
 };
