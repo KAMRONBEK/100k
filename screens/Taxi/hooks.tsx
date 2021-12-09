@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setTaxi, selectTaxi, update } from "../../redux/slices/taxi";
+import { setTaxi, selectTaxi, update } from "../../redux/slices/taxi/taxi";
 import { useEffect } from "react";
 import { requests } from "../../api/requests";
 
@@ -19,5 +19,8 @@ export let useTaxiHook = () => {
     effect();
   }, []);
 
-  return { taxi };
+  const refreshTaxi = () => {
+    effect();
+  };
+  return { taxi, refreshTaxi };
 };

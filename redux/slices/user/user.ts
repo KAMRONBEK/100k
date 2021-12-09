@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createSlice } from "@reduxjs/toolkit";
 import reactotron from "reactotron-react-native";
-import { IRoot } from "../configureStore";
+import { IRoot } from "../../configureStore";
 
 interface IUser {
     profile: {};

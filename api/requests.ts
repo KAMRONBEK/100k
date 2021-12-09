@@ -73,6 +73,9 @@ export let requests = {
         getMail: () => axios.get(`${url}/user/packages`),
     },
     taxi: {
-        getTaxi: (status='') => axios.get(`${url}/user/caborders?status=${status}`),
+        getTaxi: (status='') => axios.get(`${url}/user/caborders`),
     },
+    help:{
+        getRegions:()=>axios.get(`${url}/locations`)
+    }
 };
