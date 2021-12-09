@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectMail, setMail, update } from "../../redux/slices/mail";
+import { selectMail, setMail, update } from "../../redux/slices/mail/mail";
 import { useEffect, useState } from "react";
 import { requests } from "../../api/requests";
 

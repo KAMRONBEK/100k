@@ -18,11 +18,13 @@ const wait = (timeout) => {
 };
 
 const Passenger = ({ navigation }) => {
-  const { taxi } = useTaxiHook();
-
+  const { taxi, refreshTaxi } = useTaxiHook();
   const [refreshing, setRefreshing] = useState(false);
 
+  console.log(taxi, "taxi");
+
   const onRefresh = React.useCallback(() => {
+    refreshTaxi();
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
@@ -90,7 +92,7 @@ const Passenger = ({ navigation }) => {
           }
         >
           {Object.values(taxi).map((item) => (
-            <PassangerItem item={item} />
+            <PassangerItem item={item} key={`${item.id}`} />
           ))}
         </ScrollView>
         <TouchableOpacity

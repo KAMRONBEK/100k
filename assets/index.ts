@@ -5,5 +5,9 @@ export const images = {
   security: require("./security.png"),
   coin: require("./coin.png"),
   plus: require("./plus.png"),
-  lines:require('./line.png')
+  lines:require('./line.png'),
+  seat:require('./seat.png'),
+  eye:require('./eye.png'),
+  arrowback:require('./left-arrow.png'),
+  next:require('./next.png')
 };
