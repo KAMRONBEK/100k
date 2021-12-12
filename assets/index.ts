@@ -9,5 +9,13 @@ export const images = {
   seat:require('./seat.png'),
   eye:require('./eye.png'),
   arrowback:require('./left-arrow.png'),
-  next:require('./next.png')
+  next:require('./next.png'),
+  plus2:require('./plus2.png'),
+  questions:require('./question.png'),
+  filter:require('./filter.png'),
+  location:require('./loaction.png'),
+  strelka:require('./strelka.png'),
+  globe:require('./globe.png'),
+  restangle:require('./restangle.png'),
+  blackrestangle:require('./blackrestangle.png')
 };

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import {
   View,
@@ -9,10 +10,11 @@ import {
   ScrollView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { images } from "../assets";
 import { routes } from "../navigation/routes";
 import { selectOrderState, setOrderData } from "../redux/slices/order/order";
 
-const AddPassenger = ({ navigation }) => {
+const AddPassenger = () => {
   const [name, setName] = useState(null);
   const [nameOne, setNameOne] = useState(null);
   const [one, setOne] = useState("#fff");
@@ -95,26 +97,21 @@ const AddPassenger = ({ navigation }) => {
   //--------------------------------------------------------------
   const state = useSelector(selectOrderState);
   const dispatch = useDispatch();
+  let navigation = useNavigation();
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.navigate(routes.TAB_STACK)}>
-          <Image source={require("../assets/left-arrow.png")} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate(routes.TAB_STACK)}
+          style={styles.tchopacity}
+        >
+          <Image source={images.arrowback} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 20 }}>Taksiga sorov kiritish</Text>
-        <View></View>
+        <Text style={styles.taxiaddtext}>Taksiga sorov kiritish</Text>
       </View>
-      <View
-        style={{
-          paddingBottom: 19,
-          paddingHorizontal: 16,
-          backgroundColor: "#fff",
-          marginTop: 20,
-          paddingTop: 19,
-        }}
-      >
-        <Text style={{ fontSize: 16, marginBottom: 17 }}>Qayerdan?</Text>
+      <View style={styles.wherebox}>
+        <Text style={styles.wheretext}>Qayerdan?</Text>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Region", {
@@ -123,15 +120,9 @@ const AddPassenger = ({ navigation }) => {
           }
           style={styles.btnOne}
         >
-          <Image source={require("../assets/loaction.png")} />
-          <Text
-            style={{
-              marginLeft: 10,
-              color: "#8a8a8a",
-              fontSize: 14,
-            }}
-          >
-            {!!state.fromRegionName ? state.fromRegionName : "Viloyat"} ,{" "}
+          <Image source={images.location} />
+          <Text style={styles.lcimgbox}>
+            {!!state.fromRegionName ? state.fromRegionName : "Viloyat"} ,
             {!!state.fromDistrictName ? state.fromDistrictName : "tuman"}
           </Text>
         </TouchableOpacity>
@@ -143,30 +134,14 @@ const AddPassenger = ({ navigation }) => {
           placeholder="Kocha nomi, uy raqami, mo’jal"
         />
       </View>
-      <View
-        style={{
-          paddingBottom: 19,
-          paddingHorizontal: 16,
-          backgroundColor: "#fff",
-          marginTop: 20,
-          paddingTop: 19,
-        }}
-      >
-        <Text style={{ fontSize: 16, marginBottom: 17 }}>Qayerga</Text>
+      <View style={styles.streetname}>
+        <Text style={styles.streetnametext}>Qayerga?</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate("Region")}
           style={styles.btnOne}
         >
-          <Image source={require("../assets/loaction.png")} />
-          <Text
-            style={{
-              marginLeft: 10,
-              color: "#8a8a8a",
-              fontSize: 14,
-            }}
-          >
-            Viloyat,tuman
-          </Text>
+          <Image source={images.location} />
+          <Text style={styles.lcimgbox}>Viloyat,tuman</Text>
         </TouchableOpacity>
         <TextInput
           style={styles.input}
@@ -176,17 +151,9 @@ const AddPassenger = ({ navigation }) => {
           placeholder="Kocha nomi, uy raqami, mo’jal"
         />
       </View>
-      <View style={{ paddingHorizontal: 16, paddingVertical: 20 }}>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "500",
-            marginBottom: 15,
-          }}
-        >
-          Nechta o’rindiq kerak?
-        </Text>
-        <View style={{ flexDirection: "row" }}>
+      <View style={styles.howmanyseat}>
+        <Text style={styles.howmanytext}>Nechta o’rindiq kerak?</Text>
+        <View style={styles.howmanybuttonbox}>
           <TouchableOpacity
             onPress={() => {
               handleOne();
@@ -229,22 +196,8 @@ const AddPassenger = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View
-        style={{
-          paddingVertical: 19,
-          backgroundColor: "#fff",
-          paddingHorizontal: 16,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "500",
-            marginBottom: 17,
-          }}
-        >
-          Qo’shimcha ma’lumot?
-        </Text>
+      <View style={styles.allview}>
+        <Text style={styles.alltext}>Qo’shimcha ma’lumot?</Text>
         <TextInput
           style={styles.input}
           value={info!}
@@ -252,7 +205,7 @@ const AddPassenger = ({ navigation }) => {
           keyboardType="default"
           placeholder="Qo'shimcha ma'lumot kiriting"
         />
-        <View style={{ flexDirection: "row", marginTop: 14 }}>
+        <View style={styles.seat1}>
           <Text
             onPress={() => {
               setInfo("Oldi o’rindiq");
@@ -279,8 +232,8 @@ const AddPassenger = ({ navigation }) => {
           </Text>
         </View>
       </View>
-      <View style={{ backgroundColor: "#fff", paddingHorizontal: 16 }}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={styles.planquestions}>
+        <View style={styles.planquestions2}>
           <TouchableOpacity
             style={{ display: nonee }}
             onPress={() => {
@@ -288,7 +241,7 @@ const AddPassenger = ({ navigation }) => {
               setNone("flex");
             }}
           >
-            <Image source={require("../assets/restangle.png")} />
+            <Image source={images.restangle} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -297,17 +250,9 @@ const AddPassenger = ({ navigation }) => {
             }}
             style={{ display: none }}
           >
-            <Image source={require("../assets/blackrestangle.png")} />
+            <Image source={images.blackrestangle} />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "600",
-              marginLeft: 12,
-            }}
-          >
-            Rejalashtirilgan so’rov
-          </Text>
+          <Text style={styles.planquestionstext}>Rejalashtirilgan so’rov</Text>
         </View>
         <View style={{ marginBottom: 18, display: none }}>
           <TextInput
@@ -319,13 +264,7 @@ const AddPassenger = ({ navigation }) => {
           />
         </View>
       </View>
-      <View
-        style={{
-          paddingBottom: 20,
-          backgroundColor: "#fff",
-          paddingHorizontal: 16,
-        }}
-      >
+      <View style={styles.callnumberview}>
         <View
           style={{
             flexDirection: "row",
@@ -340,7 +279,7 @@ const AddPassenger = ({ navigation }) => {
               setNoneOne("flex");
             }}
           >
-            <Image source={require("../assets/restangle.png")} />
+            <Image source={images.restangle} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -349,17 +288,9 @@ const AddPassenger = ({ navigation }) => {
             }}
             style={{ display: noneOne }}
           >
-            <Image source={require("../assets/blackrestangle.png")} />
+            <Image source={images.blackrestangle} />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "600",
-              marginLeft: 12,
-            }}
-          >
-            Boshqa odam uchun
-          </Text>
+          <Text style={styles.restangletext}>Boshqa odam uchun</Text>
         </View>
         <View style={{ marginBottom: 18, display: noneOne }}>
           <TextInput
@@ -388,7 +319,7 @@ const AddPassenger = ({ navigation }) => {
           }}
           style={{ display: cars }}
         >
-          <Image source={require("../assets/restangle.png")} />
+          <Image source={images.restangle} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -397,7 +328,7 @@ const AddPassenger = ({ navigation }) => {
           }}
           style={{ display: car }}
         >
-          <Image source={require("../assets/blackrestangle.png")} />
+          <Image source={images.blackrestangle} />
         </TouchableOpacity>
         <Text style={{ marginLeft: 13, fontSize: 14, fontWeight: "500" }}>
           Oldi o'rindiqni bronlash
@@ -412,14 +343,16 @@ const AddPassenger = ({ navigation }) => {
           backgroundColor: "#fff",
         }}
       >
-        <Text>Bitta orin uchun summa taklif qiling</Text>
+        <Text style={{ fontWeight: "bold" }}>
+          Bitta orin uchun summa taklif qiling
+        </Text>
         <TextInput
           value={send!}
           onChangeText={setSend}
           keyboardType="numeric"
           style={styles.input}
         />
-        <View style={{ flexDirection: "row", marginTop: 14 }}>
+        <View style={styles.moneyseat}>
           <Text
             onPress={() => {
               setSend("20 000");
@@ -464,15 +397,7 @@ const AddPassenger = ({ navigation }) => {
             },
           ]}
         >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "500",
-              textAlign: "center",
-            }}
-          >
-            Yuborish
-          </Text>
+          <Text style={styles.send}>Yuborish</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -485,15 +410,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     paddingHorizontal: 16,
     paddingVertical: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
   input: {
     borderWidth: 1,
     borderColor: "#dcdcdc",
     borderRadius: 10,
-    padding: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     marginTop: 10,
   },
   btnOne: {
@@ -519,5 +450,100 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     marginRight: 20,
     color: "#8a8a8a",
+  },
+  taxiaddtext: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 15,
+  },
+  tchopacity: {
+    padding: 5,
+  },
+  wherebox: {
+    paddingBottom: 19,
+    paddingHorizontal: 16,
+    backgroundColor: "#fff",
+    marginTop: 20,
+    paddingTop: 19,
+  },
+  wheretext: {
+    fontSize: 16,
+    marginBottom: 17,
+    fontWeight: "bold",
+  },
+  lcimgbox: {
+    marginLeft: 10,
+    color: "#8a8a8a",
+    fontSize: 14,
+  },
+  streetname: {
+    paddingBottom: 19,
+    paddingHorizontal: 16,
+    backgroundColor: "#fff",
+    marginTop: 20,
+    paddingTop: 19,
+  },
+  streetnametext: {
+    fontSize: 16,
+    marginBottom: 17,
+    fontWeight: "bold",
+  },
+  howmanyseat: {
+    paddingHorizontal: 16,
+    paddingVertical: 20,
+  },
+  howmanytext: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+  howmanybuttonbox: {
+    flexDirection: "row",
+  },
+  allview: {
+    paddingVertical: 19,
+    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+  },
+  alltext: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 17,
+  },
+  seat1: {
+    flexDirection: "row",
+    marginTop: 14,
+  },
+  planquestions: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+  },
+  planquestionstext: {
+    fontSize: 14,
+    fontWeight: "600",
+    marginLeft: 12,
+  },
+  planquestions2: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  callnumberview: {
+    paddingBottom: 20,
+    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+  },
+  restangletext: {
+    fontSize: 14,
+    fontWeight: "600",
+    marginLeft: 12,
+  },
+  moneyseat: {
+    flexDirection: "row",
+    marginTop: 14,
+  },
+  send: {
+    fontSize: 18,
+    fontWeight: "500",
+    textAlign: "center",
   },
 });
