@@ -22,4 +22,5 @@ export const routes = {
     LOAD: "Load",
     TRANSPORT: "Transport",
     CABINET_STACK: "Cabinet",
+    MY_CABINET_STACK: "MyCabinet",
 };

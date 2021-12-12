@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { useFonts } from "expo-font";
+import { images } from "../assets";
 
 const FirstRoute = ({ navigation }) => (
     <ScrollView style={{ flex: 1, backgroundColor: "#f3f3f5" }}>
@@ -1335,7 +1336,7 @@ const Transport = ({ navigation }) => {
                 <TouchableOpacity style={styles.btn}>
                     <Image
                         style={{ width: 15, height: 15, marginRight: 5 }}
-                        source={require("../assets/loaction.png")}
+                        source={images.location}
                     />
                     <Text style={{ color: "#8a8a8a", fontSize: 13 }}>
                         Viloyat,tuman
@@ -1348,7 +1349,7 @@ const Transport = ({ navigation }) => {
                 <TouchableOpacity style={styles.btn}>
                     <Image
                         style={{ width: 15, height: 15, marginRight: 5 }}
-                        source={require("../assets/loaction.png")}
+                        source={images.location}
                     />
                     <Text style={{ color: "#8a8a8a", fontSize: 13 }}>
                         Viloyat,tuman

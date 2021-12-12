@@ -7,59 +7,62 @@ import { routes } from "../../navigation/routes";
 import Regions from "./Regions";
 
 const District = ({ navigation }) => {
-  let { district } = useRoute().params;
+    let { district, type } = useRoute().params;
 
-  return (
-    <View>
-      <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.navigate(routes.REGION)}>
-          <Image source={images.arrowback} style={styles.image} />
-        </TouchableOpacity>
-        <Text style={styles.text}>Tumanni tanlang</Text>
-      </View>
-      <View style={styles.dsview}>
-        {district.map((district) => (
-          <DistrictItem
-            name={district.name}
-            id={district.id}
-            key={district.id}
-          />
-        ))}
-      </View>
-    </View>
-  );
+    return (
+        <View>
+            <View style={styles.container}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate(routes.REGION)}
+                >
+                    <Image source={images.arrowback} style={styles.image} />
+                </TouchableOpacity>
+                <Text style={styles.text}>Tumanni tanlang</Text>
+            </View>
+            <View style={styles.dsview}>
+                {district.map((district) => (
+                    <DistrictItem
+                        name={district.name}
+                        id={district.id}
+                        key={district.id}
+                        type={type}
+                    />
+                ))}
+            </View>
+        </View>
+    );
 };
 
 export default District;
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-  },
-  region: {
-    backgroundColor: "#fff",
-    paddingHorizontal: 16,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 15,
-    marginTop: 2,
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  dsview: {
-    marginTop: 10,
-    marginBottom: 50,
-  },
-  buttonback: {
-    padding: 5,
-  },
-  image: {
-    marginRight: 15,
-  },
+    container: {
+        backgroundColor: "#fff",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        paddingHorizontal: 15,
+        paddingVertical: 15,
+    },
+    region: {
+        backgroundColor: "#fff",
+        paddingHorizontal: 16,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingVertical: 15,
+        marginTop: 2,
+    },
+    text: {
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+    dsview: {
+        marginTop: 10,
+        marginBottom: 50,
+    },
+    buttonback: {
+        padding: 5,
+    },
+    image: {
+        marginRight: 15,
+    },
 });

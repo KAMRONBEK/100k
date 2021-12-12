@@ -9,6 +9,7 @@ import {
     TextInput,
     Alert,
 } from "react-native";
+import { images } from "../assets";
 import { routes } from "../navigation/routes";
 
 const AddTransport = ({ navigation }) => {
@@ -53,7 +54,7 @@ const AddTransport = ({ navigation }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate(routes.TAB_STACK)}
                 >
-                    <Image source={require("../assets/left-arrow.png")} />
+                    <Image source={images.leftArrow} />
                 </TouchableOpacity>
                 <Text style={{ fontSize: 20 }}>Transport qo’shish</Text>
                 <View></View>
@@ -158,7 +159,7 @@ const AddTransport = ({ navigation }) => {
                     onPress={() => navigation.navigate("Region")}
                     style={styles.btnOne}
                 >
-                    <Image source={require("../assets/loaction.png")} />
+                    <Image source={images.location} />
                     <Text
                         style={{
                             marginLeft: 10,
@@ -186,7 +187,7 @@ const AddTransport = ({ navigation }) => {
                     onPress={() => navigation.navigate("Region")}
                     style={styles.btnOne}
                 >
-                    <Image source={require("../assets/loaction.png")} />
+                    <Image source={images.location} />
                     <Text
                         style={{
                             marginLeft: 10,
@@ -285,7 +286,7 @@ const AddTransport = ({ navigation }) => {
                             }}
                             style={{ marginLeft: 30, padding: 10 }}
                         >
-                            <Image source={require("../assets/arrow.png")} />
+                            <Image source={images.arrow} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -296,7 +297,7 @@ const AddTransport = ({ navigation }) => {
                         onPress={() => [setImg("flex"), setImgs("none")]}
                         style={{ display: imgs }}
                     >
-                        <Image source={require("../assets/restangle.png")} />
+                        <Image source={images.rectangle} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
@@ -305,9 +306,7 @@ const AddTransport = ({ navigation }) => {
                         }}
                         style={{ display: img }}
                     >
-                        <Image
-                            source={require("../assets/blackrestangle.png")}
-                        />
+                        <Image source={images.blackRectangle} />
                     </TouchableOpacity>
                     <Text
                         style={{

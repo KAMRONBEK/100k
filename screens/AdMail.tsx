@@ -8,6 +8,7 @@ import {
     StyleSheet,
     ScrollView,
 } from "react-native";
+import { images } from "../assets";
 import { routes } from "../navigation/routes";
 
 const AdMail = ({ navigation }) => {
@@ -75,7 +76,7 @@ const AdMail = ({ navigation }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate(routes.TAB_STACK)}
                 >
-                    <Image source={require("../assets/left-arrow.png")} />
+                    <Image source={images.leftArrow} />
                 </TouchableOpacity>
                 <Text style={{ fontSize: 20 }}>Pochta qo’shish</Text>
                 <View></View>
@@ -174,7 +175,7 @@ const AdMail = ({ navigation }) => {
                     onPress={() => navigation.navigate("Region")}
                     style={styles.btnOne}
                 >
-                    <Image source={require("../assets/loaction.png")} />
+                    <Image source={images.location} />
                     <Text
                         style={{
                             marginLeft: 10,
@@ -187,14 +188,14 @@ const AdMail = ({ navigation }) => {
                 </TouchableOpacity>
                 <TextInput
                     style={styles.input}
-                    value={name}
+                    value={name!}
                     onChangeText={setName}
                     keyboardType="default"
                     placeholder="Kocha nomi, uy raqami, mo’jal"
                 />
                 <TextInput
                     style={styles.input}
-                    value={number}
+                    value={number!}
                     onChangeText={setNumber}
                     keyboardType="numeric"
                     placeholder="+998(_ _)  _ _ _  _ _  _ _"
@@ -216,7 +217,7 @@ const AdMail = ({ navigation }) => {
                     onPress={() => navigation.navigate("Region")}
                     style={styles.btnOne}
                 >
-                    <Image source={require("../assets/loaction.png")} />
+                    <Image source={images.location} />
                     <Text
                         style={{
                             marginLeft: 10,
@@ -229,14 +230,14 @@ const AdMail = ({ navigation }) => {
                 </TouchableOpacity>
                 <TextInput
                     style={styles.input}
-                    value={name}
+                    value={name!}
                     onChangeText={setName}
                     keyboardType="default"
                     placeholder="Kocha nomi, uy raqami, mo’jal"
                 />
                 <TextInput
                     style={styles.input}
-                    value={number}
+                    value={number!}
                     onChangeText={setNumber}
                     keyboardType="numeric"
                     placeholder="+998(_ _)  _ _ _  _ _  _ _"
@@ -254,7 +255,7 @@ const AdMail = ({ navigation }) => {
                 <TextInput
                     style={styles.input}
                     keyboardType="default"
-                    value={what}
+                    value={what!}
                     onChangeText={setWhat}
                     placeholder="Qo'shimcha ma'lumot kiriting"
                 />
@@ -305,7 +306,7 @@ const AdMail = ({ navigation }) => {
                         >
                             <Image
                                 style={{ width: 25, height: 25 }}
-                                source={require("../assets/restangle.png")}
+                                source={images.rectangle}
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -344,9 +345,7 @@ const AdMail = ({ navigation }) => {
                             }}
                             style={{ display: moneyy }}
                         >
-                            <Image
-                                source={require("../assets/restangle.png")}
-                            />
+                            <Image source={images.rectangle} />
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
@@ -385,7 +384,7 @@ const AdMail = ({ navigation }) => {
                 </Text>
                 <TextInput
                     style={styles.input}
-                    value={price}
+                    value={price!}
                     onChangeText={setPrice}
                     keyboardType="numeric"
                 />
@@ -408,7 +407,7 @@ const AdMail = ({ navigation }) => {
             >
                 <Text>Buyurtma summasini taklif qiling</Text>
                 <TextInput
-                    value={send}
+                    value={send!}
                     onChangeText={setSend}
                     keyboardType="numeric"
                     style={styles.input}

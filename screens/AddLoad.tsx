@@ -8,6 +8,7 @@ import {
     StyleSheet,
     TextInput,
 } from "react-native";
+import { images } from "../assets";
 import { routes } from "../navigation/routes";
 
 const AddLoad = ({ navigation }) => {
@@ -83,7 +84,7 @@ const AddLoad = ({ navigation }) => {
                     onPress={() => navigation.navigate("Region")}
                     style={styles.btnOne}
                 >
-                    <Image source={require("../assets/loaction.png")} />
+                    <Image source={images.location} />
                     <Text
                         style={{
                             marginLeft: 10,
@@ -116,7 +117,7 @@ const AddLoad = ({ navigation }) => {
                     onPress={() => navigation.navigate("Region")}
                     style={styles.btnOne}
                 >
-                    <Image source={require("../assets/loaction.png")} />
+                    <Image source={images.location} />
                     <Text
                         style={{
                             marginLeft: 10,

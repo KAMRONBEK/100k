@@ -1,59 +1,59 @@
 import { IRoot } from "./../../configureStore";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface ICreatePassanger {
-  fromRegionId?: number;
-  fromRegionName?: string;
+export interface ICreateOrder {
+    fromRegionId?: number;
+    fromRegionName?: string;
 
-  fromDistrictId?: number;
-  fromDistrictName?: string;
+    fromDistrictId?: number;
+    fromDistrictName?: string;
 
-  fromAddress?: string;
-  fromNumber?: string;
+    fromAddress?: string;
+    fromNumber?: string;
 
-  toRegionId?: number;
-  toRegionName?: string;
+    toRegionId?: number;
+    toRegionName?: string;
 
-  toDistrictId?: number;
-  toDistrictName?: string;
+    toDistrictId?: number;
+    toDistrictName?: string;
 
-  toAddress?: string;
-  toNumber?: string;
+    toAddress?: string;
+    toNumber?: string;
 
-  cost?: number;
+    cost?: number;
 }
 
-const initialState: ICreatePassanger = {
-  fromRegionId: 1,
-  fromRegionName: "",
+const initialState: ICreateOrder = {
+    fromRegionId: 1,
+    fromRegionName: "",
 
-  fromDistrictId: 0,
-  fromDistrictName: "",
+    fromDistrictId: 0,
+    fromDistrictName: "",
 
-  fromAddress: "",
-  fromNumber: "",
+    fromAddress: "",
+    fromNumber: "",
 
-  toRegionId: 0,
-  toRegionName: "",
+    toRegionId: 0,
+    toRegionName: "",
 
-  toDistrictId: 0,
-  toDistrictName: "",
+    toDistrictId: 0,
+    toDistrictName: "",
 
-  toAddress: "",
-  toNumber: "",
+    toAddress: "",
+    toNumber: "",
 
-  cost: undefined,
+    cost: undefined,
 };
 
 const orderSlice = createSlice({
-  name: "order",
-  initialState,
-  reducers: {
-    setOrderData: (state, { payload }) => {
-      state = { ...state, ...payload };
-      return state;
+    name: "order",
+    initialState,
+    reducers: {
+        setOrderData: (state, { payload }) => {
+            state = { ...state, ...payload };
+            return state;
+        },
     },
-  },
 });
 
 export const selectOrderState = (state: IRoot) => state.order;
