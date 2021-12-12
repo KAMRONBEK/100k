@@ -4,7 +4,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "connect":"adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
     "@expo-google-fonts/dev": "^0.2.0",
@@ -29,7 +30,7 @@
     "react-native-flash-message": "^0.2.0",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-masked-text": "^1.13.0",
-    "react-native-pager-view": "^5.0.12",
+    "react-native-pager-view": "^5.4.9",
     "react-native-paper": "^4.10.1",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",

@@ -17,4 +17,11 @@ export const images = {
     arrow: require("./arrow.png"),
     openBox: require("./open-box.png"),
     taxi: require("./taxi.png"),
+    plus2: require("./plus2.png"),
+    questions: require("./question.png"),
+    filter: require("./filter.png"),
+    strelka: require("./strelka.png"),
+    globe: require("./globe.png"),
+    restangle: require("./restangle.png"),
+    blackrestangle: require("./blackrestangle.png"),
 };
