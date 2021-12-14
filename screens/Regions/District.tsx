@@ -7,7 +7,7 @@ import { routes } from "../../navigation/routes";
 import Regions from "./Regions";
 
 const District = ({ navigation }) => {
-    let { district, type } = useRoute().params;
+    let { district, type, route } = useRoute().params;
 
     return (
         <View>
@@ -26,6 +26,7 @@ const District = ({ navigation }) => {
                         id={district.id}
                         key={district.id}
                         type={type}
+                        route={route}
                     />
                 ))}
             </View>

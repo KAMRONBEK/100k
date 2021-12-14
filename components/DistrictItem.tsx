@@ -11,9 +11,10 @@ export interface DistrictItemProps {
     name: string;
     id: number;
     type: locationType;
+    route: any;
 }
 
-const DistrictItem = ({ name, id, type }: DistrictItemProps) => {
+const DistrictItem = ({ name, id, type, route }: DistrictItemProps) => {
     let navigation = useNavigation();
     const dispatch = useDispatch();
 
@@ -27,7 +28,7 @@ const DistrictItem = ({ name, id, type }: DistrictItemProps) => {
         // navigation.navigate(routes.ADD_MAIL);
         // navigation.popToTop();
         // navigation.pop().pop;
-        navigation.navigate(routes.ADD_PASSENGER);
+        navigation.navigate(route);
     };
 
     return (

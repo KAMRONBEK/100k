@@ -68,6 +68,7 @@ const AddPassenger = ({ navigation }) => {
                         onPress={() =>
                             navigation.navigate(routes.REGION, {
                                 type: locationType.from,
+                                route: routes.ADD_PASSENGER,
                             })
                         }
                         style={styles.btnOne}
@@ -115,6 +116,7 @@ const AddPassenger = ({ navigation }) => {
                         onPress={() =>
                             navigation.navigate(routes.REGION, {
                                 type: locationType.to,
+                                route: routes.ADD_PASSENGER,
                             })
                         }
                         style={styles.btnOne}
