@@ -29,12 +29,6 @@ axios.interceptors.request.use((response) => {
 
 axios.interceptors.response.use(
     (response) => {
-        console.log(response.status);
-
-        if (response.status === 555) {
-            store.dispatch(logoutUser);
-            navigate(routes.LOGIN, {});
-        }
         return response;
     },
     (error) => {
@@ -88,7 +82,9 @@ export let requests = {
         getMe: () => axios.get(`${url}/user/getMe`),
     },
     mail: {
-        getMail: () => axios.get(`${url}/user/packages`),
+        getMail: (status = "") => axios.get(`${url}/user/packages`),
+        createMail: (credentials) =>
+            axios.post(`${url}/user/packages`, credentials),
     },
     taxi: {
         getTaxi: (status = "") => axios.get(`${url}/user/caborders`),

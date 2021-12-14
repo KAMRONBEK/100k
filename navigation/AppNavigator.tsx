@@ -12,7 +12,7 @@ import About from "../screens/About";
 import History from "../screens/History";
 import NoInternet from "../screens/NoInternet";
 import Notifications from "../screens/Notifications";
-import AdMail from "../screens/AdMail";
+import AddMail from "../screens/Mail/AddMail";
 import District from "../screens/Regions/District";
 import AddPassenger from "../screens/Taxi/AddPassenger";
 import AddLoad from "../screens/AddLoad";
@@ -51,7 +51,7 @@ const AppNavigator = () => {
                     name={routes.NOTIFICATIONS}
                     component={Notifications}
                 />
-                <Stack.Screen name={routes.ADD_MAIL} component={AdMail} />
+                <Stack.Screen name={routes.ADD_MAIL} component={AddMail} />
                 <Stack.Screen name={routes.REGION} component={Regions} />
                 <Stack.Screen name={routes.DISTRICT} component={District} />
                 <Stack.Screen

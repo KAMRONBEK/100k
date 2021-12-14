@@ -5,8 +5,8 @@ import { compose, createStore, Store } from "redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Reactotron from "./ReactotronConfig";
 const persistConfig = {
-    key: "root",
-    storage: AsyncStorage,
+  key: "root",
+  storage: AsyncStorage,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -21,8 +21,8 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 /*Reactotron*/
 let middlewares = [];
 if (__DEV__) {
-    let reactoronMiddleware = Reactotron.createEnhancer!();
-    middlewares.push(reactoronMiddleware);
+  let reactoronMiddleware = Reactotron.createEnhancer!();
+  middlewares.push(reactoronMiddleware);
 }
 
 export let store = createStore(persistedReducer, compose(...middlewares));
