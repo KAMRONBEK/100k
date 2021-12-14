@@ -41,6 +41,7 @@ axios.interceptors.response.use(
         if (error.response.status === 555) {
             store.dispatch(logoutUser);
             navigate(routes.LOGIN, {});
+            return error;
         } else if (error.response.status !== 401) {
             return new Promise((resolve, reject) => {
                 reject(error);

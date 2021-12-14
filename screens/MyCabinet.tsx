@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { images } from "../assets";
 import { routes } from "../navigation/routes";
 import { logoutUser, selectUser } from "../redux/slices/user/user";
 import { useProfileHook } from "./Profile/hooks";
@@ -50,7 +51,7 @@ const MyCabinet = ({ navigation }) => {
                         marginTop: 5,
                     }}
                 >
-                    <Image source={require("../assets/userBig.png")} />
+                    <Image source={images.user} style={styles.image} />
                     <Text
                         style={{
                             fontSize: 20,
@@ -203,12 +204,16 @@ const MyCabinet = ({ navigation }) => {
                         }}
                     >
                         <TouchableOpacity
-                            onPress={() => navigation.navigate("Kuriyer")}
+                            onPress={() =>
+                                navigation.navigate(routes.MY_CABINET_STACK, {
+                                    screen: routes.COURIER,
+                                })
+                            }
                             style={styles.btn}
                         >
                             <Image
                                 style={{ width: 45, height: 45 }}
-                                source={require("../assets/kuriyer.png")}
+                                source={images.courier}
                             />
                             <Text style={styles.btnText}>kuryer bolmoq</Text>
                         </TouchableOpacity>
@@ -317,5 +322,9 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "300",
         marginTop: 9,
+    },
+    image: {
+        height: 80,
+        width: 80,
     },
 });

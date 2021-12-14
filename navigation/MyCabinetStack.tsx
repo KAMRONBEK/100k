@@ -1,5 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "react-native-screens/native-stack";
+import Kuriyer from "../screens/Kuriyer";
 import MyCabinet from "../screens/MyCabinet";
 import Private from "../screens/Private";
 import { routes } from "./routes";
@@ -11,6 +12,7 @@ export const MyCabinetStack = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name={routes.MY_CABINET} component={MyCabinet} />
             <Stack.Screen name={routes.PRIVATE} component={Private} />
+            <Stack.Screen name={routes.COURIER} component={Kuriyer} />
         </Stack.Navigator>
     );
 };

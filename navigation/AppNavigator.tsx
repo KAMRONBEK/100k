@@ -63,7 +63,6 @@ const AppNavigator = () => {
                     name={routes.ADD_TRANSPORT}
                     component={AddTransport}
                 />
-                <Stack.Screen name={routes.COURIER} component={Kuriyer} />
                 {/*<Stack.Screen name="MyCabinetScreen" component={MyCabinet}/>*/}
             </Stack.Navigator>
         </NavigationContainer>

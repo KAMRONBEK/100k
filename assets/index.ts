@@ -22,6 +22,7 @@ export const images = {
     filter: require("./filter.png"),
     strelka: require("./strelka.png"),
     globe: require("./globe.png"),
-    restangle: require("./restangle.png"),
-    blackrestangle: require("./blackrestangle.png"),
+    courier: require("./kuriyer.png"),
+    selfie: require("./selfi.png"),
+    user: require("./userBig.png"),
 };
