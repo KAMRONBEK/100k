@@ -23,6 +23,7 @@ import { selectToken } from "../redux/slices/user/user";
 import { routes } from "./routes";
 import Regions from "../screens/Regions/Regions";
 import { navigationRef } from "./NavigationService";
+import EditPassenger from "../screens/Taxi/EditPassanger";
 
 const Stack = createStackNavigator();
 
@@ -57,6 +58,10 @@ const AppNavigator = () => {
                 <Stack.Screen
                     name={routes.ADD_PASSENGER}
                     component={AddPassenger}
+                />
+                <Stack.Screen
+                    name={routes.EDIT_PASSENGER}
+                    component={EditPassenger}
                 />
                 <Stack.Screen name={routes.ADD_LOAD} component={AddLoad} />
                 <Stack.Screen

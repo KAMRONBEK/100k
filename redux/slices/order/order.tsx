@@ -2,58 +2,82 @@ import { IRoot } from "./../../configureStore";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface ICreateOrder {
-    fromRegionId?: number;
-    fromRegionName?: string;
+  fromRegionId?: number;
+  fromRegionName?: string;
 
-    fromDistrictId?: number;
-    fromDistrictName?: string;
+  fromDistrictId?: number;
+  fromDistrictName?: string;
 
-    fromAddress?: string;
-    fromNumber?: string;
+  fromAddress?: string;
+  fromNumber?: string;
 
-    toRegionId?: number;
-    toRegionName?: string;
+  toRegionId?: number;
+  toRegionName?: string;
 
-    toDistrictId?: number;
-    toDistrictName?: string;
+  toDistrictId?: number;
+  toDistrictName?: string;
 
-    toAddress?: string;
-    toNumber?: string;
+  toAddress?: string;
+  toNumber?: string;
 
-    cost?: number;
+  cost?: number;
+
+  seatCount?: number;
+
+  info?: string;
+
+  frontSeat?: boolean;
+
+  otherPerson?: boolean;
+
+  otherNumber?: string;
+
+  otherName?: string;
 }
 
 const initialState: ICreateOrder = {
-    fromRegionId: 1,
-    fromRegionName: "",
+  fromRegionId: 1,
+  fromRegionName: "",
 
-    fromDistrictId: 0,
-    fromDistrictName: "",
+  fromDistrictId: 0,
+  fromDistrictName: "",
 
-    fromAddress: "",
-    fromNumber: "",
+  fromAddress: "",
+  fromNumber: "",
 
-    toRegionId: 0,
-    toRegionName: "",
+  toRegionId: 0,
+  toRegionName: "",
 
-    toDistrictId: 0,
-    toDistrictName: "",
+  toDistrictId: 0,
+  toDistrictName: "",
 
-    toAddress: "",
-    toNumber: "",
+  toAddress: "",
+  toNumber: "",
 
-    cost: undefined,
+  cost: 0,
+
+  seatCount: 0,
+
+  info: "",
+
+  frontSeat: false,
+
+  otherPerson: false,
+
+  otherNumber: "",
+
+  otherName: "",
 };
 
 const orderSlice = createSlice({
-    name: "order",
-    initialState,
-    reducers: {
-        setOrderData: (state, { payload }) => {
-            state = { ...state, ...payload };
-            return state;
-        },
+  name: "order",
+  initialState,
+  reducers: {
+    setOrderData: (state, { payload }) => {
+      state = { ...state, ...payload };
+      return state;
     },
+  },
 });
 
 export const selectOrderState = (state: IRoot) => state.order;

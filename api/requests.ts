@@ -87,9 +87,11 @@ export let requests = {
             axios.post(`${url}/user/packages`, credentials),
     },
     taxi: {
-        getTaxi: (status = "") => axios.get(`${url}/user/caborders`),
+        getTaxi: () => axios.get(`${url}/user/caborders`),
         createPassanger: (credentials) =>
             axios.post(`${url}/user/caborders`, credentials),
+        editPassanger: (credentials, id) =>
+            axios.post(`${url}/user/caborders/${id}`, credentials),
     },
     help: {
         getRegions: () => axios.get(`${url}/locations`),

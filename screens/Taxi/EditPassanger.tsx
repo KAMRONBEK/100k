@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import { useRoute } from "@react-navigation/native";
+import React, { useEffect, useReducer, useState } from "react";
 import {
-    View,
+    Image,
+    ScrollView,
+    StyleSheet,
     Text,
     TextInput,
-    Image,
-    StyleSheet,
     TouchableOpacity,
-    ScrollView,
+    View,
 } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 import { ActivityIndicator, Checkbox } from "react-native-paper";
@@ -16,29 +17,107 @@ import SeatSelector from "../../components/SeatSelector";
 import { locationType } from "../../constants/values";
 import { routes } from "../../navigation/routes";
 import { selectOrderState, setOrderData } from "../../redux/slices/order/order";
+import { selectTaxi } from "../../redux/slices/taxi/taxi";
 import { useTaxiHook } from "./hooks";
 
-const AddPassenger = ({ navigation }) => {
+const EditPassanger = ({ navigation }) => {
     //--------------------------------------------------------------
     const dispatch = useDispatch();
 
     const state = useSelector(selectOrderState);
+    const taxi = useSelector(selectTaxi);
 
-    const { createPassanger, loading } = useTaxiHook();
+    const { editPassanger, loading } = useTaxiHook();
+    const { id } = useRoute().params ? useRoute().params : { id: 0 };
     const onSubmitFrom = () => {
-        createPassanger({
-            from_region_id: state.fromRegionId,
-            from_district_id: state.fromDistrictId,
-            from_address: state.fromAddress,
-            to_region_id: state.toRegionId,
-            to_district_id: state.toDistrictId,
-            to_address: state.toAddress,
-            book_front_seat: state.frontSeat ? 1 : 0,
-            seat_count: state.seatCount,
-            note: state.info,
-            cost: state.cost,
-        });
+        editPassanger(
+            {
+                from_region_id: state.fromRegionId,
+                from_district_id: state.fromDistrictId,
+                from_address: state.fromAddress,
+                to_region_id: state.toRegionId,
+                to_district_id: state.toDistrictId,
+                to_address: state.toAddress,
+                book_front_seat: state.frontSeat ? 1 : 0,
+                seat_count: state.seatCount,
+                note: state.info,
+                cost: state.cost,
+            },
+            id
+        );
     };
+
+    let temp = {
+        book_front_seat: 1,
+        cost: 23000,
+        created_at: "2021-12-08 16:49:30",
+        created_at_label: "1 сония аввал",
+        creator_avatar:
+            "https://www.gravatar.com/avatar/423bc8ebb88f4ead6b5fef84483cf3fc?s=100&d=mm",
+        creator_id: 372334,
+        creator_name: null,
+        creator_phone: "+998998032226",
+        driver_avatar: null,
+        driver_id: null,
+        driver_name: null,
+        driver_phone: null,
+        from_address: "Yakkasaroy kochasi 15-uy777",
+        from_district_id: 13,
+        from_full_address: "Fargona, Rishton, Yakkasaroy kochasi 15-uy777",
+        from_latitude: null,
+        from_longitude: null,
+        from_region_id: 1,
+        id: 1,
+        note: "Alohida olib keling",
+        seat_count: 1,
+        seat_count_label: "1 kishi",
+        status: "active",
+        to_address: "Guliston katta ko'cha 25-uy777",
+        to_district_id: 62,
+        to_full_address: "Sirdaryo, Guliston, Guliston katta ko'cha 25-uy777",
+        to_region_id: 3,
+    };
+
+    useEffect(() => {
+        let currentOrder = Object.values(taxi).filter(
+            (item) => item.id == id
+        )[0];
+        dispatch(
+            setOrderData({
+                fromRegionId: currentOrder.from_region_id,
+                fromRegionName: currentOrder.from_full_address.split(",")[0],
+
+                fromDistrictId: currentOrder.from_district_id,
+                fromDistrictName: currentOrder.from_full_address.split(",")[1],
+
+                fromAddress: currentOrder.from_address,
+                fromNumber: "",
+
+                toRegionId: currentOrder.to_region_id,
+                toRegionName: currentOrder.to_full_address.split(",")[0],
+
+                toDistrictId: currentOrder.to_district_id,
+                toDistrictName: currentOrder.from_full_address.split(",")[1],
+
+                toAddress: currentOrder.to_address,
+                toNumber: "",
+
+                cost: currentOrder.cost,
+
+                seatCount: currentOrder.seat_count,
+
+                info: currentOrder.note,
+
+                frontSeat: false,
+
+                otherPerson: false,
+
+                otherNumber: "",
+
+                otherName: "",
+            })
+        );
+    }, [id]);
 
     return (
         <>
@@ -48,7 +127,7 @@ const AddPassenger = ({ navigation }) => {
                 >
                     <Image source={images.leftArrow} />
                 </TouchableOpacity>
-                <Text style={{ fontSize: 20 }}>Taksiga sorov kiritish</Text>
+                <Text style={{ fontSize: 20 }}>Buyurtmani o'zgartirish</Text>
                 <View></View>
             </View>
             <ScrollView>
@@ -214,7 +293,9 @@ const AddPassenger = ({ navigation }) => {
                         <Checkbox.Android
                             color={"black"}
                             uncheckedColor={"#ccc"}
-                            status={state.otherPerson ? "checked" : "unchecked"}
+                            status={
+                                !!state.otherPerson ? "checked" : "unchecked"
+                            }
                             onPress={() =>
                                 dispatch(
                                     setOrderData({
@@ -243,7 +324,7 @@ const AddPassenger = ({ navigation }) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    {state.otherPerson && (
+                    {!!state.otherPerson ? (
                         <>
                             <View style={{ flex: 1, flexDirection: "row" }}>
                                 <TextInputMask
@@ -273,7 +354,7 @@ const AddPassenger = ({ navigation }) => {
                                 />
                             </View>
                         </>
-                    )}
+                    ) : undefined}
                     <View
                         style={{ flexDirection: "row", alignItems: "center" }}
                     >
@@ -394,7 +475,7 @@ const AddPassenger = ({ navigation }) => {
     );
 };
 
-export default AddPassenger;
+export default EditPassanger;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",

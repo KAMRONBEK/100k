@@ -241,7 +241,7 @@ const AddPassenger = () => {
               setNone("flex");
             }}
           >
-            <Image source={images.restangle} />
+            <Image source={images.rectangle} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -279,7 +279,7 @@ const AddPassenger = () => {
               setNoneOne("flex");
             }}
           >
-            <Image source={images.restangle} />
+            <Image source={images.rectangle} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -319,7 +319,7 @@ const AddPassenger = () => {
           }}
           style={{ display: cars }}
         >
-          <Image source={images.restangle} />
+          <Image source={images.rectangle} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -418,6 +418,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    marginRight: 5,
   },
   input: {
     borderWidth: 1,

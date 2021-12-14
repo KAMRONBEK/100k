@@ -1,21 +1,22 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import {
-    View,
-    Text,
-    StyleSheet,
-    StatusBar,
-    ScrollView,
     Image,
-    TouchableOpacity,
     RefreshControl,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
     useWindowDimensions,
+    View,
 } from "react-native";
-import reactotron from "reactotron-react-native";
+import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { images } from "../../assets";
 import PassangerItem from "../../components/PassangerItem";
 import { useTaxiHook } from "./hooks";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { NavigationProp, useNavigation } from "@react-navigation/core";
+import PassagerMyOrderItem from "../../components/PassagerMyOrderItem";
+import { routes } from "../../navigation/routes";
 
 const FirstRoute = () => {
     const { taxi, refreshTaxi } = useTaxiHook();
@@ -53,7 +54,7 @@ const FirstRoute = () => {
     );
 };
 const SecondRoute = () => {
-    const { taxi, refreshTaxi } = useTaxiHook();
+    const { taxi, myOrder, refreshTaxi } = useTaxiHook();
     const [refreshing, setRefreshing] = useState(false);
     let navigation = useNavigation();
 
@@ -74,12 +75,12 @@ const SecondRoute = () => {
                     />
                 }
             >
-                {Object.values(taxi).map((item) => (
-                    <PassangerItem item={item} key={`${item.id}`} />
+                {myOrder.map((item) => (
+                    <PassagerMyOrderItem item={item} key={`${item.id}`} />
                 ))}
             </ScrollView>
             <TouchableOpacity
-                onPress={() => navigation.navigate("AddPassenger")}
+                onPress={() => navigation.navigate(routes.ADD_PASSENGER)}
                 style={styles.tchopacity}
             >
                 <Image style={styles.plus2} source={images.plus2} />
