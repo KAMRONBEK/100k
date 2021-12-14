@@ -1,12 +1,18 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { images } from "../assets";
+import Xicon from "../assets/icons/Xicon";
+import Pensolicon from "../assets/icons/Pensolicon";
+import CheckedIcon from "../assets/icons/CheckedIcon";
+import { useNavigation } from "@react-navigation/native";
+import { routes } from "../navigation/routes";
 
 interface IPassangerProp {
   item: any;
 }
 
-const PassangerItem = ({ item }: IPassangerProp) => {
+const PassagerMyOrderItem = ({ item }: IPassangerProp) => {
+  let navigation = useNavigation();
   return (
     <>
       <View
@@ -204,19 +210,24 @@ const PassangerItem = ({ item }: IPassangerProp) => {
           <View
             style={{
               marginTop: 20,
+              flexDirection: "row",
             }}
           >
             <TouchableOpacity style={styles.btn1}>
-              <Image source={images.plus} />
-              <Text
-                style={{
-                  marginLeft: 4,
-                  fontWeight: "normal",
-                  fontSize: 12,
-                }}
-              >
-                QABUL QILISH
-              </Text>
+              <Xicon />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.pensolbutton}
+              onPress={() =>
+                navigation.navigate(routes.EDIT_PASSENGER, {
+                  id: item.id,
+                })
+              }
+            >
+              <Pensolicon />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.checkedbutton}>
+              <CheckedIcon />
             </TouchableOpacity>
           </View>
         </View>
@@ -225,21 +236,55 @@ const PassangerItem = ({ item }: IPassangerProp) => {
   );
 };
 
-export default PassangerItem;
+export default PassagerMyOrderItem;
 
 const styles = StyleSheet.create({
   btn1: {
-    borderColor: "#bf9100",
-    borderRadius: 8,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    backgroundColor: "#FFCD30",
-    flexDirection: "row",
+    borderWidth: 1.5,
+    borderColor: "red",
+    borderRadius: 25,
+    paddingHorizontal: 11,
+    paddingVertical: 11,
     alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 6,
   },
   borderBottom: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 25,
+  },
+  xicon: {
+    width: 15,
+    height: 15,
+    tintColor: "red",
+  },
+  pensolbutton: {
+    borderWidth: 1.5,
+    borderColor: "orange",
+    borderRadius: 25,
+    paddingHorizontal: 11,
+    paddingVertical: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 6,
+  },
+  pensolicon: {
+    width: 15,
+    height: 15,
+  },
+  checkedicon: {
+    width: 15,
+    height: 15,
+  },
+  checkedbutton: {
+    borderWidth: 1.5,
+    borderColor: "green",
+    borderRadius: 25,
+    paddingHorizontal: 11,
+    paddingVertical: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 6,
   },
 });

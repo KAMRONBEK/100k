@@ -41,6 +41,7 @@ axios.interceptors.response.use(
         if (error.response.status === 555) {
             store.dispatch(logoutUser);
             navigate(routes.LOGIN, {});
+            return error
         } else if (error.response.status !== 401) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -90,9 +91,12 @@ export let requests = {
         getMail: () => axios.get(`${url}/user/packages`),
     },
     taxi: {
-        getTaxi: (status = "") => axios.get(`${url}/user/caborders`),
+        getTaxi: () => axios.get(`${url}/user/caborders`),
         createPassanger: (credentials) =>
             axios.post(`${url}/user/caborders`, credentials),
+            editPassanger: (credentials,id) => 
+            axios.post(`${url}/user/caborders/${id}`, credentials),
+
     },
     help: {
         getRegions: () => axios.get(`${url}/locations`),
