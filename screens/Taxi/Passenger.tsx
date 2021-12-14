@@ -11,7 +11,6 @@ import {
     useWindowDimensions,
 } from "react-native";
 import reactotron from "reactotron-react-native";
-import { images } from "../../assets";
 import PassangerItem from "../../components/PassangerItem";
 import { useTaxiHook } from "./hooks";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
@@ -141,7 +140,7 @@ const Passenger = ({}: PassengerViewProps) => {
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
                 onIndexChange={setIndex}
-                initialLayout={{ width: layout.width }}
+                initialre={{ width: layout.width }}
                 renderTabBar={(props) => (
                     <TabBar
                         renderLabel={(e) => {
