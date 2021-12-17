@@ -1,18 +1,27 @@
 import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 
-interface ISeatSelector {
+interface ILoadSelector {
   value?: number;
   setValue: Dispatch<SetStateAction<number>>;
 }
 
-const SeatSelector = ({ value, setValue }: ISeatSelector) => {
+const LoadSelector = ({ value, setValue }: ILoadSelector) => {
+  console.log(value);
+
   let [state, setState] = useState([
-    { id: 0, name: "1", selected: false, value: 1 },
-    { id: 1, name: "2", selected: false, value: 2 },
-    { id: 2, name: "3", selected: false, value: 3 },
-    { id: 3, name: "4", selected: false, value: 4 },
-    { id: 4, name: "Hammasi", selected: false, value: 5 },
+    { id: 0, name: "1 tonnagacha", selected: false, value: "1 tonnagacha" },
+    { id: 1, name: "1-3 tonna", selected: false, value: "1-3 tonna" },
+    { id: 2, name: "4-7 tonna", selected: false, value: "4-7 tonna" },
+    { id: 3, name: "8-16 tonna", selected: false, value: "8-16 tonna" },
+    { id: 4, name: "17-30 tonna", selected: false, value: "17-30 tonna" },
   ]);
 
   useEffect(() => {
@@ -51,31 +60,36 @@ const SeatSelector = ({ value, setValue }: ISeatSelector) => {
           fontSize: 16,
           fontWeight: "bold",
           marginBottom: 15,
+          marginLeft: 5,
         }}
       >
-        O'rindiq sonini belgilang
+        Yuk og'irligi
       </Text>
-      <View style={{ flexDirection: "row" }}>
-        {state.map(({ id, name, selected }) => (
+      <FlatList
+        data={state}
+        renderItem={({ item }) => (
           <TouchableOpacity
-            key={id.toString()}
-            onPress={() => onPress(id)}
+            key={item.id.toString()}
+            onPress={() => onPress(item.id)}
             style={[
               styles.btn,
               {
-                backgroundColor: selected ? "#FFCD30" : undefined,
+                backgroundColor: item.selected ? "#FFCD30" : undefined,
+                borderColor: item.selected ? "#FFCD30" : undefined,
               },
             ]}
           >
-            <Text>{name}</Text>
+            <Text>{item.name}</Text>
           </TouchableOpacity>
-        ))}
-      </View>
+        )}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      />
     </View>
   );
 };
 
-export default SeatSelector;
+export default LoadSelector;
 
 const styles = StyleSheet.create({
   btn: {

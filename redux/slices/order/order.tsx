@@ -2,85 +2,93 @@ import { IRoot } from "./../../configureStore";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface ICreateOrder {
-    fromRegionId?: number;
-    fromRegionName?: string;
+  fromRegionId?: number;
+  fromRegionName?: string;
 
-    fromDistrictId?: number;
-    fromDistrictName?: string;
+  fromDistrictId?: number;
+  fromDistrictName?: string;
 
-    fromAddress?: string;
-    fromNumber?: string;
+  fromAddress?: string;
+  fromNumber?: string;
 
-    toRegionId?: number;
-    toRegionName?: string;
+  toRegionId?: number;
+  toRegionName?: string;
 
-    toDistrictId?: number;
-    toDistrictName?: string;
+  toDistrictId?: number;
+  toDistrictName?: string;
 
-    toAddress?: string;
-    toNumber?: string;
+  toAddress?: string;
+  toNumber?: string;
 
-    cost?: number;
+  cost?: string;
 
-    seatCount?: number;
+  seatCount?: number;
 
-    info?: string;
+  info?: string;
 
-    frontSeat?: boolean;
+  frontSeat?: boolean;
 
-    otherPerson?: boolean;
+  otherPerson?: boolean;
 
-    otherNumber?: string;
+  otherNumber?: string;
 
-    otherName?: string;
+  otherName?: string;
+
+  weight?: number;
+
+  matter?: string;
 }
 
 const initialState: ICreateOrder = {
-    fromRegionId: 1,
-    fromRegionName: "",
+  fromRegionId: 1,
+  fromRegionName: "",
 
-    fromDistrictId: 0,
-    fromDistrictName: "",
+  fromDistrictId: 0,
+  fromDistrictName: "",
 
-    fromAddress: "",
-    fromNumber: "",
+  fromAddress: "",
+  fromNumber: "",
 
-    toRegionId: 0,
-    toRegionName: "",
+  toRegionId: 0,
+  toRegionName: "",
 
-    toDistrictId: 0,
-    toDistrictName: "",
+  toDistrictId: 0,
+  toDistrictName: "",
 
-    toAddress: "",
-    toNumber: "",
+  toAddress: "",
+  toNumber: "",
 
-    cost: 0,
+  cost: "",
 
-    seatCount: 0,
+  seatCount: 0,
 
-    info: "",
+  info: "",
 
-    frontSeat: false,
+  frontSeat: false,
 
-    otherPerson: false,
+  otherPerson: false,
 
-    otherNumber: "",
+  otherNumber: "",
 
-    otherName: "",
+  otherName: "",
+
+  weight: 0,
+
+  matter: "",
 };
 
 const orderSlice = createSlice({
-    name: "order",
-    initialState,
-    reducers: {
-        setOrderData: (state, { payload }) => {
-            state = { ...state, ...payload };
-            return state;
-        },
+  name: "order",
+  initialState,
+  reducers: {
+    setOrderData: (state, { payload }) => {
+      state = { ...state, ...payload };
+      return state;
     },
+  },
 });
 
-export const selectOrderState = (state: IRoot) => state.order;
+export const selectOrderState = (state: IRoot) => state && state.order;
 
 export const { setOrderData } = orderSlice.actions;
 export default orderSlice.reducer;

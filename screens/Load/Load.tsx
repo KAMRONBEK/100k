@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Image,
@@ -13,22 +13,18 @@ import {
 } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { images } from "../../assets";
-import PassangerItem from "../../components/PassangerItem";
-import { useTaxiHook } from "./hooks";
-import PassagerMyOrderItem from "../../components/PassagerMyOrderItem";
-import { routes as Routes } from "../../navigation/routes";
-import Question from "../../assets/icons/QuestionIcon";
-import Filter from "../../assets/icons/FilterIcon";
 import QuestionIcon from "../../assets/icons/QuestionIcon";
-import FilterIcon from "../../assets/icons/FilterIcon";
+import LoadItem from "../../components/LoadItem";
+import { routes as Routes } from "../../navigation/routes";
+import { useLoadHook } from "./hooks";
 
 const FirstRoute = () => {
-  const { taxi, refreshTaxi } = useTaxiHook();
+  const { load, refreshLoad } = useLoadHook();
   const [refreshing, setRefreshing] = useState(false);
   let navigation = useNavigation();
 
   const onRefresh = React.useCallback(() => {
-    refreshTaxi();
+    refreshLoad();
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
@@ -41,20 +37,47 @@ const FirstRoute = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {Object.values(taxi).map((item) => (
-          <PassangerItem item={item} key={`${item.id}`} />
+        {Object.values(load).map((item) => (
+          <LoadItem item={item} key={`${item.id}`} />
         ))}
       </ScrollView>
     </View>
   );
 };
 const SecondRoute = () => {
-  const { taxi, myOrder, refreshTaxi } = useTaxiHook();
+  const { load, myOrder, refreshLoad } = useLoadHook();
   const [refreshing, setRefreshing] = useState(false);
   let navigation = useNavigation();
 
   const onRefresh = React.useCallback(() => {
-    refreshTaxi();
+    refreshLoad();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {Object.values(load).map((item) => (
+          <LoadItem item={item} key={`${item.id}`} />
+        ))}
+      </ScrollView>
+    </View>
+  );
+};
+
+const ThirdRoute = () => {
+  const { load, myOrder, refreshLoad } = useLoadHook();
+  const [refreshing, setRefreshing] = useState(false);
+  let navigation = useNavigation();
+
+  const onRefresh = React.useCallback(() => {
+    refreshLoad();
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
@@ -68,7 +91,7 @@ const SecondRoute = () => {
         }
       >
         {myOrder.map((item) => (
-          <PassagerMyOrderItem item={item} key={`${item.id}`} />
+          <LoadItem item={item} key={`${item.id}`} editable={true} />
         ))}
       </ScrollView>
     </View>
@@ -78,6 +101,7 @@ const SecondRoute = () => {
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
+  third: ThirdRoute,
 });
 
 const wait = (timeout: number) => {
@@ -90,14 +114,15 @@ let titleIconMapper = {
   first: images.globe,
 };
 
-const Passenger = ({}: PassengerViewProps) => {
+const Load = ({ navigation }: PassengerViewProps) => {
   const layout = useWindowDimensions();
-  let navigation = useNavigation();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "first", title: "Barchasi" },
-    { key: "second", title: "Mening buyurtmalarim" },
+    { key: "second", title: "Ko'rilganlar" },
+    { key: "third", title: "Mening e'lonlarim" },
   ]);
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style={styles.statusbar} />
@@ -106,13 +131,10 @@ const Passenger = ({}: PassengerViewProps) => {
           <QuestionIcon />
         </View>
         <View>
-          <Text style={styles.passengerbox}>Yo'lovchilar</Text>
+          <Text style={styles.passengerbox}>Yuklar</Text>
         </View>
         <View>
-          <Image
-            source={images.filter}
-            style={{ width: 20, height: 20, tintColor: "#000000" }}
-          />
+          <Image style={styles.psimage} source={images.filter} />
         </View>
       </View>
       <View style={styles.header}>
@@ -142,7 +164,9 @@ const Passenger = ({}: PassengerViewProps) => {
                       style={styles.tabimg}
                     />
                   )}
-                  <Text style={{ fontSize: 12 }}>{e.route.title}</Text>
+                  <Text numberOfLines={1} style={{ fontSize: 12 }}>
+                    {e.route.title}
+                  </Text>
                 </View>
               );
             }}
@@ -152,7 +176,7 @@ const Passenger = ({}: PassengerViewProps) => {
         )}
       />
       <TouchableOpacity
-        onPress={() => navigation.navigate(Routes.ADD_PASSENGER)}
+        onPress={() => navigation.navigate(Routes.ADD_LOAD)}
         style={styles.tchopacity}
       >
         <Image style={styles.plus2} source={images.plus2} />
@@ -161,7 +185,7 @@ const Passenger = ({}: PassengerViewProps) => {
   );
 };
 
-export default Passenger;
+export default Load;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -174,25 +198,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 25,
+    padding: 10,
     borderWidth: 1,
     borderColor: "#dcdcdc",
     borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
   },
   top: {
     flexDirection: "row",
     paddingHorizontal: 21,
     paddingVertical: 16,
+    backgroundColor: "#ffff",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#fff",
   },
   header: {
-    marginVertical: 19,
+    marginVertical: 15,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     justifyContent: "space-between",
   },
   btn1: {
@@ -204,6 +230,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFCD30",
     flexDirection: "row",
     alignItems: "center",
+  },
+  statusBar: {
+    backgroundColor: "#FFCE34",
+  },
+  topImg: {
+    width: 24,
+    height: 24,
+  },
+  topText: {
+    fontSize: 20,
+    color: "#000",
+  },
+  filtericon: {
+    width: 20,
+    height: 20,
+  },
+  locationbox: {
+    width: 15,
+    height: 15,
+    marginRight: 5,
+  },
+  locationtext: {
+    color: "#8a8a8a",
+    fontSize: 13,
+    paddingHorizontal: 15,
   },
   tchopacity: {
     borderColor: "#BF9100",
@@ -230,7 +281,8 @@ const styles = StyleSheet.create({
     height: 24,
   },
   passengerbox: {
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: "bold",
     color: "#000",
   },
   psimage: {
@@ -260,8 +312,5 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginRight: 5,
-  },
-  filterIcon: {
-    tintColor: "#000",
   },
 });

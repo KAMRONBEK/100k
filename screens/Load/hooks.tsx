@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setTaxi, selectTaxi, update } from "../../redux/slices/taxi/taxi";
 import React, { useEffect, useState } from "react";
 import { requests } from "../../api/requests";
 import { showMessage, hideMessage } from "react-native-flash-message";
@@ -7,21 +6,22 @@ import reactotron from "reactotron-react-native";
 import { useNavigation } from "@react-navigation/core";
 import { routes } from "../../navigation/routes";
 import { selectUser } from "../../redux/slices/user/user";
+import { selectLoad, setLoad } from "../../redux/slices/load/load";
 
-export let useTaxiHook = () => {
+export let useLoadHook = () => {
   let navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  let taxi = useSelector(selectTaxi);
+  let load = useSelector(selectLoad);
   let user = useSelector(selectUser);
-  let myOrder = Object.values(taxi).filter(
+  let myOrder = Object.values(load).filter(
     (item) => item.creator_id == user.id
   );
 
   let dispatch = useDispatch();
   let effect = async () => {
     try {
-      let res = await requests.taxi.getTaxi();
-      dispatch(setTaxi(res.data.data.reverse()));
+      let res = await requests.load.getLoad();
+      dispatch(setLoad(res.data.data.reverse()));
       console.log({ data: res.data });
     } catch (err) {
       console.log(err.response);
@@ -31,14 +31,14 @@ export let useTaxiHook = () => {
     effect();
   }, []);
 
-  const refreshTaxi = () => {
+  const refreshLoad = () => {
     effect();
   };
 
-  const createPassanger = async (credentials) => {
+  const createLoad = async (credentials) => {
     setLoading(true);
     try {
-      let res = await requests.taxi.createPassanger(credentials);
+      let res = await requests.load.createLoad(credentials);
       console.log(res, "new passanger created");
       showMessage({
         message: "Zakaz qabul qilindi",
@@ -49,6 +49,7 @@ export let useTaxiHook = () => {
       navigation.goBack();
     } catch (error) {
       reactotron.log!(error);
+      console.log!(error.response.data);
       showMessage({
         message: error.message,
         type: "danger",
@@ -60,10 +61,10 @@ export let useTaxiHook = () => {
     }
   };
 
-  const editPassanger = async (credentials, id) => {
+  const editLoad = async (credentials, id) => {
     setLoading(true);
     try {
-      let res = await requests.taxi.createPassanger(credentials, id);
+      let res = await requests.load.createLoad(credentials, id);
       console.log(res, "new passanger created");
       showMessage({
         message: "Zakaz qabul qilindi",
@@ -71,7 +72,7 @@ export let useTaxiHook = () => {
         icon: "success",
         floating: true,
       });
-      navigation.navigate(routes.PASSENGER);
+      navigation.navigate(routes.LOAD);
     } catch (error) {
       reactotron.log!(error);
       showMessage({
@@ -86,11 +87,11 @@ export let useTaxiHook = () => {
   };
 
   return {
-    taxi,
-    refreshTaxi,
-    createPassanger,
+    load,
+    refreshLoad,
+    createLoad,
     loading,
-    editPassanger,
+    editLoad,
     myOrder,
   };
 };
