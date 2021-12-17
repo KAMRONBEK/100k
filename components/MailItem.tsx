@@ -150,7 +150,7 @@ export default function MailItem({ item }) {
       <View
         style={{
           marginTop: 22,
-          flexDirection: "row-reverse",
+          flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
         }}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -8,10 +8,11 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  ActivityIndicator,
   RefreshControl,
   FlatList,
+  useWindowDimensions,
 } from "react-native";
+import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { images } from "../../assets";
 import MailItem from "../../components/MailItem";
 import { useMailHook } from "./hooks";
@@ -20,7 +21,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const Mail = ({ navigation }) => {
+const FirstRoute = ({}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const { mail, useRefresh } = useMailHook();
 
@@ -29,6 +30,120 @@ const Mail = ({ navigation }) => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
+  return (
+    <ScrollView
+      style={{ marginBottom: 80 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <FlatList
+        contentContainerStyle={{
+          flex: 1,
+        }}
+        data={Object.values(mail)}
+        renderItem={({ item }) => <MailItem item={item} />}
+        ListEmptyComponent={() => (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={images.openBox}
+              style={{
+                height: 140,
+
+                width: 140,
+                marginBottom: 80,
+              }}
+            />
+          </View>
+        )}
+      />
+    </ScrollView>
+  );
+};
+
+let status = [
+  { text: "Yangi" },
+  { text: "Kuryer topildi" },
+  { text: "Yo'lda" },
+  { text: "Bajarilgan" },
+];
+const SecondRoute = () => {
+  let [activeIndex, setActiveIndex] = useState(0);
+  return (
+    <View style={{ flex: 1, backgroundColor: "#f3f3f5" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 20,
+          marginVertical: 10,
+        }}
+      >
+        {status.map((e, i) => {
+          return (
+            <TouchableOpacity onPress={() => setActiveIndex(i)}>
+              <Text
+                style={{
+                  backgroundColor: activeIndex === i ? "#fff9d4" : "#f3f3f5",
+                  color: activeIndex === i ? "#3d2200" : "#707070",
+                  borderWidth: 0.6,
+                  borderColor: activeIndex === i ? "#3d2200" : "#dcdcdc",
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                }}
+              >
+                {e.text}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </View>
+  );
+};
+const ThirdRoute = () => (
+  <View
+    style={{ flex: 1, backgroundColor: "#f3f3f5", justifyContent: "center" }}
+  >
+    <Text style={{ fontSize: 18, textAlign: "center", color: "#ccc" }}>
+      Hech narsa topilmadi 😔
+    </Text>
+  </View>
+);
+const FourthRoute = () => (
+  <View
+    style={{ flex: 1, backgroundColor: "#f3f3f5", justifyContent: "center" }}
+  >
+    <Text style={{ fontSize: 18, textAlign: "center", color: "#ccc" }}>
+      Hech narsa topilmadi 😔
+    </Text>
+  </View>
+);
+let titleIconMapper = {
+  first: images.globe,
+};
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute,
+  third: ThirdRoute,
+  fourth: FourthRoute,
+});
+
+const Mail = ({ navigation }) => {
+  const layout = useWindowDimensions();
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", label: "Barchasi" },
+    { key: "second", title: "Mening buyurtmalarim" },
+    { key: "third", label: "Ro'yxat" },
+    { key: "fourth", label: "Kirim" },
+  ]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f3f3f5" }}>
@@ -103,38 +218,60 @@ const Mail = ({ navigation }) => {
             <Image source={require("../../assets/filter.png")} />
           </TouchableOpacity>
         </View>
-        <ScrollView
-          style={{ marginBottom: 80 }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <FlatList
-            contentContainerStyle={{
-              flex: 1,
-            }}
-            data={Object.values(mail)}
-            renderItem={({ item }) => <MailItem item={item} />}
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={images.openBox}
-                  style={{
-                    height: 140,
-                    width: 140,
-                    marginBottom: 80,
-                  }}
-                />
-              </View>
-            )}
-          />
-        </ScrollView>
+        <TabView
+          style={{ backgroundColor: "#f3f3f5" }}
+          sceneContainerStyle={{
+            flexWrap: "nowrap",
+          }}
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+          renderTabBar={(p) => (
+            <TabBar
+              {...p}
+              contentContainerStyle={{
+                backgroundColor: "#f3f3f5",
+              }}
+              scrollEnabled={true}
+              indicatorStyle={{
+                width: 100,
+                left: 50,
+              }}
+              style={{ backgroundColor: "#f3f3f5" }}
+              tabStyle={{}}
+              labelStyle={{
+                textTransform: "capitalize",
+                padding: 0,
+                color: "black",
+                margin: 0,
+              }}
+              renderLabel={(e) => {
+                return (
+                  <View style={styles.tabView}>
+                    {titleIconMapper[e.route.key] && (
+                      <Image
+                        source={titleIconMapper[e.route.key]}
+                        style={styles.tabimg}
+                      />
+                    )}
+                    <Text style={{ fontSize: 15 }}>{e.route.title}</Text>
+                    <View style={{ padding: 0, margin: 0 }}>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                        }}
+                      >
+                        {e.route.label}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              }}
+              {...p}
+            />
+          )}
+        />
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("AdMail")}
@@ -169,6 +306,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#dcdcdc",
     borderRadius: 8,
+  },
+  tabView: {
+    flexDirection: "row",
+    color: "#8a8a8a",
+  },
+  tabimg: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
   },
   top: {
     flexDirection: "row",
