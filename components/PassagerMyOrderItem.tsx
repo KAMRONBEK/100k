@@ -68,18 +68,10 @@ const PassagerMyOrderItem = ({ item }: IPassangerProp) => {
             >
               {item.seat_count}
             </Text>
-            <TouchableOpacity
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#59dead",
-                padding: 5,
-                borderRadius: 10,
-                opacity: 1,
-              }}
-            >
-              <Text style={{ color: "green" }}>{item.seat_count_label}</Text>
+            <TouchableOpacity style={styles.seatbutton}>
+              <Text style={{ color: "#2e8c60", opacity: 0.8 }}>
+                {item.seat_count_label}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -286,5 +278,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 6,
+  },
+  seatbutton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#dbfaec",
+    padding: 5,
+    borderRadius: 10,
+    opacity: 0.7,
   },
 });

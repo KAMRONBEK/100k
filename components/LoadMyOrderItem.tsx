@@ -1,20 +1,17 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
 import { images } from "../assets";
-import CheckedIcon from "../assets/icons/CheckedIcon";
-import Pensolicon from "../assets/icons/Pensolicon";
 import Xicon from "../assets/icons/Xicon";
-import user, { selectUser } from "../redux/slices/user/user";
+import Pensolicon from "../assets/icons/Pensolicon";
+import CheckedIcon from "../assets/icons/CheckedIcon";
+import { useNavigation } from "@react-navigation/native";
+import { routes } from "../navigation/routes";
 
 interface IPassangerProp {
   item: any;
-  editable?: boolean;
 }
 
-const PassangerItem = ({ item, editable }: IPassangerProp) => {
-  let user = useSelector(selectUser);
+const LoadMyOrderItem = ({ item }: IPassangerProp) => {
   let navigation = useNavigation();
   return (
     <>
@@ -52,27 +49,20 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               flexDirection: "row",
             }}
           >
-            <Image
-              source={images.seat}
+            <TouchableOpacity
               style={{
-                width: 25,
-                height: 25,
-                tintColor: "#000",
-                marginTop: 1,
-              }}
-            />
-            <Text
-              style={{
-                fontSize: 17,
-                fontWeight: "500",
-                marginRight: 15,
-                marginTop: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#dbfaec",
+                padding: 5,
+                borderRadius: 10,
+                opacity: 0.7,
               }}
             >
-              {item.seat_count}
-            </Text>
-            <TouchableOpacity style={styles.seatbutton}>
-              <Text style={styles.seatbuttontxt}>{item.seat_count_label}</Text>
+              <Text style={{ color: "#2e8c60", opacity: 0.8 }}>
+                {item.weight}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -89,12 +79,15 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               source={images.ellipse}
             />
             <Text style={{ fontSize: 15, fontWeight: "normal" }}>
-              {item.from_address}
+              {item.from_full_address}
             </Text>
           </View>
         </View>
         <Image
-          style={{ height: 17, marginLeft: 4, marginTop: -5 }}
+          style={{
+            height: 17,
+            marginLeft: 4,
+          }}
           source={images.lines}
         ></Image>
         <View
@@ -115,7 +108,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               color: "#000",
             }}
           >
-            {item.to_address}
+            {item.to_full_address}
           </Text>
         </View>
         <View>
@@ -128,6 +121,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
             }}
           >
             {item.note}
+            <Text>-{item.matter}</Text>
           </Text>
           <View
             style={{
@@ -135,7 +129,14 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ marginTop: 5, color: "gray" }}>#{item.id}</Text>
+            <Text
+              style={{
+                marginTop: 5,
+                color: "gray",
+              }}
+            >
+              #{item.id}
+            </Text>
             <View style={{ flexDirection: "row" }}>
               <Image
                 source={images.eye}
@@ -166,90 +167,62 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
             flexDirection: "row",
             justifyContent: "space-between",
             paddingHorizontal: 10,
+            paddingVertical: 10,
             alignItems: "center",
-            marginVertical: -10,
           }}
         >
           <View style={styles.borderBottom}>
-            <View style={styles.avatarwrapper}>
-              <Image
-                source={{ uri: item.creator_avatar }}
+            <Image
+              source={{ uri: item.creator_avatar }}
+              style={{
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+              }}
+            />
+            <View>
+              <Text
                 style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: 25,
-                }}
-              />
-              <View>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    color: "gray",
-                    fontWeight: "500",
-                  }}
-                >
-                  {!!item.creator_name ? item.creator_name : "Anonim"}
-                  {user.id == item.creator_id && " (siz)"}
-                  {/* {user.id == item.creator_id ? "( siz)" : " (begona)"} */}
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    color: "gray",
-                    fontWeight: "600",
-                  }}
-                >
-                  {item.created_at}
-                </Text>
-              </View>
-            </View>
-            {editable ? (
-              <View
-                style={{
-                  flexDirection: "row",
+                  marginLeft: 10,
+                  color: "gray",
+                  fontWeight: "500",
                 }}
               >
-                <TouchableOpacity style={styles.iconsbutton}>
-                  <Xicon />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.pensolbutton}
-                  onPress={() =>
-                    navigation.navigate(routes.EDIT_LOAD, {
-                      id: item.id,
-                    })
-                  }
-                >
-                  <Pensolicon />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.checkedbutton}>
-                  <CheckedIcon />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              user.id !== item.creator_id && (
-                <>
-                  <View
-                    style={{
-                      marginTop: 20,
-                    }}
-                  >
-                    <TouchableOpacity style={styles.btn1}>
-                      <Image source={images.plus} />
-                      <Text
-                        style={{
-                          marginLeft: 4,
-                          fontWeight: "normal",
-                          fontSize: 12,
-                        }}
-                      >
-                        QABUL QILISH
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </>
-              )
-            )}
+                {!!item.creator_name ? item.creator_name : "Anonim"}
+              </Text>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  color: "gray",
+                  fontWeight: "600",
+                }}
+              >
+                {item.created_at}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              // marginTop: 20,
+              flexDirection: "row",
+            }}
+          >
+            <TouchableOpacity style={styles.btn1}>
+              <Xicon />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.pensolbutton}
+              onPress={() =>
+                navigation.navigate(routes.EDIT_LOAD, {
+                  id: item.id,
+                })
+              }
+            >
+              <Pensolicon />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.checkedbutton}>
+              <CheckedIcon />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -257,34 +230,28 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
   );
 };
 
-export default PassangerItem;
+export default LoadMyOrderItem;
 
 const styles = StyleSheet.create({
   btn1: {
-    borderColor: "#bf9100",
-    borderRadius: 8,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    backgroundColor: "#FFCD30",
-    flexDirection: "row",
+    borderWidth: 1.5,
+    borderColor: "red",
+    borderRadius: 25,
+    paddingHorizontal: 11,
+    paddingVertical: 11,
     alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 6,
   },
   borderBottom: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 25,
+    // marginTop: 25,
   },
-  seatbutton: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#dbfaec",
-    padding: 5,
-    borderRadius: 10,
-    opacity: 1,
-  },
-  seatbuttontxt: {
-    color: "#2e8c60",
+  xicon: {
+    width: 15,
+    height: 15,
+    tintColor: "red",
   },
   pensolbutton: {
     borderWidth: 1.5,
@@ -296,6 +263,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 6,
   },
+  pensolicon: {
+    width: 15,
+    height: 15,
+  },
+  checkedicon: {
+    width: 15,
+    height: 15,
+  },
   checkedbutton: {
     borderWidth: 1.5,
     borderColor: "green",
@@ -305,18 +280,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 6,
-  },
-  iconsbutton: {
-    borderWidth: 1.5,
-    borderColor: "red",
-    borderRadius: 25,
-    paddingHorizontal: 11,
-    paddingVertical: 11,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 6,
-  },
-  avatarwrapper: {
-    flexDirection: "row",
   },
 });
