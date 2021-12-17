@@ -1,19 +1,23 @@
-import "react-native-gesture-handler";
-import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import OnboardingScreen from "../screens/OnboardingScreen";
-import TabStack from "./TabStack";
-import Login from "../screens/Auth/Login/Login";
-import MyCabinet from "../screens/MyCabinet";
-import Private from "../screens/Private";
-import GetMoney from "../screens/GetMoney";
+import React from "react";
+import "react-native-gesture-handler";
+import { useSelector } from "react-redux";
+import { selectToken } from "../redux/slices/user/user";
 import About from "../screens/About";
+import AddTransport from "../screens/AddTransport";
+import Login from "../screens/Auth/Login/Login";
+import GetMoney from "../screens/GetMoney";
 import History from "../screens/History";
+import AddLoad from "../screens/Load/AddLoad";
+import EditLoad from "../screens/Load/EditLoad";
+import AddMail from "../screens/Mail/AddMail";
+import MyCabinet from "../screens/MyCabinet";
 import NoInternet from "../screens/NoInternet";
 import Notifications from "../screens/Notifications";
-import AddMail from "../screens/Mail/AddMail";
+import OnboardingScreen from "../screens/OnboardingScreen";
 import District from "../screens/Regions/District";
+<<<<<<< HEAD
 import AddPassenger from "../screens/Taxi/AddPassenger";
 import AddLoad from "../screens/AddLoad";
 import AddTransport from "../screens/transport/AddTransport";
@@ -21,9 +25,14 @@ import Kuriyer from "../screens/Kuriyer";
 import { useSelector } from "react-redux";
 import { selectToken } from "../redux/slices/user/user";
 import { routes } from "./routes";
+=======
+>>>>>>> 0f70045adb793f75dc6038af2b0d2046da7e9c74
 import Regions from "../screens/Regions/Regions";
-import { navigationRef } from "./NavigationService";
+import AddPassenger from "../screens/Taxi/AddPassenger";
 import EditPassenger from "../screens/Taxi/EditPassanger";
+import { navigationRef } from "./NavigationService";
+import { routes } from "./routes";
+import TabStack from "./TabStack";
 
 const Stack = createStackNavigator();
 
@@ -51,6 +60,7 @@ const AppNavigator = () => {
         <Stack.Screen name={routes.ADD_LOAD} component={AddLoad} />
         <Stack.Screen name={routes.ADD_TRANSPORT} component={AddTransport} />
         {/*<Stack.Screen name="MyCabinetScreen" component={MyCabinet}/>*/}
+        <Stack.Screen name={routes.EDIT_LOAD} component={EditLoad} />
       </Stack.Navigator>
     </NavigationContainer>
   );

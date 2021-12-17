@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import Cabinet from "../screens/Cabinet";
-import Load from "../screens/Load";
+import Load from "../screens/Load/Load";
 import Mail from "../screens/Mail/Mail";
 import Transport from "../screens/transport/Transport";
 import { Image, Text, View } from "react-native";

@@ -1,21 +1,23 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { images } from "../assets";
 import CheckedIcon from "../assets/icons/CheckedIcon";
 import Pensolicon from "../assets/icons/Pensolicon";
 import Xicon from "../assets/icons/Xicon";
-import user, { selectUser } from "../redux/slices/user/user";
+import { routes } from "../navigation/routes";
+import { selectUser } from "../redux/slices/user/user";
 
-interface IPassangerProp {
+interface ILoadProp {
   item: any;
   editable?: boolean;
 }
 
-const PassangerItem = ({ item, editable }: IPassangerProp) => {
+const LoadItem = ({ item, editable }: ILoadProp) => {
   let user = useSelector(selectUser);
   let navigation = useNavigation();
+
   return (
     <>
       <View
@@ -52,27 +54,20 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               flexDirection: "row",
             }}
           >
-            <Image
-              source={images.seat}
+            <TouchableOpacity
               style={{
-                width: 25,
-                height: 25,
-                tintColor: "#000",
-                marginTop: 1,
-              }}
-            />
-            <Text
-              style={{
-                fontSize: 17,
-                fontWeight: "500",
-                marginRight: 15,
-                marginTop: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#dbfaec",
+                opacity: 0.7,
+                padding: 5,
+                borderRadius: 10,
               }}
             >
-              {item.seat_count}
-            </Text>
-            <TouchableOpacity style={styles.seatbutton}>
-              <Text style={styles.seatbuttontxt}>{item.seat_count_label}</Text>
+              <Text style={{ color: "#2e8c60", opacity: 0.8 }}>
+                {item.weight}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -89,7 +84,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               source={images.ellipse}
             />
             <Text style={{ fontSize: 15, fontWeight: "normal" }}>
-              {item.from_address}
+              {item.from_full_address}
             </Text>
           </View>
         </View>
@@ -115,7 +110,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               color: "#000",
             }}
           >
-            {item.to_address}
+            {item.to_full_address}
           </Text>
         </View>
         <View>
@@ -128,6 +123,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
             }}
           >
             {item.note}
+            <Text style={{ color: "gray" }}>-{item.matter}</Text>
           </Text>
           <View
             style={{
@@ -206,6 +202,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
             {editable ? (
               <View
                 style={{
+                  // marginTop: 20,
                   flexDirection: "row",
                 }}
               >
@@ -257,7 +254,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
   );
 };
 
-export default PassangerItem;
+export default LoadItem;
 
 const styles = StyleSheet.create({
   btn1: {
@@ -268,23 +265,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFCD30",
     flexDirection: "row",
     alignItems: "center",
+    marginLeft: 60,
+    marginBottom: 10,
   },
   borderBottom: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 25,
-  },
-  seatbutton: {
-    display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#dbfaec",
-    padding: 5,
-    borderRadius: 10,
-    opacity: 1,
-  },
-  seatbuttontxt: {
-    color: "#2e8c60",
+    flex: 1,
+    paddingTop: 10,
   },
   pensolbutton: {
     borderWidth: 1.5,
