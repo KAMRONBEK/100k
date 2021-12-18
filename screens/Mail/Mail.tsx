@@ -137,12 +137,12 @@ const renderScene = SceneMap({
 
 const Mail = ({ navigation }) => {
   const layout = useWindowDimensions();
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", label: "Barchasi" },
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "first", title: "Barchasi" },
     { key: "second", title: "Mening buyurtmalarim" },
-    { key: "third", label: "Ro'yxat" },
-    { key: "fourth", label: "Kirim" },
+    { key: "third", title: "Ro'yxat" },
+    { key: "fourth", title: "Kirim" },
   ]);
 
   return (
@@ -219,33 +219,28 @@ const Mail = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <TabView
-          style={{ backgroundColor: "#f3f3f5" }}
-          sceneContainerStyle={{
-            flexWrap: "nowrap",
-          }}
           navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={{ width: layout.width }}
-          renderTabBar={(p) => (
+          renderTabBar={(props) => (
             <TabBar
-              {...p}
-              contentContainerStyle={{
-                backgroundColor: "#f3f3f5",
-              }}
               scrollEnabled={true}
               indicatorStyle={{
-                width: 100,
-                left: 50,
+                backgroundColor: "#047DE8",
+                left: 4,
+                borderWidth: 0.4,
+                borderColor: "#047de8",
               }}
-              style={{ backgroundColor: "#f3f3f5" }}
-              tabStyle={{}}
-              labelStyle={{
-                textTransform: "capitalize",
-                padding: 0,
-                color: "black",
-                margin: 0,
+              tabStyle={{
+                width: "auto",
+                paddingBottom: 2,
+                marginLeft: 20,
+                marginRight: -24,
+                right: 30,
               }}
+              activeColor={"#047de8"}
+              inactiveColor={"#8a8a8a"}
               renderLabel={(e) => {
                 return (
                   <View style={styles.tabView}>
@@ -255,20 +250,21 @@ const Mail = ({ navigation }) => {
                         style={styles.tabimg}
                       />
                     )}
-                    <Text style={{ fontSize: 15 }}>{e.route.title}</Text>
-                    <View style={{ padding: 0, margin: 0 }}>
-                      <Text
-                        style={{
-                          fontSize: 15,
-                        }}
-                      >
-                        {e.route.label}
-                      </Text>
-                    </View>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        fontSize: 13,
+                        paddingHorizontal: 10,
+                        color: e.focused ? "#047DE8" : "#8a8a8a",
+                      }}
+                    >
+                      {e.route.title}
+                    </Text>
                   </View>
                 );
               }}
-              {...p}
+              style={{ backgroundColor: "#f3f3f5", paddingLeft: 10 }}
+              {...props}
             />
           )}
         />
@@ -314,7 +310,7 @@ const styles = StyleSheet.create({
   tabimg: {
     width: 20,
     height: 20,
-    marginRight: 5,
+    // marginRight: 5,
   },
   top: {
     flexDirection: "row",
