@@ -43,13 +43,14 @@ export default function MailItem({ item }) {
         </View>
         <View
           style={{
-            backgroundColor: "#48bd92",
+            backgroundColor: "#dbfaec",
             paddingHorizontal: 10,
-            borderRadius: 5,
-            opacity: 0.4,
+            padding: 5,
+            borderRadius: 8,
+            opacity: 1,
           }}
         >
-          <Text>{item.status}</Text>
+          <Text style={{ color: "#2e8c60" }}>{item.status}</Text>
         </View>
       </View>
       <View

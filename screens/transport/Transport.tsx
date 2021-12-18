@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -157,10 +157,14 @@ const ThirdRoute = () => {
   );
 };
 
+let titleIconMapper = {
+  first: images.globe,
+};
+
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
-  three: ThirdRoute,
+  third: ThirdRoute,
 });
 
 const Transport = ({ navigation }) => {
@@ -169,13 +173,12 @@ const Transport = ({ navigation }) => {
   //     MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
   //     MontserratLight: require('../assets/fonts/Montserrat-Light.ttf'),
   // });
-  const a = "avtomobillar";
   const layout = useWindowDimensions();
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", title: a.toLowerCase() },
-    { key: "second", title: "Yuk mashinalar" },
-    { key: "three", title: "Texnikalar" },
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "first", title: "Barchasi" },
+    { key: "second", title: "Mening buyurtmalarim" },
+    { key: "third", title: "Ro'yxat" },
   ]);
   return (
     <View horizontal={false} style={{ flexDirection: "column", flex: 1 }}>
@@ -219,28 +222,47 @@ const Transport = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <TabView
-        style={{ backgroundColor: "#f3f3f5", flex: 1 }}
-        sceneContainerStyle={{ flex: 1 }}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
-        renderTabBar={(p) => (
+        renderTabBar={(props) => (
           <TabBar
-            {...p}
-            style={{
-              backgroundColor: "#f3f3f5",
-            }}
             indicatorStyle={{
-              width: 40,
-              left: 40,
+              left: 12,
+              borderWidth: 0.5,
+              borderColor: "#047de8",
+              backgroundColor: "#047DE8",
             }}
-            labelStyle={{
-              textTransform: "capitalize",
-              color: "black",
-              padding: 0,
-              margin: 0,
+            tabStyle={{
+              width: "auto",
+              paddingBottom: 2,
             }}
+            renderLabel={(e) => {
+              return (
+                <View style={styles.tabView}>
+                  {titleIconMapper[e.route.key] && (
+                    <Image
+                      source={titleIconMapper[e.route.key]}
+                      style={styles.tabimg}
+                    />
+                  )}
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontSize: 13,
+                      paddingHorizontal: 10,
+
+                      color: "#047DE8",
+                    }}
+                  >
+                    {e.route.title}
+                  </Text>
+                </View>
+              );
+            }}
+            style={{ backgroundColor: "#f3f3f5", paddingLeft: 10 }}
+            {...props}
           />
         )}
       />
@@ -297,5 +319,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#dcdcdc",
     borderRadius: 8,
+  },
+  tabView: {
+    flexDirection: "row",
+    color: "#8a8a8a",
+  },
+  tabimg: {
+    width: 20,
+    height: 20,
+    // marginRight: 5,
   },
 });
