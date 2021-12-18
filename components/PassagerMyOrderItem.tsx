@@ -1,11 +1,9 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { images } from "../assets";
-import Xicon from "../assets/icons/Xicon";
-import Pensolicon from "../assets/icons/Pensolicon";
-import CheckedIcon from "../assets/icons/CheckedIcon";
 import { useNavigation } from "@react-navigation/native";
 import { routes } from "../navigation/routes";
+import { CheckedIcon, PensolIcon, XIcon } from "../assets/icons/icons";
 
 interface IPassangerProp {
   item: any;
@@ -88,7 +86,7 @@ const PassagerMyOrderItem = ({ item }: IPassangerProp) => {
               source={images.ellipse}
             />
             <Text style={{ fontSize: 15, fontWeight: "normal" }}>
-              {item.from_address}
+              {item.from_full_address}
             </Text>
           </View>
         </View>
@@ -114,7 +112,7 @@ const PassagerMyOrderItem = ({ item }: IPassangerProp) => {
               color: "#000",
             }}
           >
-            {item.to_address}
+            {item.to_full_address}
           </Text>
         </View>
         <View>
@@ -206,7 +204,7 @@ const PassagerMyOrderItem = ({ item }: IPassangerProp) => {
             }}
           >
             <TouchableOpacity style={styles.btn1}>
-              <Xicon />
+              <XIcon />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.pensolbutton}
@@ -216,7 +214,7 @@ const PassagerMyOrderItem = ({ item }: IPassangerProp) => {
                 })
               }
             >
-              <Pensolicon />
+              <PensolIcon />
             </TouchableOpacity>
             <TouchableOpacity style={styles.checkedbutton}>
               <CheckedIcon />

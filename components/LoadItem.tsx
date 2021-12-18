@@ -3,9 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { images } from "../assets";
-import CheckedIcon from "../assets/icons/CheckedIcon";
-import Pensolicon from "../assets/icons/Pensolicon";
-import Xicon from "../assets/icons/Xicon";
+import { CheckedIcon, PensolIcon, XIcon } from "../assets/icons/icons";
 import { routes } from "../navigation/routes";
 import { selectUser } from "../redux/slices/user/user";
 
@@ -202,12 +200,11 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
             {editable ? (
               <View
                 style={{
-                  // marginTop: 20,
                   flexDirection: "row",
                 }}
               >
                 <TouchableOpacity style={styles.iconsbutton}>
-                  <Xicon />
+                  <XIcon />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.pensolbutton}
@@ -217,7 +214,7 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                     })
                   }
                 >
-                  <Pensolicon />
+                  <PensolIcon />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.checkedbutton}>
                   <CheckedIcon />

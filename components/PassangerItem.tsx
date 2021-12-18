@@ -3,9 +3,7 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { images } from "../assets";
-import CheckedIcon from "../assets/icons/CheckedIcon";
-import Pensolicon from "../assets/icons/Pensolicon";
-import Xicon from "../assets/icons/Xicon";
+import { CheckedIcon, PensolIcon, XIcon } from "../assets/icons/icons";
 import user, { selectUser } from "../redux/slices/user/user";
 
 interface IPassangerProp {
@@ -89,7 +87,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               source={images.ellipse}
             />
             <Text style={{ fontSize: 15, fontWeight: "normal" }}>
-              {item.from_address}
+              {item.from_full_address}
             </Text>
           </View>
         </View>
@@ -115,7 +113,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               color: "#000",
             }}
           >
-            {item.to_address}
+            {item.to_full_address}
           </Text>
         </View>
         <View>
@@ -210,7 +208,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                 }}
               >
                 <TouchableOpacity style={styles.iconsbutton}>
-                  <Xicon />
+                  <XIcon />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.pensolbutton}
@@ -220,7 +218,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                     })
                   }
                 >
-                  <Pensolicon />
+                  <PensolIcon />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.checkedbutton}>
                   <CheckedIcon />

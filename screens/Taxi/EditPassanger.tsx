@@ -123,8 +123,9 @@ const EditPassanger = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate(routes.TAB_STACK)}>
           <Image source={images.leftArrow} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 20 }}>Buyurtmani o'zgartirish</Text>
-        <View></View>
+        <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 25 }}>
+          Buyurtmani o'zgartirish
+        </Text>
       </View>
       <ScrollView>
         <View
@@ -136,7 +137,9 @@ const EditPassanger = ({ navigation }) => {
             paddingTop: 19,
           }}
         >
-          <Text style={{ fontSize: 16, marginBottom: 17 }}>Qayerdan?</Text>
+          <Text style={{ fontSize: 15, marginBottom: 17, fontWeight: "bold" }}>
+            Qayerdan?
+          </Text>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(routes.REGION, {
@@ -174,7 +177,9 @@ const EditPassanger = ({ navigation }) => {
             paddingTop: 19,
           }}
         >
-          <Text style={{ fontSize: 16, marginBottom: 17 }}>Qayerga</Text>
+          <Text style={{ fontSize: 15, marginBottom: 17, fontWeight: "bold" }}>
+            Qayerga?
+          </Text>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(routes.REGION, {
@@ -191,7 +196,7 @@ const EditPassanger = ({ navigation }) => {
                 fontSize: 14,
               }}
             >
-              {!!state.toRegionName ? state.toRegionName : "Viloyat"} ,{" "}
+              {!!state.toRegionName ? state.toRegionName : "Viloyat"} ,
               {!!state.toDistrictName ? state.toDistrictName : "tuman"}
             </Text>
           </TouchableOpacity>
@@ -425,7 +430,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     paddingHorizontal: 16,
     paddingVertical: 20,
   },

@@ -12,6 +12,12 @@ import {
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { images } from "../../assets";
+import {
+  FilterIcon,
+  LocationIcon,
+  QuestionsIcon,
+  ReverseArrowIcon,
+} from "../../assets/icons/icons";
 import TransportItem from "../../components/TransportItem";
 import { useTransportHook } from "./hooks";
 
@@ -181,7 +187,7 @@ const Transport = ({ navigation }) => {
     <View horizontal={false} style={{ flexDirection: "column", flex: 1 }}>
       <View style={styles.top}>
         <View>
-          <Image style={{ width: 24, height: 24 }} source={images.questions} />
+          <QuestionsIcon size={22} />
         </View>
         <View>
           <Text
@@ -195,27 +201,18 @@ const Transport = ({ navigation }) => {
           </Text>
         </View>
         <View>
-          <Image style={{ width: 33, height: 33 }} source={images.userUser} />
+          <FilterIcon size={22} />
         </View>
       </View>
       <View style={styles.header}>
         <TouchableOpacity style={styles.btn}>
-          <Image
-            style={{ width: 15, height: 15, marginRight: 5 }}
-            source={images.location}
-          />
-          <Text style={{ color: "#8a8a8a", fontSize: 13 }}>Viloyat,tuman</Text>
+          <LocationIcon size={22} color="#8a8a8a" />
+          <Text style={styles.btntext}>Viloyat,tuman</Text>
         </TouchableOpacity>
-        <Image
-          style={{ width: 24, height: 18, marginHorizontal: 6 }}
-          source={images.strelka}
-        />
+        <ReverseArrowIcon size={25} color="#8a8a8a" />
         <TouchableOpacity style={styles.btn}>
-          <Image
-            style={{ width: 15, height: 15, marginRight: 5 }}
-            source={images.location}
-          />
-          <Text style={{ color: "#8a8a8a", fontSize: 13 }}>Viloyat,tuman</Text>
+          <LocationIcon size={22} color="#8a8a8a" />
+          <Text style={styles.btntext}>Viloyat,tuman</Text>
         </TouchableOpacity>
       </View>
       <TabView
@@ -282,20 +279,26 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  header: {
-    marginTop: 22,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    justifyContent: "space-between",
-  },
   btn: {
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
     borderWidth: 1,
     borderColor: "#dcdcdc",
     borderRadius: 8,
+  },
+  header: {
+    marginVertical: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 16,
+    justifyContent: "space-between",
+  },
+  btntext: {
+    color: "#8a8a8a",
+    fontSize: 13,
   },
 });

@@ -94,7 +94,7 @@ const EditLoad = ({ navigation }) => {
         toRegionName: currentOrder.to_full_address.split(",")[0],
 
         toDistrictId: currentOrder.to_district_id,
-        toDistrictName: currentOrder.from_full_address.split(",")[1],
+        toDistrictName: currentOrder.to_full_address.split(",")[1],
 
         toAddress: currentOrder.to_address,
         toNumber: "",

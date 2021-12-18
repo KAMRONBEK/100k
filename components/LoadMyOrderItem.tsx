@@ -1,11 +1,9 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { images } from "../assets";
-import Xicon from "../assets/icons/Xicon";
-import Pensolicon from "../assets/icons/Pensolicon";
-import CheckedIcon from "../assets/icons/CheckedIcon";
 import { useNavigation } from "@react-navigation/native";
 import { routes } from "../navigation/routes";
+import { CheckedIcon, PensolIcon, XIcon } from "../assets/icons/icons";
 
 interface IPassangerProp {
   item: any;
@@ -208,7 +206,7 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
             }}
           >
             <TouchableOpacity style={styles.btn1}>
-              <Xicon />
+              <XIcon />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.pensolbutton}
@@ -218,7 +216,7 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
                 })
               }
             >
-              <Pensolicon />
+              <PensolIcon />
             </TouchableOpacity>
             <TouchableOpacity style={styles.checkedbutton}>
               <CheckedIcon />
