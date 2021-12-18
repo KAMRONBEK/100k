@@ -14,6 +14,13 @@ import {
 } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { images } from "../../assets";
+import {
+  FilterIcon,
+  GlobeIcon,
+  LocationIcon,
+  QuestionsIcon,
+  ReverseArrowIcon,
+} from "../../assets/icons/icons";
 import MailItem from "../../components/MailItem";
 import { useMailHook } from "./hooks";
 
@@ -126,7 +133,7 @@ const FourthRoute = () => (
   </View>
 );
 let titleIconMapper = {
-  first: images.globe,
+  first: <GlobeIcon />,
 };
 const renderScene = SceneMap({
   first: FirstRoute,
@@ -155,10 +162,7 @@ const Mail = ({ navigation }) => {
       >
         <View style={styles.top}>
           <View>
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../../assets/question.png")}
-            />
+            <QuestionsIcon size={22} />
           </View>
           <View>
             <Text
@@ -172,50 +176,18 @@ const Mail = ({ navigation }) => {
             </Text>
           </View>
           <View>
-            <Image
-              style={{ width: 33, height: 33 }}
-              source={require("../../assets/user.png")}
-            />
+            <FilterIcon size={22} />
           </View>
         </View>
         <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Region")}
-            style={styles.btn}
-          >
-            <Image
-              style={{ width: 15, height: 15, marginRight: 5 }}
-              source={images.location}
-            />
-            <Text style={{ color: "#8a8a8a", fontSize: 13 }}>
-              Viloyat,tuman
-            </Text>
+          <TouchableOpacity style={styles.btn}>
+            <LocationIcon size={22} color="#8a8a8a" />
+            <Text style={styles.btntext}>Viloyat,tuman</Text>
           </TouchableOpacity>
-          <Image
-            style={{ width: 24, height: 18, marginHorizontal: 6 }}
-            source={require("../../assets/strelka.png")}
-          />
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Region")}
-            style={styles.btn}
-          >
-            <Image
-              style={{ width: 15, height: 15, marginRight: 5 }}
-              source={images.location}
-            />
-            <Text style={{ color: "#8a8a8a", fontSize: 13 }}>
-              Viloyat,tuman
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#fff",
-              paddingVertical: 11,
-              borderRadius: 8,
-              paddingHorizontal: 11,
-            }}
-          >
-            <Image source={require("../../assets/filter.png")} />
+          <ReverseArrowIcon size={25} color="#8a8a8a" />
+          <TouchableOpacity style={styles.btn}>
+            <LocationIcon size={22} color="#8a8a8a" />
+            <Text style={styles.btntext}>Viloyat,tuman</Text>
           </TouchableOpacity>
         </View>
         <TabView
@@ -245,9 +217,9 @@ const Mail = ({ navigation }) => {
                 return (
                   <View style={styles.tabView}>
                     {titleIconMapper[e.route.key] && (
-                      <Image
-                        source={titleIconMapper[e.route.key]}
-                        style={styles.tabimg}
+                      <GlobeIcon
+                        color={e.focused ? "#047de8" : "#8a8a8a"}
+                        size={22}
                       />
                     )}
                     <Text
@@ -294,11 +266,16 @@ const Mail = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
+  btntext: {
+    color: "#8a8a8a",
+    fontSize: 13,
+  },
   btn: {
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
     borderWidth: 1,
     borderColor: "#dcdcdc",
     borderRadius: 8,
@@ -321,9 +298,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    marginVertical: 19,
+    marginVertical: 15,
     flexDirection: "row",
     alignItems: "center",
+    paddingVertical: 5,
     paddingHorizontal: 16,
     justifyContent: "space-between",
   },

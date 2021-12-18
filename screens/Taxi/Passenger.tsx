@@ -13,14 +13,17 @@ import {
 } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { images } from "../../assets";
-import PassangerItem from "../../components/PassangerItem";
-import { useTaxiHook } from "./hooks";
+import {
+  FilterIcon,
+  GlobeIcon,
+  LocationIcon,
+  QuestionsIcon,
+  ReverseArrowIcon,
+} from "../../assets/icons/icons";
 import PassagerMyOrderItem from "../../components/PassagerMyOrderItem";
+import PassangerItem from "../../components/PassangerItem";
 import { routes as Routes } from "../../navigation/routes";
-import Question from "../../assets/icons/QuestionIcon";
-import Filter from "../../assets/icons/FilterIcon";
-import QuestionIcon from "../../assets/icons/QuestionIcon";
-import FilterIcon from "../../assets/icons/FilterIcon";
+import { useTaxiHook } from "./hooks";
 
 const FirstRoute = () => {
   const { taxi, refreshTaxi } = useTaxiHook();
@@ -87,7 +90,7 @@ const wait = (timeout: number) => {
 export interface PassengerViewProps {}
 
 let titleIconMapper = {
-  first: images.globe,
+  first: <GlobeIcon />,
 };
 
 const Passenger = ({}: PassengerViewProps) => {
@@ -103,26 +106,27 @@ const Passenger = ({}: PassengerViewProps) => {
       <StatusBar style={styles.statusbar} />
       <View style={styles.top}>
         <View>
-          <QuestionIcon />
+          <TouchableOpacity style={{ padding: 5 }}>
+            <QuestionsIcon size={22} />
+          </TouchableOpacity>
         </View>
         <View>
           <Text style={styles.passengerbox}>Yo'lovchilar</Text>
         </View>
         <View>
-          <Image
-            source={images.filter}
-            style={{ width: 20, height: 20, tintColor: "#000000" }}
-          />
+          <TouchableOpacity style={{ padding: 5 }}>
+            <FilterIcon size={22} />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.header}>
         <TouchableOpacity style={styles.btn}>
-          <Image style={styles.btnimg} source={images.location} />
+          <LocationIcon size={22} color="#8a8a8a" />
           <Text style={styles.btntext}>Viloyat,tuman</Text>
         </TouchableOpacity>
-        <Image style={styles.strelkaimg} source={images.strelka} />
+        <ReverseArrowIcon size={25} color="#8a8a8a" />
         <TouchableOpacity style={styles.btn}>
-          <Image style={styles.btnimg} source={images.location} />
+          <LocationIcon size={22} color="#8a8a8a" />
           <Text style={styles.btntext}>Viloyat,tuman</Text>
         </TouchableOpacity>
       </View>
@@ -133,20 +137,43 @@ const Passenger = ({}: PassengerViewProps) => {
         initialLayout={{ width: layout.width }}
         renderTabBar={(props) => (
           <TabBar
+            indicatorStyle={{
+              backgroundColor: "#047DE8",
+              left: 11,
+              borderWidth: 0.5,
+              borderColor: "#047DE8",
+              marginLeft: -6,
+            }}
+            tabStyle={{
+              width: "auto",
+              paddingBottom: 2,
+              marginRight: 10,
+            }}
             renderLabel={(e) => {
               return (
                 <View style={styles.tabView}>
                   {titleIconMapper[e.route.key] && (
-                    <Image
-                      source={titleIconMapper[e.route.key]}
-                      style={styles.tabimg}
+                    <GlobeIcon
+                      color={e.focused ? "#047de8" : "#8a8a8a"}
+                      size={22}
                     />
                   )}
-                  <Text style={{ fontSize: 12 }}>{e.route.title}</Text>
+                  <Text
+                    style={{
+                      color: e.focused ? "#047de8" : "#8a8a8a",
+                      fontWeight: "bold",
+                      fontSize: 13,
+                    }}
+                  >
+                    {e.route.title}
+                  </Text>
                 </View>
               );
             }}
-            style={{ backgroundColor: "#f3f3f5" }}
+            style={{
+              backgroundColor: "#f3f3f5",
+              paddingLeft: 10,
+            }}
             {...props}
           />
         )}
@@ -189,9 +216,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   header: {
-    marginVertical: 19,
+    marginVertical: 15,
     flexDirection: "row",
     alignItems: "center",
+    paddingVertical: 5,
     paddingHorizontal: 16,
     justifyContent: "space-between",
   },
@@ -230,8 +258,9 @@ const styles = StyleSheet.create({
     height: 24,
   },
   passengerbox: {
-    fontSize: 20,
+    fontSize: 18,
     color: "#000",
+    fontWeight: "bold",
   },
   psimage: {
     width: 20,
@@ -263,5 +292,9 @@ const styles = StyleSheet.create({
   },
   filterIcon: {
     tintColor: "#000",
+  },
+  tabViewtxt: {
+    fontSize: 13,
+    color: "#047DE8",
   },
 });
