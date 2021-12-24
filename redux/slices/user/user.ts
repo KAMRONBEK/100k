@@ -32,15 +32,19 @@ const userSlice = createSlice({
             AsyncStorage.removeItem("@user");
             return state;
         },
-        update: (state, { payload }) => {
+        updateUser: (state, { payload }) => {
             let newState = { ...state, ...payload };
             return newState;
         },
+        updateProfile:(state, { payload }) => {
+            let newState = { ...state, profile:{...state.profile, ...payload }};
+            return newState;}
     },
 });
+
 
 export const selectUser = (state: IRoot) => state.user.profile;
 export const selectToken = (state: IRoot) => state.user.data;
 
-export const { setUser, logoutUser, update } = userSlice.actions;
+export const { setUser, logoutUser, updateUser, updateProfile } = userSlice.actions;
 export default userSlice.reducer;

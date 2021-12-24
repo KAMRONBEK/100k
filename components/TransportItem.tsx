@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { images } from "../assets";
+import { PlusIcon } from "../assets/icons/icons";
 
 const TransportItem = ({ item }) => {
   console.log(item.images, "item");
@@ -117,7 +118,6 @@ const TransportItem = ({ item }) => {
                   {item.cost_type}
                 </Text>
                 <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                  {" "}
                   {item.cost}
                 </Text>
               </View>
@@ -126,24 +126,36 @@ const TransportItem = ({ item }) => {
               <TouchableOpacity
                 style={{
                   borderRadius: 8,
-                  borderColor: "#BF9100",
-                  borderWidth: 1,
                   backgroundColor: "#ffcc33",
                   flexDirection: "row",
                   paddingHorizontal: 22,
                   paddingVertical: 11,
                   alignItems: "center",
+                  justifyContent: "center",
+                  elevation: 3,
                 }}
               >
-                <Image
+                <View
                   style={{
-                    width: 16.84,
-                    height: 16.84,
-                    marginRight: 8,
+                    width: 15,
+                    height: 15,
+                    borderRadius: 20,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderWidth: 1,
                   }}
-                  source={images.plus}
-                />
-                <Text>Qarash</Text>
+                >
+                  <PlusIcon size={16} />
+                </View>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    fontWeight: "bold",
+                    marginLeft: 3,
+                  }}
+                >
+                  Qarash
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -17,6 +17,7 @@ import {
   FilterIcon,
   GlobeIcon,
   LocationIcon,
+  PlusIcon,
   QuestionsIcon,
   ReverseArrowIcon,
 } from "../../assets/icons/icons";
@@ -71,7 +72,7 @@ const SecondRoute = () => {
         }
       >
         {myOrder.map((item) => (
-          <PassagerMyOrderItem item={item} key={`${item.id}`} />
+          <PassangerItem item={item} key={`${item.id}`} editable={true} />
         ))}
       </ScrollView>
     </View>
@@ -182,7 +183,7 @@ const Passenger = ({}: PassengerViewProps) => {
         onPress={() => navigation.navigate(Routes.ADD_PASSENGER)}
         style={styles.tchopacity}
       >
-        <Image style={styles.plus2} source={images.plus2} />
+        <PlusIcon size={35} />
       </TouchableOpacity>
     </View>
   );
@@ -235,16 +236,16 @@ const styles = StyleSheet.create({
   },
   tchopacity: {
     borderColor: "#BF9100",
-    borderWidth: 1,
     position: "absolute",
-    right: 16,
-    bottom: 87,
+    right: 26,
+    bottom: 97,
     alignItems: "center",
     justifyContent: "center",
-    width: 65,
-    height: 65,
+    width: 55,
+    height: 55,
     borderRadius: 65,
     backgroundColor: "#ffcd30",
+    elevation: 2,
   },
   plus2: {
     width: 26,
@@ -284,6 +285,7 @@ const styles = StyleSheet.create({
   tabView: {
     flexDirection: "row",
     color: "#8a8a8a",
+    alignItems: "center",
   },
   tabimg: {
     width: 20,

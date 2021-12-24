@@ -17,6 +17,7 @@ import {
   FilterIcon,
   GlobeIcon,
   LocationIcon,
+  PlusIcon,
   QuestionsIcon,
   ReverseArrowIcon,
 } from "../../assets/icons/icons";
@@ -208,7 +209,7 @@ const Load = ({ navigation }: PassengerViewProps) => {
         onPress={() => navigation.navigate(Routes.ADD_LOAD)}
         style={styles.tchopacity}
       >
-        <Image style={styles.plus2} source={images.plus2} />
+        <PlusIcon size={35} />
       </TouchableOpacity>
     </View>
   );
@@ -285,17 +286,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   tchopacity: {
-    borderColor: "#BF9100",
-    borderWidth: 1,
     position: "absolute",
-    right: 16,
-    bottom: 87,
+    right: 26,
+    bottom: 97,
     alignItems: "center",
     justifyContent: "center",
-    width: 65,
-    height: 65,
+    width: 55,
+    height: 55,
     borderRadius: 65,
     backgroundColor: "#ffcd30",
+    elevation: 2,
   },
   plus2: {
     width: 26,
@@ -337,6 +337,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     color: "#8a8a8a",
     fontWeight: "bold",
+    alignItems: "center",
   },
   tabimg: {
     width: 20,

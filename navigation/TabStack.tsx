@@ -52,7 +52,7 @@ const Tabs = () => {
                   marginBottom: 26,
                 }}
               >
-                pochta
+                Pochta
               </Text>
             </View>
           ),
@@ -89,7 +89,7 @@ const Tabs = () => {
                   marginBottom: 26,
                 }}
               >
-                yo’lovchi
+                Taxi
               </Text>
             </View>
           ),
@@ -126,7 +126,7 @@ const Tabs = () => {
                   marginBottom: 26,
                 }}
               >
-                yuk
+                Yuk
               </Text>
             </View>
           ),
@@ -163,7 +163,7 @@ const Tabs = () => {
                   marginBottom: 26,
                 }}
               >
-                transport
+                Transport
               </Text>
             </View>
           ),
@@ -200,7 +200,7 @@ const Tabs = () => {
                   marginBottom: 26,
                 }}
               >
-                kabinet
+                Kabinet
               </Text>
             </View>
           ),

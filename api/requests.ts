@@ -4,7 +4,7 @@ import reactotron from "reactotron-react-native";
 import { navigate } from "../navigation/NavigationService";
 import { routes } from "../navigation/routes";
 import { store } from "../redux/configureStore";
-import { logoutUser, update } from "../redux/slices/user/user";
+import { logoutUser } from "../redux/slices/user/user";
 
 export let url = "https://dev.100k.uz/api";
 
@@ -80,6 +80,7 @@ export let requests = {
     },
     user: {
         getMe: () => axios.get(`${url}/user/getMe`),
+        updateUser: (credentials) => axios.post(`${url}/user/update`,credentials)
     },
     mail: {
         getMail: (status = "") => axios.get(`${url}/user/packages`),
@@ -108,4 +109,7 @@ export let requests = {
     help: {
         getRegions: () => axios.get(`${url}/locations`),
     },
+    // settings: {
+    //     getSettings: () => axios.get(`${url}`)
+    // }
 };

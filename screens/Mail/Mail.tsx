@@ -19,6 +19,7 @@ import {
     FilterIcon,
     GlobeIcon,
     LocationIcon,
+    PlusIcon,
     QuestionsIcon,
     ReverseArrowIcon,
 } from "../../assets/icons/icons";

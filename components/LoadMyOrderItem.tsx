@@ -199,9 +199,8 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
               </Text>
             </View>
           </View>
-          <View
+          {/* <View
             style={{
-              // marginTop: 20,
               flexDirection: "row",
             }}
           >
@@ -221,7 +220,7 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
             <TouchableOpacity style={styles.checkedbutton}>
               <CheckedIcon />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
     </>
@@ -231,52 +230,48 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
 export default LoadMyOrderItem;
 
 const styles = StyleSheet.create({
-  btn1: {
-    borderWidth: 1.5,
-    borderColor: "red",
-    borderRadius: 25,
-    paddingHorizontal: 11,
-    paddingVertical: 11,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 6,
-  },
+  // btn1: {
+  //   borderWidth: 1.5,
+  //   borderColor: "red",
+  //   borderRadius: 25,
+  //   paddingHorizontal: 11,
+  //   paddingVertical: 11,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   marginLeft: 6,
+  //   backgroundColor: "red",
+  // },
   borderBottom: {
     flexDirection: "row",
     justifyContent: "space-between",
     // marginTop: 25,
   },
-  xicon: {
-    width: 15,
-    height: 15,
-    tintColor: "red",
-  },
-  pensolbutton: {
-    borderWidth: 1.5,
-    borderColor: "orange",
-    borderRadius: 25,
-    paddingHorizontal: 11,
-    paddingVertical: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 6,
-  },
-  pensolicon: {
-    width: 15,
-    height: 15,
-  },
-  checkedicon: {
-    width: 15,
-    height: 15,
-  },
-  checkedbutton: {
-    borderWidth: 1.5,
-    borderColor: "green",
-    borderRadius: 25,
-    paddingHorizontal: 11,
-    paddingVertical: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 6,
-  },
+  // pensolbutton: {
+  //   borderWidth: 1.5,
+  //   borderColor: "orange",
+  //   borderRadius: 25,
+  //   paddingHorizontal: 11,
+  //   paddingVertical: 11,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   marginLeft: 6,
+  // },
+  // pensolicon: {
+  //   width: 15,
+  //   height: 15,
+  // },
+  // checkedicon: {
+  //   width: 15,
+  //   height: 15,
+  // },
+  // checkedbutton: {
+  //   borderWidth: 1.5,
+  //   borderColor: "green",
+  //   borderRadius: 25,
+  //   paddingHorizontal: 11,
+  //   paddingVertical: 5,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   marginLeft: 6,
+  // },
 });
