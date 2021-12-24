@@ -11,6 +11,7 @@ import {
 import { images } from "../assets";
 import { useDispatch } from "react-redux";
 import { setOrderData } from "../redux/slices/order/order";
+import { colors } from "../constants/color";
 // import { useSelector } from "react-redux";
 // import { selectOrderState } from "../redux/slices/order/order";
 // import { useTransportHook } from "../screens/transport/hooks";
@@ -136,14 +137,16 @@ const TrantsportTypeSelector = ({ value, setValue }) => {
                 style={{
                   width: 50,
                   height: 50,
-                  tintColor: item.selected ? "#556080" : "#BFBFBF",
+                  tintColor: item.selected
+                    ? colors.dimgray
+                    : colors.blachSilver,
                 }}
                 source={item.icon}
               />
               <Text
                 style={{
                   fontSize: 13,
-                  color: item.selected ? "#556080" : "#BFBFBF",
+                  color: item.selected ? colors.dimgray : colors.blachSilver,
                 }}
               >
                 {item.name}
@@ -167,8 +170,8 @@ const TrantsportTypeSelector = ({ value, setValue }) => {
               style={[
                 styles.btn,
                 {
-                  backgroundColor: selected ? "#FFCD30" : undefined,
-                  borderColor: selected ? "#FFCD30" : undefined,
+                  backgroundColor: selected ? colors.lightOrange : undefined,
+                  borderColor: selected ? colors.lightOrange : undefined,
                 },
               ]}
               onPress={() => onMassPress(id, value)}
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 13,
     paddingVertical: 12,
-    borderColor: "#BF9100",
+    borderColor: colors.darkOrange,
     borderRadius: 7,
     borderWidth: 1,
     marginRight: 20,

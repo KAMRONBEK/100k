@@ -5,12 +5,17 @@ import { requests } from "../../api/requests";
 import { useNavigation } from "@react-navigation/core";
 import { showMessage } from "react-native-flash-message";
 import reactotron from "reactotron-react-native";
+import { selectUser } from "../../redux/slices/user/user";
 
 export let useMailHook = () => {
   let mail = useSelector(selectMail);
   let navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   let dispatch = useDispatch();
+  let user = useSelector(selectUser);
+  let myOrder = Object.values(mail).filter(
+    (item) => item.creator_id == user.id
+  );
   let effect = async () => {
     try {
       let res = await requests.mail.getMail();
@@ -52,5 +57,5 @@ export let useMailHook = () => {
       setLoading(false);
     }
   };
-  return { mail, useRefresh, createMail, loading };
+  return { mail, useRefresh, myOrder, createMail, loading };
 };

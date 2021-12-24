@@ -35,4 +35,5 @@ export const images = {
   delivery: require("./delivery.png"),
   frontalTruck: require("./frontal-truck.png"),
   tarnsport: require("./delivery-truck.png"),
+  angle: require("./angle.png"),
 };

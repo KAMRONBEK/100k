@@ -24,7 +24,8 @@ export const routes = {
     CABINET_STACK: "Cabinet",
     MY_CABINET_STACK: "MyCabinet",
     EDIT_PASSENGER: "EditPassenger",
-    EDIT_LOAD: 'EditLoad',
-    ONBOARDING: 'Onboarding',
-    LOCATION: 'Location'
+    EDIT_LOAD: "EditLoad",
+    ONBOARDING: "Onboarding",
+    LOCATION: "Location",
+    SUPPORT: "Support",
 };

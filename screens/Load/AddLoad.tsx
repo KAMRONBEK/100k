@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "../../assets";
 import LoadSelector from "../../components/LoadSelector";
+import { colors } from "../../constants/color";
 import { locationType } from "../../constants/values";
 import { routes } from "../../navigation/routes";
 import { selectOrderState, setOrderData } from "../../redux/slices/order/order";
@@ -36,51 +37,7 @@ const AddLoad = ({ navigation }) => {
       matter: state.matter,
     });
   };
-  // const [where, setWhere] = useState(null);
-  // const [whereOne, setWhereOne] = useState(null);
-  // const [extra, setExtra] = useState(null);
-  // const [price, setPrice] = useState(null);
-  // const [color, setColor] = useState("#fff");
-  // const [colorOne, setColorOne] = useState("#fff");
-  // const [colorTwo, setColorTwo] = useState("#fff");
-  // const [colorThree, setColorThree] = useState("#fff");
-  // const [colorFour, setColorFour] = useState("#fff");
 
-  // const Handle = () => {
-  //   setColor("#FFCD30");
-  //   setColorOne("#fff");
-  //   setColorTwo("#fff");
-  //   setColorThree("#fff");
-  //   setColorFour("#fff");
-  // };
-  // const HandleOne = () => {
-  //   setColorOne("#FFCD30");
-  //   setColor("#fff");
-  //   setColorTwo("#fff");
-  //   setColorThree("#fff");
-  //   setColorFour("#fff");
-  // };
-  // const HandleTwo = () => {
-  //   setColorTwo("#FFCD30");
-  //   setColorOne("#fff");
-  //   setColor("#fff");
-  //   setColorThree("#fff");
-  //   setColorFour("#fff");
-  // };
-  // const HandleThree = () => {
-  //   setColorThree("#FFCD30");
-  //   setColorOne("#fff");
-  //   setColor("#fff");
-  //   setColorTwo("#fff");
-  //   setColorFour("#fff");
-  // };
-  // const HandleFour = () => {
-  //   setColorFour("#FFCD30");
-  //   setColorOne("#fff");
-  //   setColor("#fff");
-  //   setColorTwo("#fff");
-  //   setColorThree("#fff");
-  // };
   return (
     <>
       <View style={styles.container}>
@@ -147,7 +104,7 @@ const AddLoad = ({ navigation }) => {
         />
         <View
           style={{
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
             paddingHorizontal: 16,
             paddingVertical: 20,
           }}
@@ -164,7 +121,7 @@ const AddLoad = ({ navigation }) => {
         <View
           style={{
             marginTop: 20,
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
             paddingHorizontal: 16,
             paddingVertical: 20,
           }}
@@ -207,7 +164,7 @@ const AddLoad = ({ navigation }) => {
         </View>
         <View
           style={{
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
             paddingHorizontal: 16,
             paddingVertical: 20,
           }}
@@ -243,7 +200,7 @@ const AddLoad = ({ navigation }) => {
 export default AddLoad;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -252,17 +209,17 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#dcdcdc",
+    borderColor: colors.lightgray,
     borderRadius: 10,
     padding: 14,
     marginTop: 10,
   },
   btnOne: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
-    borderColor: "#DCDCDC",
+    borderColor: colors.lightgray,
     borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
@@ -270,7 +227,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 13,
     paddingVertical: 12,
-    borderColor: "#BF9100",
+    borderColor: colors.darkOrange,
     borderRadius: 7,
     borderWidth: 1,
     marginRight: 10,
@@ -279,7 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     marginRight: 20,
-    color: "#8a8a8a",
+    color: colors.darkGray,
   },
   editLoad: {
     fontSize: 18,
@@ -289,7 +246,7 @@ const styles = StyleSheet.create({
   fromWhere: {
     paddingBottom: 19,
     paddingHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     marginTop: 20,
     paddingTop: 19,
   },
@@ -300,13 +257,13 @@ const styles = StyleSheet.create({
   },
   fromlocation: {
     marginLeft: 10,
-    color: "#8a8a8a",
+    color: colors.darkGray,
     fontSize: 14,
   },
   towhere: {
     paddingBottom: 19,
     paddingHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     marginTop: 20,
     paddingTop: 19,
   },
@@ -317,7 +274,7 @@ const styles = StyleSheet.create({
   },
   distaktor: {
     marginLeft: 10,
-    color: "#8a8a8a",
+    color: colors.darkGray,
     fontSize: 14,
   },
 });

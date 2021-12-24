@@ -8,11 +8,16 @@ import {
   selectTransport,
   setTransport,
 } from "../../redux/slices/transport/transport";
+import { selectUser } from "../../redux/slices/user/user";
 
 export let useTransportHook = () => {
   let transport = useSelector(selectTransport);
   let navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  let user = useSelector(selectUser);
+  let myOrder = Object.values(transport).filter(
+    (item) => item.creator_id == user.id
+  );
   let dispatch = useDispatch();
   let effect = async () => {
     try {
@@ -55,5 +60,5 @@ export let useTransportHook = () => {
       setLoading(false);
     }
   };
-  return { transport, useRefresh, createTransport, loading };
+  return { transport, useRefresh, createTransport, loading, myOrder };
 };

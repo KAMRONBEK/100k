@@ -80,7 +80,8 @@ export let requests = {
     },
     user: {
         getMe: () => axios.get(`${url}/user/getMe`),
-        updateUser: (credentials) => axios.post(`${url}/user/update`,credentials)
+        updateUser: (credentials) =>
+            axios.post(`${url}/user/update`, credentials),
     },
     mail: {
         getMail: (status = "") => axios.get(`${url}/user/packages`),
@@ -91,6 +92,8 @@ export let requests = {
         getTransport: (status = "") => axios.get(`${url}/driver/transports`),
         createTranport: (credentials) =>
             axios.post(`${url}/driver/transports`, credentials),
+        deleteTransport: (credentials, id) =>
+            axios.post(`${url}/driver/transport/${id}`, credentials),
     },
     taxi: {
         getTaxi: () => axios.get(`${url}/user/caborders`),
