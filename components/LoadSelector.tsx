@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import { colors } from "../constants/color";
 
 interface ILoadSelector {
   value?: number;
@@ -74,8 +75,8 @@ const LoadSelector = ({ value, setValue }: ILoadSelector) => {
             style={[
               styles.btn,
               {
-                backgroundColor: item.selected ? "#FFCD30" : undefined,
-                borderColor: item.selected ? "#FFCD30" : undefined,
+                backgroundColor: item.selected ? colors.lightOrange : undefined,
+                borderColor: item.selected ? colors.lightOrange : undefined,
               },
             ]}
           >
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderColor: "#BF9100",
+    borderColor: colors.darkOrange,
     borderRadius: 10,
     borderWidth: 1,
     marginRight: 18,

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import {
   Image,
@@ -11,7 +12,9 @@ import {
   RefreshControl,
   FlatList,
   useWindowDimensions,
+  ImageBackground,
 } from "react-native";
+import Modal from "react-native-modal";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { images } from "../../assets";
 import {
@@ -20,8 +23,11 @@ import {
   LocationIcon,
   QuestionsIcon,
   ReverseArrowIcon,
+  UpdateIcon,
+  UserIcon,
 } from "../../assets/icons/icons";
 import MailItem from "../../components/MailItem";
+import { colors } from "../../constants/color";
 import { useMailHook } from "./hooks";
 
 const wait = (timeout) => {
@@ -82,8 +88,18 @@ let status = [
 ];
 const SecondRoute = () => {
   let [activeIndex, setActiveIndex] = useState(0);
+  const { mail, myOrder, useRefresh } = useMailHook();
+  const [refreshing, setRefreshing] = useState(false);
+  let navigation = useNavigation();
+
+  const onRefresh = React.useCallback(() => {
+    useRefresh();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   return (
-    <View style={{ flex: 1, backgroundColor: "#f3f3f5" }}>
+    <View style={{ flex: 1, backgroundColor: colors.lightWhite }}>
       <View
         style={{
           flexDirection: "row",
@@ -97,12 +113,16 @@ const SecondRoute = () => {
             <TouchableOpacity onPress={() => setActiveIndex(i)}>
               <Text
                 style={{
-                  backgroundColor: activeIndex === i ? "#fff9d4" : "#f3f3f5",
-                  color: activeIndex === i ? "#3d2200" : "#707070",
+                  backgroundColor:
+                    activeIndex === i ? colors.cornsilk : colors.lightWhite,
+                  color: activeIndex === i ? colors.orange : colors.linghtGray,
                   borderWidth: 0.6,
-                  borderColor: activeIndex === i ? "#3d2200" : "#dcdcdc",
+                  borderRadius: 5,
+                  borderColor:
+                    activeIndex === i ? colors.orange : colors.linghtGray,
                   paddingHorizontal: 10,
                   paddingVertical: 5,
+                  fontWeight: "600",
                 }}
               >
                 {e.text}
@@ -111,23 +131,43 @@ const SecondRoute = () => {
           );
         })}
       </View>
+      <View>
+        <ScrollView
+          contentContainerStyle={styles.scrollView}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          {myOrder.map((item) => (
+            <MailItem item={item} key={`${item.id}`} editable={true} />
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };
 const ThirdRoute = () => (
   <View
-    style={{ flex: 1, backgroundColor: "#f3f3f5", justifyContent: "center" }}
+    style={{
+      flex: 1,
+      backgroundColor: colors.lightWhite,
+      justifyContent: "center",
+    }}
   >
-    <Text style={{ fontSize: 18, textAlign: "center", color: "#ccc" }}>
+    <Text style={{ fontSize: 18, textAlign: "center", color: colors.gray }}>
       Hech narsa topilmadi 😔
     </Text>
   </View>
 );
 const FourthRoute = () => (
   <View
-    style={{ flex: 1, backgroundColor: "#f3f3f5", justifyContent: "center" }}
+    style={{
+      flex: 1,
+      backgroundColor: colors.lightWhite,
+      justifyContent: "center",
+    }}
   >
-    <Text style={{ fontSize: 18, textAlign: "center", color: "#ccc" }}>
+    <Text style={{ fontSize: 18, textAlign: "center", color: colors.gray }}>
       Hech narsa topilmadi 😔
     </Text>
   </View>
@@ -152,9 +192,14 @@ const Mail = ({ navigation }) => {
     { key: "fourth", title: "Kirim" },
   ]);
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f3f3f5" }}>
-      <StatusBar backgroundColor={"#FFCE34"} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.lightWhite }}>
+      <StatusBar backgroundColor={colors.lightOrange} />
       <View
         style={{
           flex: 1,
@@ -162,13 +207,110 @@ const Mail = ({ navigation }) => {
       >
         <View style={styles.top}>
           <View>
-            <QuestionsIcon size={22} />
+            <Modal
+              isVisible={isModalVisible}
+              testID={"modal"}
+              onBackdropPress={() => setModalVisible(false)}
+              swipeDirection={["up", "left", "right", "down"]}
+              style={{ justifyContent: "center", margin: 0 }}
+            >
+              <View
+                style={{ marginHorizontal: 20, backgroundColor: colors.white }}
+              >
+                <Text
+                  style={{
+                    paddingVertical: 20,
+                    paddingHorizontal: 20,
+                    fontWeight: "bold",
+                    fontSize: 24,
+                    color: colors.darkBlue,
+                  }}
+                >
+                  Express pochta
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "600",
+                    lineHeight: 25,
+                    paddingBottom: 20,
+                    paddingVertical: 10,
+                    paddingHorizontal: 20,
+                    color: colors.darkBlue,
+                  }}
+                >
+                  Express jo'natmalar bo'limida siz uyingizdan turib
+                  jo'natmangizni boshqa viloyat yoki shaharga berib yuborishigiz
+                  mumkin. Bazi hollarda qimmatbaho buyumlarni yuborish
+                  zaruruyati tug'ulib qoladi va bunday holatlarda esa ishonchli
+                  tanish haydovchi topa olmasangiz ko'nglingiz notinch bo'ladi.
+                  Biz shu kabi muammolar yechimi tayyor buyurtma berish
+                  formasini toldirish vaqtida qimmatbaho buyumingiz qiymatini
+                  kirinig hotirjam ishlaringizni davom ettiring
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 10,
+                    marginBottom: 30,
+                  }}
+                >
+                  <ImageBackground
+                    source={images.angle}
+                    resizeMode="contain"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      marginHorizontal: 10,
+                      marginLeft: 30,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <UpdateIcon />
+                  </ImageBackground>
+                  <Text style={{ width: 245, fontSize: 12, lineHeight: 18 }}>
+                    Buyurtma berish formasini to'ldirganizda, tizim bir zumda
+                    summasini hisoblab beradi.
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 10,
+                    marginBottom: 30,
+                  }}
+                >
+                  <ImageBackground
+                    source={images.angle}
+                    resizeMode="contain"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      marginHorizontal: 10,
+                      marginLeft: 30,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <UserIcon />
+                  </ImageBackground>
+                  <Text style={{ width: 245, fontSize: 12, lineHeight: 18 }}>
+                    Tahminan 10 daqiqa ishida sizga eng yaqin va yuqori
+                    reytingli kuryer biriktiladi
+                  </Text>
+                </View>
+              </View>
+            </Modal>
+            <TouchableOpacity onPress={toggleModal}>
+              <QuestionsIcon size={22} />
+            </TouchableOpacity>
           </View>
           <View>
             <Text
               style={{
                 fontSize: 20,
-                color: "#000",
+                color: colors.black,
                 fontWeight: "400",
               }}
             >
@@ -181,12 +323,12 @@ const Mail = ({ navigation }) => {
         </View>
         <View style={styles.header}>
           <TouchableOpacity style={styles.btn}>
-            <LocationIcon size={22} color="#8a8a8a" />
+            <LocationIcon size={22} color={colors.darkGray} />
             <Text style={styles.btntext}>Viloyat,tuman</Text>
           </TouchableOpacity>
-          <ReverseArrowIcon size={25} color="#8a8a8a" />
+          <ReverseArrowIcon size={25} color={colors.darkGray} />
           <TouchableOpacity style={styles.btn}>
-            <LocationIcon size={22} color="#8a8a8a" />
+            <LocationIcon size={22} color={colors.darkGray} />
             <Text style={styles.btntext}>Viloyat,tuman</Text>
           </TouchableOpacity>
         </View>
@@ -199,10 +341,10 @@ const Mail = ({ navigation }) => {
             <TabBar
               scrollEnabled={true}
               indicatorStyle={{
-                backgroundColor: "#047DE8",
+                backgroundColor: colors.navyBlue,
                 left: 4,
                 borderWidth: 0.4,
-                borderColor: "#047de8",
+                borderColor: colors.navyBlue,
               }}
               tabStyle={{
                 width: "auto",
@@ -211,14 +353,14 @@ const Mail = ({ navigation }) => {
                 marginRight: -24,
                 right: 30,
               }}
-              activeColor={"#047de8"}
-              inactiveColor={"#8a8a8a"}
+              activeColor={colors.navyBlue}
+              inactiveColor={colors.darkGray}
               renderLabel={(e) => {
                 return (
                   <View style={styles.tabView}>
                     {titleIconMapper[e.route.key] && (
                       <GlobeIcon
-                        color={e.focused ? "#047de8" : "#8a8a8a"}
+                        color={e.focused ? colors.navyBlue : colors.darkGray}
                         size={22}
                       />
                     )}
@@ -227,7 +369,7 @@ const Mail = ({ navigation }) => {
                       style={{
                         fontSize: 13,
                         paddingHorizontal: 10,
-                        color: e.focused ? "#047DE8" : "#8a8a8a",
+                        color: e.focused ? colors.navyBlue : colors.darkGray,
                       }}
                     >
                       {e.route.title}
@@ -235,7 +377,7 @@ const Mail = ({ navigation }) => {
                   </View>
                 );
               }}
-              style={{ backgroundColor: "#f3f3f5", paddingLeft: 10 }}
+              style={{ backgroundColor: colors.lightWhite, paddingLeft: 10 }}
               {...props}
             />
           )}
@@ -244,7 +386,7 @@ const Mail = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate("AdMail")}
         style={{
-          borderColor: "#BF9100",
+          borderColor: colors.darkOrange,
           borderWidth: 1,
           position: "absolute",
           right: 16,
@@ -254,7 +396,7 @@ const Mail = ({ navigation }) => {
           width: 65,
           height: 65,
           borderRadius: 65,
-          backgroundColor: "#ffcd30",
+          backgroundColor: colors.lightOrange,
         }}
       >
         <Image
@@ -266,23 +408,26 @@ const Mail = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
+  scrollView: {
+    paddingBottom: 120,
+  },
   btntext: {
-    color: "#8a8a8a",
+    color: colors.darkGray,
     fontSize: 13,
   },
   btn: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderWidth: 1,
-    borderColor: "#dcdcdc",
+    borderColor: colors.lightgray,
     borderRadius: 8,
   },
   tabView: {
     flexDirection: "row",
-    color: "#8a8a8a",
+    color: colors.darkGray,
   },
   tabimg: {
     width: 20,
@@ -293,7 +438,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 21,
     paddingVertical: 16,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     justifyContent: "space-between",
     alignItems: "center",
   },

@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Image,
+  ImageBackground,
   RefreshControl,
   ScrollView,
   StatusBar,
@@ -11,6 +12,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
+import Modal from "react-native-modal";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { images } from "../../assets";
 import {
@@ -19,8 +21,11 @@ import {
   LocationIcon,
   QuestionsIcon,
   ReverseArrowIcon,
+  UpdateIcon,
+  UserIcon,
 } from "../../assets/icons/icons";
 import LoadItem from "../../components/LoadItem";
+import { colors } from "../../constants/color";
 import { routes as Routes } from "../../navigation/routes";
 import { useLoadHook } from "./hooks";
 
@@ -129,12 +134,110 @@ const Load = ({ navigation }: PassengerViewProps) => {
     { key: "third", title: "Mening e'lonlarim" },
   ]);
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style={styles.statusbar} />
       <View style={styles.top}>
         <View>
-          <TouchableOpacity style={{ padding: 5 }}>
+          <Modal
+            isVisible={isModalVisible}
+            testID={"modal"}
+            onBackdropPress={() => setModalVisible(false)}
+            swipeDirection={["up", "left", "right", "down"]}
+            style={{ justifyContent: "center", margin: 0 }}
+          >
+            <View
+              style={{ marginHorizontal: 20, backgroundColor: colors.white }}
+            >
+              <Text
+                style={{
+                  paddingVertical: 20,
+                  paddingHorizontal: 20,
+                  fontWeight: "bold",
+                  fontSize: 24,
+                  color: colors.darkBlue,
+                }}
+              >
+                Yuk tashish
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "600",
+                  lineHeight: 30,
+                  paddingBottom: 20,
+                  paddingVertical: 10,
+                  paddingHorizontal: 20,
+                  color: colors.darkBlue,
+                }}
+              >
+                100k Kargo bo'limi yuk mashinalarni tez va arzon narxlarda
+                topishda yordam beradi. Iliomani yuklab ilib manzil va yukingiz
+                ma'lumot kiriting va shu zahotiyoq siz bilan yuk mashina
+                haydovchilari bog'lanishadi.
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginVertical: 10,
+                  marginBottom: 30,
+                }}
+              >
+                <ImageBackground
+                  source={images.angle}
+                  resizeMode="contain"
+                  style={{
+                    width: 50,
+                    height: 50,
+                    marginHorizontal: 10,
+                    marginLeft: 30,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <UpdateIcon />
+                </ImageBackground>
+                <Text style={{ width: 245, fontSize: 12, lineHeight: 18 }}>
+                  Endi yuk mashinalar avtoturargohida borib yuk mashinalarni
+                  izlash shart emas. 100k Kargo vaqtingizni tejaydi.
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginVertical: 10,
+                  marginBottom: 30,
+                }}
+              >
+                <ImageBackground
+                  source={images.angle}
+                  resizeMode="contain"
+                  style={{
+                    width: 50,
+                    height: 50,
+                    marginHorizontal: 10,
+                    marginLeft: 30,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <UserIcon />
+                </ImageBackground>
+                <Text style={{ width: 245, fontSize: 12, lineHeight: 18 }}>
+                  Narxni siz taklif qilasiz tizim esa sizning eloningizni eng
+                  yaqin haydovchilarga ko'rsatib ularni siz bilan bog'lab
+                  beradi.
+                </Text>
+              </View>
+            </View>
+          </Modal>
+          <TouchableOpacity onPress={toggleModal}>
             <QuestionsIcon size={22} />
           </TouchableOpacity>
         </View>
@@ -149,12 +252,12 @@ const Load = ({ navigation }: PassengerViewProps) => {
       </View>
       <View style={styles.header}>
         <TouchableOpacity style={styles.btn}>
-          <LocationIcon size={22} color="#8a8a8a" />
+          <LocationIcon size={22} color={colors.darkGray} />
           <Text style={styles.btntext}>Viloyat,tuman</Text>
         </TouchableOpacity>
-        <ReverseArrowIcon size={25} color="#8a8a8a" />
+        <ReverseArrowIcon size={25} color={colors.darkGray} />
         <TouchableOpacity style={styles.btn}>
-          <LocationIcon size={22} color="#8a8a8a" />
+          <LocationIcon size={22} color={colors.darkGray} />
           <Text style={styles.btntext}>Viloyat,tuman</Text>
         </TouchableOpacity>
       </View>
@@ -166,10 +269,10 @@ const Load = ({ navigation }: PassengerViewProps) => {
         renderTabBar={(props) => (
           <TabBar
             indicatorStyle={{
-              backgroundColor: "#047DE8",
+              backgroundColor: colors.navyBlue,
               left: 11,
               borderWidth: 0.5,
-              borderColor: "#047DE8",
+              borderColor: colors.navyBlue,
               marginLeft: -6,
             }}
             tabStyle={{
@@ -182,7 +285,7 @@ const Load = ({ navigation }: PassengerViewProps) => {
                 <View style={styles.tabView}>
                   {titleIconMapper[e.route.key] && (
                     <GlobeIcon
-                      color={e.focused ? "#047de8" : "#8a8a8a"}
+                      color={e.focused ? colors.navyBlue : colors.darkGray}
                       size={22}
                     />
                   )}
@@ -191,7 +294,7 @@ const Load = ({ navigation }: PassengerViewProps) => {
                     style={{
                       fontSize: 13,
                       fontWeight: "bold",
-                      color: e.focused ? "#047DE8" : "#8a8a8a",
+                      color: e.focused ? colors.navyBlue : colors.darkGray,
                     }}
                   >
                     {e.route.title}
@@ -199,7 +302,7 @@ const Load = ({ navigation }: PassengerViewProps) => {
                 </View>
               );
             }}
-            style={{ backgroundColor: "#f3f3f5", paddingLeft: 10 }}
+            style={{ backgroundColor: colors.lightWhite, paddingLeft: 10 }}
             {...props}
           />
         )}
@@ -218,26 +321,26 @@ export default Load;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f3f3f5",
+    backgroundColor: colors.lightWhite,
   },
   scrollView: {
     paddingBottom: 70,
   },
   btn: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderWidth: 1,
-    borderColor: "#dcdcdc",
+    borderColor: colors.lightgray,
     borderRadius: 8,
   },
   top: {
     flexDirection: "row",
     paddingHorizontal: 21,
     paddingVertical: 16,
-    backgroundColor: "#ffff",
+    backgroundColor: colors.white,
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -251,11 +354,11 @@ const styles = StyleSheet.create({
   },
   btn1: {
     borderWidth: 1,
-    borderColor: "#bf9100",
+    borderColor: colors.darkOrange,
     borderRadius: 8,
     paddingHorizontal: 5,
     paddingVertical: 11,
-    backgroundColor: "#FFCD30",
+    backgroundColor: colors.lightOrange,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -285,7 +388,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   tchopacity: {
-    borderColor: "#BF9100",
+    borderColor: colors.darkOrange,
     borderWidth: 1,
     position: "absolute",
     right: 16,
@@ -295,7 +398,7 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     borderRadius: 65,
-    backgroundColor: "#ffcd30",
+    backgroundColor: colors.lightOrange,
   },
   plus2: {
     width: 26,
@@ -311,12 +414,12 @@ const styles = StyleSheet.create({
   passengerbox: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#000",
+    color: colors.black,
   },
   psimage: {
     width: 20,
     height: 20,
-    tintColor: "#000",
+    tintColor: colors.black,
   },
   btnimg: {
     width: 15,
@@ -325,7 +428,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   btntext: {
-    color: "#8a8a8a",
+    color: colors.darkGray,
     fontSize: 13,
   },
   strelkaimg: {
@@ -335,7 +438,7 @@ const styles = StyleSheet.create({
   },
   tabView: {
     flexDirection: "row",
-    color: "#8a8a8a",
+    color: colors.darkGray,
     fontWeight: "bold",
   },
   tabimg: {

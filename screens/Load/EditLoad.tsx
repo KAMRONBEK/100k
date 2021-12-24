@@ -13,6 +13,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "../../assets";
 import LoadSelector from "../../components/LoadSelector";
+import { colors } from "../../constants/color";
 import { locationType } from "../../constants/values";
 import { routes } from "../../navigation/routes";
 import { selectLoad } from "../../redux/slices/load/load";
@@ -173,7 +174,7 @@ const EditLoad = ({ navigation }) => {
         <View
           style={{
             paddingVertical: 19,
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
             paddingHorizontal: 16,
           }}
         >
@@ -199,7 +200,7 @@ const EditLoad = ({ navigation }) => {
             marginTop: 20,
             paddingVertical: 19,
             paddingHorizontal: 16,
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
           }}
         >
           <Text style={{ fontWeight: "bold" }}>
@@ -240,7 +241,7 @@ const EditLoad = ({ navigation }) => {
                 marginBottom: 35,
                 flexDirection: "column",
                 marginTop: 23,
-                backgroundColor: "#FFC847",
+                backgroundColor: colors.brightOrangeTwo,
               },
             ]}
             onPress={onSubmitFrom}
@@ -265,7 +266,7 @@ const EditLoad = ({ navigation }) => {
 export default EditLoad;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -279,17 +280,17 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#dcdcdc",
+    borderColor: colors.lightgray,
     borderRadius: 10,
     padding: 14,
     marginTop: 10,
   },
   btnOne: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
-    borderColor: "#DCDCDC",
+    borderColor: colors.lightgray,
     borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
@@ -297,7 +298,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderColor: "#BF9100",
+    borderColor: colors.darkOrange,
     borderRadius: 10,
     borderWidth: 1,
     marginRight: 18,
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     marginRight: 20,
-    color: "#8a8a8a",
+    color: colors.darkGray,
   },
   editloadtxt: {
     marginLeft: 25,
@@ -316,7 +317,7 @@ const styles = StyleSheet.create({
   fromWhere: {
     paddingBottom: 19,
     paddingHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     marginTop: 20,
     paddingTop: 19,
   },
@@ -327,13 +328,13 @@ const styles = StyleSheet.create({
   },
   locationicon: {
     marginLeft: 10,
-    color: "#8a8a8a",
+    color: colors.darkGray,
     fontSize: 14,
   },
   tocontainer: {
     paddingBottom: 19,
     paddingHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     marginTop: 20,
     paddingTop: 19,
   },
@@ -344,7 +345,7 @@ const styles = StyleSheet.create({
   },
   tolocation: {
     marginLeft: 10,
-    color: "#8a8a8a",
+    color: colors.darkGray,
     fontSize: 14,
   },
 });

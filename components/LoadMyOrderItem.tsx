@@ -4,6 +4,7 @@ import { images } from "../assets";
 import { useNavigation } from "@react-navigation/native";
 import { routes } from "../navigation/routes";
 import { CheckedIcon, PensolIcon, XIcon } from "../assets/icons/icons";
+import { colors } from "../constants/color";
 
 interface IPassangerProp {
   item: any;
@@ -15,7 +16,7 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
     <>
       <View
         style={{
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
           paddingVertical: 20,
           paddingHorizontal: 15,
           marginBottom: 10,
@@ -58,7 +59,7 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
                 opacity: 0.7,
               }}
             >
-              <Text style={{ color: "#2e8c60", opacity: 0.8 }}>
+              <Text style={{ color: colors.darkGreen, opacity: 0.8 }}>
                 {item.weight}
               </Text>
             </TouchableOpacity>
@@ -103,7 +104,7 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
             style={{
               fontSize: 15,
               fontWeight: "normal",
-              color: "#000",
+              color: colors.black,
             }}
           >
             {item.to_full_address}
@@ -161,7 +162,7 @@ const LoadMyOrderItem = ({ item }: IPassangerProp) => {
           style={{
             borderTopWidth: 1,
             borderStyle: "solid",
-            borderColor: "#d2d4d4",
+            borderColor: colors.grey,
             flexDirection: "row",
             justifyContent: "space-between",
             paddingHorizontal: 10,

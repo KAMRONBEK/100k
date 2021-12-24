@@ -1,5 +1,6 @@
 import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { colors } from "../constants/color";
 
 interface ISeatSelector {
   value?: number;
@@ -63,7 +64,7 @@ const SeatSelector = ({ value, setValue }: ISeatSelector) => {
             style={[
               styles.btn,
               {
-                backgroundColor: selected ? "#FFCD30" : undefined,
+                backgroundColor: selected ? colors.lightOrange : undefined,
               },
             ]}
           >
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderColor: "#BF9100",
+    borderColor: colors.darkOrange,
     borderRadius: 10,
     borderWidth: 1,
     marginRight: 18,

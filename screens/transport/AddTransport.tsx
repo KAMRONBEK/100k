@@ -26,6 +26,7 @@ import {
   ImageLibraryOptions,
   ImagePickerResponse,
 } from "react-native-image-picker";
+import { colors } from "../../constants/color";
 
 const AddTransport = ({ navigation }) => {
   const [img, setImg] = useState<"none" | "flex">("none");
@@ -85,15 +86,15 @@ const AddTransport = ({ navigation }) => {
         setValue={(e) => dispatch(setOrderData({ transportType: e }))}
       />
       <View style={{ paddingHorizontal: 16, marginTop: 20 }}>
-        <Text style={{ fontSize: 14, color: "#8a8a8a" }}>
+        <Text style={{ fontSize: 14, color: colors.darkGray }}>
           Texnika to'g'risida ma'lumot *
         </Text>
         <TextInput
-          style={[styles.input, { backgroundColor: "#fff" }]}
+          style={[styles.input, { backgroundColor: colors.white }]}
           value={state.note!}
           onChangeText={(e) => dispatch(setOrderData({ note: e }))}
           placeholder="Informatsiya"
-          placeholderTextColor="#8a8a8a"
+          placeholderTextColor={colors.darkGray}
           multiline
           numberOfLines={2}
         />
@@ -105,7 +106,9 @@ const AddTransport = ({ navigation }) => {
           paddingTop: 15,
         }}
       >
-        <Text style={{ fontSize: 16, marginBottom: 17, color: "#8a8a8a" }}>
+        <Text
+          style={{ fontSize: 16, marginBottom: 17, color: colors.darkGray }}
+        >
           Hozirgi manzilingiz *
         </Text>
         <TouchableOpacity
@@ -121,7 +124,7 @@ const AddTransport = ({ navigation }) => {
           <Text
             style={{
               marginLeft: 10,
-              color: "#8a8a8a",
+              color: colors.darkGray,
               fontSize: 14,
             }}
           >
@@ -137,7 +140,9 @@ const AddTransport = ({ navigation }) => {
           paddingTop: 10,
         }}
       >
-        <Text style={{ color: "#8a8a8a", fontSize: 16, marginBottom: 17 }}>
+        <Text
+          style={{ color: colors.darkGray, fontSize: 16, marginBottom: 17 }}
+        >
           Boradigan manzilingiz(kiritish majburiy emas)
         </Text>
         <TouchableOpacity
@@ -153,7 +158,7 @@ const AddTransport = ({ navigation }) => {
           <Text
             style={{
               marginLeft: 10,
-              color: "#8a8a8a",
+              color: colors.darkGray,
               fontSize: 14,
             }}
           >
@@ -170,17 +175,17 @@ const AddTransport = ({ navigation }) => {
           paddingTop: 20,
         }}
       >
-        <Text style={{ fontSize: 16, color: "#8a8a8a" }}>
+        <Text style={{ fontSize: 16, color: colors.darkGray }}>
           Narxingiz (qatnash uchun)*
         </Text>
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
             borderRadius: 10,
             borderWidth: 1,
-            borderColor: "#DCDCDC",
+            borderColor: colors.lightgray,
             marginTop: 10,
           }}
         >
@@ -193,7 +198,7 @@ const AddTransport = ({ navigation }) => {
               keyboardType="numeric"
             />
           </View>
-          <View style={{ width: 150, backgroundColor: "#fff" }}>
+          <View style={{ width: 150, backgroundColor: colors.white }}>
             <Picker
               selectedValue={state.costType}
               onValueChange={(itemValue, itemIndex) =>
@@ -227,7 +232,7 @@ const AddTransport = ({ navigation }) => {
           <Text
             style={{
               fontSize: 14,
-              color: "#8a8a8a",
+              color: colors.darkGray,
               marginLeft: 16,
             }}
           >
@@ -240,18 +245,24 @@ const AddTransport = ({ navigation }) => {
         <TextInput
           value={state.otherName!}
           onChangeText={(e) => dispatch(setOrderData({ otherName: e }))}
-          style={[styles.input, { backgroundColor: "#fff", marginBottom: 21 }]}
+          style={[
+            styles.input,
+            { backgroundColor: colors.white, marginBottom: 21 },
+          ]}
         />
         <Text style={styles.text}>Telefon raqamini kiriting * </Text>
         <TextInput
           value={state.otherNumber!}
           onChangeText={(e) => dispatch(setOrderData({ otherNumber: e }))}
-          style={[styles.input, { backgroundColor: "#fff", marginBottom: 21 }]}
+          style={[
+            styles.input,
+            { backgroundColor: colors.white, marginBottom: 21 },
+          ]}
           keyboardType="numeric"
         />
       </View>
       <View>
-        <Text style={{ margin: 15, marginTop: 15, color: "#8a8a8a" }}>
+        <Text style={{ margin: 15, marginTop: 15, color: colors.darkGray }}>
           Transportingizni fotosurati*
         </Text>
         <ScrollView
@@ -282,7 +293,7 @@ const AddTransport = ({ navigation }) => {
               height: 70,
               borderWidth: 1,
               borderRadius: 1,
-              borderColor: "#8a8a8a",
+              borderColor: colors.darkGray,
               borderStyle: "dashed",
               marginHorizontal: 20,
               alignItems: "center",
@@ -300,7 +311,10 @@ const AddTransport = ({ navigation }) => {
         <TouchableOpacity
           style={[
             styles.btnOne,
-            { flexDirection: "column", backgroundColor: "#FFC847" },
+            {
+              flexDirection: "column",
+              backgroundColor: colors.brightOrangeTwo,
+            },
           ]}
           onPress={onSubmitFrom}
         >
@@ -322,7 +336,7 @@ const AddTransport = ({ navigation }) => {
 export default AddTransport;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -334,24 +348,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     paddingHorizontal: 14,
     marginBottom: 10,
     justifyContent: "space-between",
   },
   input: {
     borderWidth: 1,
-    borderColor: "#dcdcdc",
+    borderColor: colors.lightgray,
     borderRadius: 10,
     padding: 14,
     marginTop: 10,
   },
   btnOne: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
-    borderColor: "#DCDCDC",
+    borderColor: colors.lightgray,
     borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
@@ -359,7 +373,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 13,
     paddingVertical: 12,
-    borderColor: "#BF9100",
+    borderColor: colors.darkOrange,
     borderRadius: 7,
     borderWidth: 1,
     marginRight: 10,
@@ -368,6 +382,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     marginRight: 20,
-    color: "#8a8a8a",
+    color: colors.darkGray,
   },
 });

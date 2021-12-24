@@ -23,6 +23,7 @@ import EditPassenger from "../screens/Taxi/EditPassanger";
 import { navigationRef } from "./NavigationService";
 import TabStack from "./TabStack";
 import AddTransport from "../screens/transport/AddTransport";
+import SupportView from "../screens/Support/Support";
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,7 @@ const AppNavigator = () => {
         <Stack.Screen name={routes.ADD_LOAD} component={AddLoad} />
         <Stack.Screen name={routes.ADD_TRANSPORT} component={AddTransport} />
         <Stack.Screen name={routes.EDIT_LOAD} component={EditLoad} />
+        <Stack.Screen name={routes.SUPPORT} component={SupportView} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -15,7 +15,7 @@ import { selectOrderState, setOrderData } from "../../redux/slices/order/order";
 import { useMailHook } from "./hooks";
 import { ActivityIndicator, Checkbox } from "react-native-paper";
 import { locationType } from "../../constants/values";
-import { TextInputMask } from "react-native-masked-text";
+import { colors } from "../../constants/color";
 
 const AdMail = ({ navigation }) => {
   const [type, setType] = useState("#fff");
@@ -51,12 +51,7 @@ const AdMail = ({ navigation }) => {
 
   const state = useSelector(selectOrderState);
 
-  const [cost, setCost] = useState<number>();
   const dispatch = useDispatch();
-  const [otherNumber, setOtherNumber] = useState("");
-  const [otherPerson, setOtherPerson] = useState(false);
-  const [matter, setMatter] = useState(0);
-  const [vehicleType, setVehicleType] = useState(1);
 
   const { createMail, loading } = useMailHook();
   const onSubmitFrom = () => {
@@ -191,7 +186,7 @@ const AdMail = ({ navigation }) => {
         style={{
           paddingBottom: 19,
           paddingHorizontal: 16,
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
           marginTop: 20,
           paddingTop: 19,
         }}
@@ -218,7 +213,7 @@ const AdMail = ({ navigation }) => {
           <Text
             style={{
               marginLeft: 10,
-              color: "#8a8a8a",
+              color: colors.darkGray,
               fontSize: 14,
             }}
           >
@@ -252,7 +247,7 @@ const AdMail = ({ navigation }) => {
         style={{
           paddingBottom: 19,
           paddingHorizontal: 16,
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
           marginTop: 20,
           paddingTop: 19,
         }}
@@ -279,7 +274,7 @@ const AdMail = ({ navigation }) => {
           <Text
             style={{
               marginLeft: 10,
-              color: "#8a8a8a",
+              color: colors.darkGray,
               fontSize: 14,
             }}
           >
@@ -314,7 +309,7 @@ const AdMail = ({ navigation }) => {
           paddingVertical: 19,
           marginTop: 20,
           paddingHorizontal: 16,
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
         }}
       >
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>
@@ -398,7 +393,7 @@ const AdMail = ({ navigation }) => {
           >
             <Checkbox.Android
               color={"black"}
-              uncheckedColor={"#ccc"}
+              uncheckedColor={colors.gray}
               status={state.otherPerson ? "checked" : "unchecked"}
               onPress={() =>
                 dispatch(setOrderData({ otherPerson: !state.otherPerson }))
@@ -424,14 +419,14 @@ const AdMail = ({ navigation }) => {
             <View
               style={{
                 paddingVertical: 19,
-                backgroundColor: "#fff",
+                backgroundColor: colors.white,
                 paddingHorizontal: 16,
               }}
             >
               <View
                 style={{
                   borderWidth: 1,
-                  borderColor: "#ccc",
+                  borderColor: colors.gray,
                   marginBottom: 15,
                   opacity: 0.2,
                 }}
@@ -448,7 +443,7 @@ const AdMail = ({ navigation }) => {
               <Text
                 style={{
                   fontSize: 14,
-                  color: "#8a8a8a",
+                  color: colors.darkGray,
                   marginTop: 13,
                 }}
               >
@@ -468,7 +463,7 @@ const AdMail = ({ navigation }) => {
           marginTop: 20,
           paddingVertical: 19,
           paddingHorizontal: 16,
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
         }}
       >
         <Text style={{ fontWeight: "bold", fontSize: 16 }}>
@@ -509,7 +504,7 @@ const AdMail = ({ navigation }) => {
             {
               flexDirection: "column",
               marginTop: 23,
-              backgroundColor: "#FFC847",
+              backgroundColor: colors.orange,
             },
           ]}
           onPress={onSubmitFrom}
@@ -532,7 +527,7 @@ const AdMail = ({ navigation }) => {
 export default AdMail;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -543,12 +538,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 22,
     borderRadius: 10,
-    borderColor: "#DCDCDC",
+    borderColor: colors.lightgray,
     borderWidth: 1,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#dcdcdc",
+    borderColor: colors.lightgray,
     borderRadius: 10,
     padding: 14,
     marginTop: 10,
@@ -559,15 +554,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#dcdcdc",
+    borderColor: colors.lightgray,
     paddingHorizontal: 14,
   },
   btnOne: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
-    borderColor: "#DCDCDC",
+    borderColor: colors.lightgray,
     borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
@@ -576,12 +571,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "500",
     // marginRight: 20,
-    color: "#8a8a8a",
+    color: colors.darkGray,
   },
   texts: {
     fontSize: 15,
     fontWeight: "500",
     marginRight: 20,
-    color: "#8a8a8a",
+    color: colors.darkGray,
   },
 });

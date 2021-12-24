@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { images } from "../assets";
 import { CheckedIcon, PensolIcon, XIcon } from "../assets/icons/icons";
+import { colors } from "../constants/color";
 import { routes } from "../navigation/routes";
 import { selectUser } from "../redux/slices/user/user";
 
@@ -20,7 +21,7 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
     <>
       <View
         style={{
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
           paddingVertical: 20,
           paddingHorizontal: 15,
           marginBottom: 10,
@@ -63,7 +64,7 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                 borderRadius: 10,
               }}
             >
-              <Text style={{ color: "#2e8c60", opacity: 0.8 }}>
+              <Text style={{ color: colors.darkGreen, opacity: 0.8 }}>
                 {item.weight}
               </Text>
             </TouchableOpacity>
@@ -105,7 +106,7 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
             style={{
               fontSize: 15,
               fontWeight: "normal",
-              color: "#000",
+              color: colors.black,
             }}
           >
             {item.to_full_address}
@@ -156,7 +157,7 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
           style={{
             borderTopWidth: 1,
             borderStyle: "solid",
-            borderColor: "#d2d4d4",
+            borderColor: colors.grey,
             flexDirection: "row",
             justifyContent: "space-between",
             paddingHorizontal: 10,
@@ -204,7 +205,7 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                 }}
               >
                 <TouchableOpacity style={styles.iconsbutton}>
-                  <XIcon />
+                  <XIcon size={15} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.pensolbutton}
@@ -214,10 +215,10 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                     })
                   }
                 >
-                  <PensolIcon />
+                  <PensolIcon size={15} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.checkedbutton}>
-                  <CheckedIcon />
+                  <CheckedIcon size={15} />
                 </TouchableOpacity>
               </View>
             ) : (
@@ -255,11 +256,11 @@ export default LoadItem;
 
 const styles = StyleSheet.create({
   btn1: {
-    borderColor: "#bf9100",
+    borderColor: colors.darkOrange,
     borderRadius: 8,
     paddingHorizontal: 5,
     paddingVertical: 10,
-    backgroundColor: "#FFCD30",
+    backgroundColor: colors.lightOrange,
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 60,
@@ -273,34 +274,37 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   pensolbutton: {
+    marginLeft: 6,
     borderWidth: 1.5,
-    borderColor: "orange",
     borderRadius: 25,
-    paddingHorizontal: 11,
     paddingVertical: 5,
     alignItems: "center",
+    paddingHorizontal: 11,
     justifyContent: "center",
-    marginLeft: 6,
+    backgroundColor: colors.orange,
+    borderColor: colors.orange,
   },
   checkedbutton: {
+    marginLeft: 6,
     borderWidth: 1.5,
-    borderColor: "green",
     borderRadius: 25,
-    paddingHorizontal: 11,
     paddingVertical: 5,
     alignItems: "center",
+    paddingHorizontal: 11,
     justifyContent: "center",
-    marginLeft: 6,
+    borderColor: colors.greenLigth,
+    backgroundColor: colors.greenLigth,
   },
   iconsbutton: {
+    marginLeft: 6,
     borderWidth: 1.5,
-    borderColor: "red",
     borderRadius: 25,
-    paddingHorizontal: 11,
     paddingVertical: 11,
     alignItems: "center",
+    paddingHorizontal: 11,
     justifyContent: "center",
-    marginLeft: 6,
+    borderColor: colors.lightCoral,
+    backgroundColor: colors.lightCoral,
   },
   avatarwrapper: {
     flexDirection: "row",

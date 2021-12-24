@@ -4,6 +4,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { images } from "../assets";
 import { CheckedIcon, PensolIcon, XIcon } from "../assets/icons/icons";
+import { colors } from "../constants/color";
 import user, { selectUser } from "../redux/slices/user/user";
 
 interface IPassangerProp {
@@ -18,7 +19,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
     <>
       <View
         style={{
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
           paddingVertical: 20,
           paddingHorizontal: 15,
           marginBottom: 10,
@@ -55,7 +56,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
               style={{
                 width: 25,
                 height: 25,
-                tintColor: "#000",
+                tintColor: colors.black,
                 marginTop: 1,
               }}
             />
@@ -110,7 +111,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
             style={{
               fontSize: 15,
               fontWeight: "normal",
-              color: "#000",
+              color: colors.black,
             }}
           >
             {item.to_full_address}
@@ -160,7 +161,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
           style={{
             borderTopWidth: 1,
             borderStyle: "solid",
-            borderColor: "#d2d4d4",
+            borderColor: colors.grey,
             flexDirection: "row",
             justifyContent: "space-between",
             paddingHorizontal: 10,
@@ -204,11 +205,13 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
             {editable ? (
               <View
                 style={{
+                  marginHorizontal: 10,
+                  marginLeft: 30,
                   flexDirection: "row",
                 }}
               >
                 <TouchableOpacity style={styles.iconsbutton}>
-                  <XIcon />
+                  <XIcon size={15} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.pensolbutton}
@@ -218,10 +221,10 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                     })
                   }
                 >
-                  <PensolIcon />
+                  <PensolIcon size={15} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.checkedbutton}>
-                  <CheckedIcon />
+                  <CheckedIcon size={15} />
                 </TouchableOpacity>
               </View>
             ) : (
@@ -259,18 +262,18 @@ export default PassangerItem;
 
 const styles = StyleSheet.create({
   btn1: {
-    borderColor: "#bf9100",
+    borderColor: colors.darkOrange,
     borderRadius: 8,
     paddingHorizontal: 5,
     paddingVertical: 10,
-    backgroundColor: "#FFCD30",
+    backgroundColor: colors.lightOrange,
     flexDirection: "row",
     alignItems: "center",
   },
   borderBottom: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 25,
+    marginTop: 10,
   },
   seatbutton: {
     display: "flex",
@@ -282,37 +285,40 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   seatbuttontxt: {
-    color: "#2e8c60",
+    color: colors.darkGreen,
   },
   pensolbutton: {
     borderWidth: 1.5,
-    borderColor: "orange",
     borderRadius: 25,
     paddingHorizontal: 11,
     paddingVertical: 5,
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 6,
+    borderColor: colors.orange,
+    backgroundColor: colors.orange,
   },
   checkedbutton: {
+    marginLeft: 6,
     borderWidth: 1.5,
-    borderColor: "green",
     borderRadius: 25,
-    paddingHorizontal: 11,
     paddingVertical: 5,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 6,
+    paddingHorizontal: 11,
+    backgroundColor: colors.greenLigth,
+    borderColor: colors.greenLigth,
   },
   iconsbutton: {
+    marginLeft: 6,
     borderWidth: 1.5,
-    borderColor: "red",
     borderRadius: 25,
-    paddingHorizontal: 11,
     paddingVertical: 11,
     alignItems: "center",
+    paddingHorizontal: 11,
     justifyContent: "center",
-    marginLeft: 6,
+    borderColor: colors.lightCoral,
+    backgroundColor: colors.lightCoral,
   },
   avatarwrapper: {
     flexDirection: "row",

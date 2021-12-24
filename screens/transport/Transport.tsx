@@ -1,340 +1,394 @@
 import React, { useState } from "react";
 import {
-    View,
-    Text,
-    StyleSheet,
-    useWindowDimensions,
-    ScrollView,
-    Image,
-    TouchableOpacity,
-    RefreshControl,
-    FlatList,
+  View,
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  RefreshControl,
+  FlatList,
+  ImageBackground,
 } from "react-native";
+import Modal from "react-native-modal";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { images } from "../../assets";
 import {
-    FilterIcon,
-    LocationIcon,
-    QuestionsIcon,
-    ReverseArrowIcon,
+  FilterIcon,
+  LocationIcon,
+  QuestionsIcon,
+  ReverseArrowIcon,
+  UpdateIcon,
+  UserIcon,
 } from "../../assets/icons/icons";
 import TransportItem from "../../components/TransportItem";
+import { colors } from "../../constants/color";
 import { useTransportHook } from "./hooks";
 
 const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
+  return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 const FirstRoute = ({}) => {
-    const [refreshing, setRefreshing] = React.useState(false);
-    const { transport, useRefresh } = useTransportHook();
-    console.log({ transport });
+  const [refreshing, setRefreshing] = React.useState(false);
+  const { transport, useRefresh } = useTransportHook();
+  console.log({ transport });
 
-    const onRefresh = React.useCallback(() => {
-        useRefresh();
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-    return (
-        <ScrollView
-            style={{ flex: 1 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <FlatList
-                contentContainerStyle={{
-                    flex: 1,
-                }}
-                data={Object.values(transport)}
-                renderItem={({ item }) => <TransportItem item={item} />}
-                ListEmptyComponent={() => (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            source={images.tarnsport}
-                            style={{
-                                height: 140,
-                                alignItems: "center",
-                                width: 140,
-                                marginBottom: 80,
-                            }}
-                        />
-                    </View>
-                )}
+  const onRefresh = React.useCallback(() => {
+    useRefresh();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+  return (
+    <ScrollView
+      style={{ flex: 1 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <FlatList
+        contentContainerStyle={{
+          flex: 1,
+        }}
+        data={Object.values(transport)}
+        renderItem={({ item }) => <TransportItem item={item} />}
+        ListEmptyComponent={() => (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={images.tarnsport}
+              style={{
+                height: 140,
+                alignItems: "center",
+                width: 140,
+                marginBottom: 80,
+              }}
             />
-        </ScrollView>
-    );
+          </View>
+        )}
+      />
+    </ScrollView>
+  );
 };
 
 const SecondRoute = () => {
-    const [refreshing, setRefreshing] = React.useState(false);
-    const { transport, useRefresh } = useTransportHook();
+  const [refreshing, setRefreshing] = React.useState(false);
+  const { transport, myOrder, useRefresh } = useTransportHook();
 
-    const onRefresh = React.useCallback(() => {
-        useRefresh();
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-    return (
-        <ScrollView
-            style={{ flex: 1 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <FlatList
-                contentContainerStyle={{
-                    flex: 1,
-                }}
-                data={Object.values(transport)}
-                renderItem={({ item }) => <TransportItem item={item} />}
-                ListEmptyComponent={() => (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            source={images.tarnsport}
-                            style={{
-                                height: 140,
-                                alignItems: "center",
-                                width: 140,
-                                marginBottom: 80,
-                            }}
-                        />
-                    </View>
-                )}
-            />
-        </ScrollView>
-    );
+  const onRefresh = React.useCallback(() => {
+    useRefresh();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+  return (
+    <View>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {myOrder.map((item) => (
+          <TransportItem item={item} key={`${item.id}`} editable={true} />
+        ))}
+      </ScrollView>
+    </View>
+  );
 };
 
 const ThirdRoute = () => {
-    const [refreshing, setRefreshing] = React.useState(false);
-    const { transport, useRefresh } = useTransportHook();
+  const [refreshing, setRefreshing] = React.useState(false);
+  const { transport, useRefresh } = useTransportHook();
 
-    const onRefresh = React.useCallback(() => {
-        useRefresh();
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-    return (
-        <ScrollView
-            style={{ flex: 1 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <FlatList
-                contentContainerStyle={{
-                    flex: 1,
-                }}
-                data={Object.values(transport)}
-                renderItem={({ item }) => <TransportItem item={item} />}
-                ListEmptyComponent={() => (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            source={images.tarnsport}
-                            style={{
-                                height: 140,
-                                alignItems: "center",
-                                width: 140,
-                                marginBottom: 80,
-                            }}
-                        />
-                    </View>
-                )}
-            />
-        </ScrollView>
-    );
+  const onRefresh = React.useCallback(() => {
+    useRefresh();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+  return (
+    <ScrollView
+      style={{ flex: 1 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    ></ScrollView>
+  );
 };
 
 let titleIconMapper = {
-    first: images.globe,
+  first: images.globe,
 };
 
 const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-    third: ThirdRoute,
+  first: FirstRoute,
+  second: SecondRoute,
+  third: ThirdRoute,
 });
 
 const Transport = ({ navigation }) => {
-    // useFonts({
-    //     Montserrat: require('../assets/fonts/Montserrat-Medium.ttf'),
-    //     MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
-    //     MontserratLight: require('../assets/fonts/Montserrat-Light.ttf'),
-    // });
-    const layout = useWindowDimensions();
-    const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        { key: "first", title: "Barchasi" },
-        { key: "second", title: "Mening buyurtmalarim" },
-        { key: "third", title: "Ro'yxat" },
-    ]);
-    return (
-        <View horizontal={false} style={{ flexDirection: "column", flex: 1 }}>
-            <View style={styles.top}>
-                <View>
-                    <QuestionsIcon size={22} />
-                </View>
-                <View>
-                    <Text
-                        style={{
-                            fontSize: 20,
-                            color: "#000",
-                            fontWeight: "400",
-                        }}
-                    >
-                        Transportlar (3)
-                    </Text>
-                </View>
-                <View>
-                    <FilterIcon size={22} />
-                </View>
-            </View>
-            <View style={styles.header}>
-                <TouchableOpacity style={styles.btn}>
-                    <LocationIcon size={22} color="#8a8a8a" />
-                    <Text style={styles.btntext}>Viloyat,tuman</Text>
-                </TouchableOpacity>
-                <ReverseArrowIcon size={25} color="#8a8a8a" />
-                <TouchableOpacity style={styles.btn}>
-                    <LocationIcon size={22} color="#8a8a8a" />
-                    <Text style={styles.btntext}>Viloyat,tuman</Text>
-                </TouchableOpacity>
-            </View>
-            <TabView
-                navigationState={{ index, routes }}
-                renderScene={renderScene}
-                onIndexChange={setIndex}
-                initialLayout={{ width: layout.width }}
-                renderTabBar={(props) => (
-                    <TabBar
-                        indicatorStyle={{
-                            left: 12,
-                            borderWidth: 0.5,
-                            borderColor: "#047de8",
-                            backgroundColor: "#047DE8",
-                        }}
-                        tabStyle={{
-                            width: "auto",
-                            paddingBottom: 2,
-                        }}
-                        renderLabel={(e) => {
-                            return (
-                                <View style={styles.tabView}>
-                                    {titleIconMapper[e.route.key] && (
-                                        <Image
-                                            source={
-                                                titleIconMapper[e.route.key]
-                                            }
-                                            style={styles.tabimg}
-                                        />
-                                    )}
-                                    <Text
-                                        numberOfLines={1}
-                                        style={{
-                                            fontSize: 13,
-                                            paddingHorizontal: 10,
+  // useFonts({
+  //     Montserrat: require('../assets/fonts/Montserrat-Medium.ttf'),
+  //     MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
+  //     MontserratLight: require('../assets/fonts/Montserrat-Light.ttf'),
+  // });
+  const layout = useWindowDimensions();
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "first", title: "Barchasi" },
+    { key: "second", title: "Mening buyurtmalarim" },
+    { key: "third", title: "Ro'yxat" },
+  ]);
 
-                                            color: "#047DE8",
-                                        }}
-                                    >
-                                        {e.route.title}
-                                    </Text>
-                                </View>
-                            );
-                        }}
-                        style={{ backgroundColor: "#f3f3f5", paddingLeft: 10 }}
-                        {...props}
-                    />
-                )}
-            />
-            <TouchableOpacity
-                onPress={() => navigation.navigate("AdTransport")}
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  return (
+    <View horizontal={false} style={{ flexDirection: "column", flex: 1 }}>
+      <View style={styles.top}>
+        <View>
+          <Modal
+            isVisible={isModalVisible}
+            testID={"modal"}
+            onBackdropPress={() => setModalVisible(false)}
+            swipeDirection={["up", "left", "right", "down"]}
+            style={{ justifyContent: "center", margin: 0 }}
+          >
+            <View
+              style={{ marginHorizontal: 20, backgroundColor: colors.white }}
+            >
+              <Text
                 style={{
-                    width: 65,
-                    height: 65,
-                    borderRadius: 65,
+                  paddingVertical: 20,
+                  paddingHorizontal: 20,
+                  fontWeight: "bold",
+                  fontSize: 24,
+                  color: colors.darkBlue,
+                }}
+              >
+                Maxsus transportlar
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "600",
+                  lineHeight: 25,
+                  paddingBottom: 20,
+                  paddingVertical: 10,
+                  paddingHorizontal: 20,
+                  color: colors.darkBlue,
+                }}
+              >
+                O'zbekiston mahsus texnika / transportlarga moslashgan
+                platformalar bo'lmaganligi sababli. Ushbu bo'lim 100k express
+                ilovasiga qo'shildi. Agar sizda elon qo'shib haydovchilardan
+                qo'ng'iroq kutishga vaqtingiz bo'lmasa unda siz ushbu bo'lim
+                100k express ilovasida haydovchi sifatida ro'yhatdan o'tgan
+                yengil va yuk mashina haydovchilarini topishingiz mumkin.
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginVertical: 10,
+                  marginBottom: 30,
+                }}
+              >
+                <ImageBackground
+                  source={images.angle}
+                  resizeMode="contain"
+                  style={{
+                    width: 50,
+                    height: 50,
+                    marginHorizontal: 10,
+                    marginLeft: 30,
                     alignItems: "center",
                     justifyContent: "center",
-                    borderColor: "#BF9100",
-                    borderWidth: 1,
-                    backgroundColor: "#ffcc33",
-                    bottom: 87,
-                    position: "absolute",
-                    right: 16,
+                  }}
+                >
+                  <UpdateIcon />
+                </ImageBackground>
+                <Text style={{ width: 245, fontSize: 12, lineHeight: 18 }}>
+                  Hech qanday formalarni to'ldirishingizni talab qilmaydi
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginVertical: 10,
+                  marginBottom: 30,
                 }}
-            >
-                <Image
-                    style={{ width: 26, height: 26 }}
-                    source={images.plus2}
-                />
-            </TouchableOpacity>
+              >
+                <ImageBackground
+                  source={images.angle}
+                  resizeMode="contain"
+                  style={{
+                    width: 50,
+                    height: 50,
+                    marginHorizontal: 10,
+                    marginLeft: 30,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <UserIcon />
+                </ImageBackground>
+                <Text style={{ width: 245, fontSize: 12, lineHeight: 18 }}>
+                  Filtr orqali istalgan shahar yoki viloyatni tanlang va sizga
+                  tizim tanlangan shaharda xizmat ko'rsatuvchi haydovchilar
+                  ro'yhatini taqdim etadi
+                </Text>
+              </View>
+            </View>
+          </Modal>
+          <TouchableOpacity onPress={toggleModal}>
+            <QuestionsIcon size={22} />
+          </TouchableOpacity>
         </View>
-    );
+        <View>
+          <Text
+            style={{
+              fontSize: 20,
+              color: colors.black,
+              fontWeight: "400",
+            }}
+          >
+            Transportlar (3)
+          </Text>
+        </View>
+        <View>
+          <FilterIcon size={22} />
+        </View>
+      </View>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.btn}>
+          <LocationIcon size={22} color={colors.darkGray} />
+          <Text style={styles.btntext}>Viloyat,tuman</Text>
+        </TouchableOpacity>
+        <ReverseArrowIcon size={25} color={colors.darkGray} />
+        <TouchableOpacity style={styles.btn}>
+          <LocationIcon size={22} color={colors.darkGray} />
+          <Text style={styles.btntext}>Viloyat,tuman</Text>
+        </TouchableOpacity>
+      </View>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={(props) => (
+          <TabBar
+            indicatorStyle={{
+              left: 12,
+              borderWidth: 0.5,
+              borderColor: colors.navyBlue,
+              backgroundColor: colors.navyBlue,
+            }}
+            tabStyle={{
+              width: "auto",
+              paddingBottom: 2,
+            }}
+            renderLabel={(e) => {
+              return (
+                <View style={styles.tabView}>
+                  {titleIconMapper[e.route.key] && (
+                    <Image
+                      source={titleIconMapper[e.route.key]}
+                      style={styles.tabimg}
+                    />
+                  )}
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontSize: 13,
+                      paddingHorizontal: 10,
+
+                      color: colors.navyBlue,
+                    }}
+                  >
+                    {e.route.title}
+                  </Text>
+                </View>
+              );
+            }}
+            style={{ backgroundColor: colors.lightWhite, paddingLeft: 10 }}
+            {...props}
+          />
+        )}
+      />
+      <TouchableOpacity
+        onPress={() => navigation.navigate("AdTransport")}
+        style={{
+          width: 65,
+          height: 65,
+          borderRadius: 65,
+          alignItems: "center",
+          justifyContent: "center",
+          borderColor: colors.darkOrange,
+          borderWidth: 1,
+          backgroundColor: colors.lightOrangeTwo,
+          bottom: 87,
+          position: "absolute",
+          right: 16,
+        }}
+      >
+        <Image style={{ width: 26, height: 26 }} source={images.plus2} />
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 export default Transport;
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "red",
-    },
-    top: {
-        flexDirection: "row",
-        paddingHorizontal: 21,
-        paddingVertical: 16,
-        backgroundColor: "#fff",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    btn: {
-        backgroundColor: "#fff",
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 10,
-        paddingHorizontal: 25,
-        borderWidth: 1,
-        borderColor: "#dcdcdc",
-        borderRadius: 8,
-    },
-    tabView: {
-        flexDirection: "row",
-        color: "#8a8a8a",
-    },
-    tabimg: {
-        width: 20,
-        height: 20,
-        // marginRight: 5,
-    },
-    header: {
-        marginVertical: 15,
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 5,
-        paddingHorizontal: 16,
-        justifyContent: "space-between",
-    },
-    btntext: {
-        color: "#8a8a8a",
-        fontSize: 13,
-    },
+  scrollView: {},
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "red",
+  },
+  top: {
+    flexDirection: "row",
+    paddingHorizontal: 21,
+    paddingVertical: 16,
+    backgroundColor: colors.white,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  btn: {
+    backgroundColor: colors.white,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderWidth: 1,
+    borderColor: colors.lightgray,
+    borderRadius: 8,
+  },
+  tabView: {
+    flexDirection: "row",
+    color: colors.darkGray,
+  },
+  tabimg: {
+    width: 20,
+    height: 20,
+    // marginRight: 5,
+  },
+  header: {
+    marginVertical: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 16,
+    justifyContent: "space-between",
+  },
+  btntext: {
+    color: colors.darkGray,
+    fontSize: 13,
+  },
 });

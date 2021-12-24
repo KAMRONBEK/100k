@@ -8,6 +8,7 @@ import { Image, Text, View } from "react-native";
 import { CabinetStack } from "./CabinetStack";
 import Passenger from "../screens/Taxi/Passenger";
 import { routes } from "./routes";
+import { colors } from "../constants/color";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,12 +41,12 @@ const Tabs = () => {
                 style={{
                   width: 29.57,
                   height: 29.22,
-                  tintColor: focused ? "#FFD347" : "#C7C7C7",
+                  tintColor: focused ? colors.brightOrange : colors.greyThree,
                 }}
               />
               <Text
                 style={{
-                  color: focused ? "#FFD347" : "#C7C7C7",
+                  color: focused ? colors.brightOrange : colors.greyThree,
                   fontSize: 12,
                   fontWeight: "500",
                   marginTop: 5.78,
@@ -77,12 +78,12 @@ const Tabs = () => {
                 style={{
                   width: 31.57,
                   height: 29.22,
-                  tintColor: focused ? "#FFD347" : "#C7C7C7",
+                  tintColor: focused ? colors.brightOrange : colors.greyThree,
                 }}
               />
               <Text
                 style={{
-                  color: focused ? "#FFD347" : "#C7C7C7",
+                  color: focused ? colors.brightOrange : colors.greyThree,
                   fontSize: 12,
                   fontWeight: "500",
                   marginTop: 5.78,
@@ -114,12 +115,12 @@ const Tabs = () => {
                 style={{
                   width: 29.57,
                   height: 29.22,
-                  tintColor: focused ? "#FFD347" : "#C7C7C7",
+                  tintColor: focused ? colors.brightOrange : colors.greyThree,
                 }}
               />
               <Text
                 style={{
-                  color: focused ? "#FFD347" : "#C7C7C7",
+                  color: focused ? colors.brightOrange : colors.greyThree,
                   fontSize: 12,
                   fontWeight: "500",
                   marginTop: 5.78,
@@ -151,12 +152,12 @@ const Tabs = () => {
                 style={{
                   width: 29.57,
                   height: 29.22,
-                  tintColor: focused ? "#FFD347" : "#C7C7C7",
+                  tintColor: focused ? colors.brightOrange : colors.greyThree,
                 }}
               />
               <Text
                 style={{
-                  color: focused ? "#FFD347" : "#C7C7C7",
+                  color: focused ? colors.brightOrange : colors.greyThree,
                   fontSize: 12,
                   fontWeight: "500",
                   marginTop: 5.78,
@@ -188,12 +189,12 @@ const Tabs = () => {
                 style={{
                   width: 29.57,
                   height: 29.22,
-                  tintColor: focused ? "#FFD347" : "#C7C7C7",
+                  tintColor: focused ? colors.brightOrange : colors.greyThree,
                 }}
               />
               <Text
                 style={{
-                  color: focused ? "#FFD347" : "#C7C7C7",
+                  color: focused ? colors.brightOrange : colors.greyThree,
                   fontSize: 12,
                   fontWeight: "500",
                   marginTop: 5.78,

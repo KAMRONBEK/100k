@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { images } from "../../assets";
 import RegionItem from "../../components/RegionItem";
+import { colors } from "../../constants/color";
 import { routes } from "../../navigation/routes";
 import { useRegions } from "./hook";
 
@@ -55,7 +56,7 @@ const Regions = ({ navigation }) => {
 export default Regions;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   region: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     paddingHorizontal: 16,
     flexDirection: "row",
     justifyContent: "space-between",

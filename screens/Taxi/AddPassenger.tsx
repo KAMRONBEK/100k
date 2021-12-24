@@ -13,6 +13,7 @@ import { ActivityIndicator, Checkbox } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "../../assets";
 import SeatSelector from "../../components/SeatSelector";
+import { colors } from "../../constants/color";
 import { locationType } from "../../constants/values";
 import { routes } from "../../navigation/routes";
 import { selectOrderState, setOrderData } from "../../redux/slices/order/order";
@@ -53,7 +54,7 @@ const AddPassenger = ({ navigation }) => {
           style={{
             paddingBottom: 19,
             paddingHorizontal: 16,
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
             marginTop: 20,
             paddingTop: 19,
           }}
@@ -74,7 +75,7 @@ const AddPassenger = ({ navigation }) => {
             <Text
               style={{
                 marginLeft: 10,
-                color: "#8a8a8a",
+                color: colors.darkGray,
                 fontSize: 14,
               }}
             >
@@ -94,7 +95,7 @@ const AddPassenger = ({ navigation }) => {
           style={{
             paddingBottom: 19,
             paddingHorizontal: 16,
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
             marginTop: 20,
             paddingTop: 19,
           }}
@@ -115,7 +116,7 @@ const AddPassenger = ({ navigation }) => {
             <Text
               style={{
                 marginLeft: 10,
-                color: "#8a8a8a",
+                color: colors.darkGray,
                 fontSize: 14,
               }}
             >
@@ -138,7 +139,7 @@ const AddPassenger = ({ navigation }) => {
         <View
           style={{
             paddingVertical: 19,
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
             paddingHorizontal: 16,
           }}
         >
@@ -179,11 +180,11 @@ const AddPassenger = ({ navigation }) => {
             </Text>
           </View>
         </View>
-        <View style={{ backgroundColor: "#fff", paddingHorizontal: 16 }}>
+        <View style={{ backgroundColor: colors.white, paddingHorizontal: 16 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Checkbox.Android
               color={"black"}
-              uncheckedColor={"#ccc"}
+              uncheckedColor={colors.gray}
               status={state.otherPerson ? "checked" : "unchecked"}
               onPress={() =>
                 dispatch(
@@ -243,7 +244,7 @@ const AddPassenger = ({ navigation }) => {
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Checkbox.Android
               color={"black"}
-              uncheckedColor={"#ccc"}
+              uncheckedColor={colors.gray}
               status={state.frontSeat ? "checked" : "unchecked"}
               onPress={() =>
                 dispatch(
@@ -280,7 +281,7 @@ const AddPassenger = ({ navigation }) => {
             marginTop: 20,
             paddingVertical: 19,
             paddingHorizontal: 16,
-            backgroundColor: "#fff",
+            backgroundColor: colors.white,
           }}
         >
           <Text>Bitta orin uchun summa taklif qiling</Text>
@@ -324,7 +325,7 @@ const AddPassenger = ({ navigation }) => {
                 marginBottom: 35,
                 flexDirection: "column",
                 marginTop: 23,
-                backgroundColor: "#FFC847",
+                backgroundColor: colors.brightOrangeTwo,
               },
             ]}
             onPress={onSubmitFrom}
@@ -349,7 +350,7 @@ const AddPassenger = ({ navigation }) => {
 export default AddPassenger;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -364,17 +365,17 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#dcdcdc",
+    borderColor: colors.lightgray,
     borderRadius: 10,
     padding: 14,
     marginTop: 10,
   },
   btnOne: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
-    borderColor: "#DCDCDC",
+    borderColor: colors.lightgray,
     borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
@@ -382,7 +383,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderColor: "#BF9100",
+    borderColor: colors.darkOrange,
     borderRadius: 10,
     borderWidth: 1,
     marginRight: 18,
@@ -391,6 +392,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     marginRight: 20,
-    color: "#8a8a8a",
+    color: colors.darkGray,
   },
 });
