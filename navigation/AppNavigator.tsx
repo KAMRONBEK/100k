@@ -50,6 +50,7 @@ const AppNavigator = () => {
         <Stack.Screen name={routes.ADD_LOAD} component={AddLoad} />
         <Stack.Screen name={routes.ADD_TRANSPORT} component={AddTransport} />
         <Stack.Screen name={routes.EDIT_LOAD} component={EditLoad} />
+        <Stack.Screen name={routes.ONBOARDING} component={OnboardingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

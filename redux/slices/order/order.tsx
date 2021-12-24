@@ -5,108 +5,108 @@ import { Image } from "react-native";
 export type ImageSourcePropType = React.ComponentProps<typeof Image>["source"];
 
 export interface ICreateOrder {
-    fromRegionId?: number;
-    fromRegionName?: string;
+  fromRegionId?: number;
+  fromRegionName?: string;
 
-    fromDistrictId?: number;
-    fromDistrictName?: string;
+  fromDistrictId?: number;
+  fromDistrictName?: string;
 
-    fromAddress?: string;
-    fromNumber?: string;
+  fromAddress?: string;
+  fromNumber?: string;
 
-    toRegionId?: number;
-    toRegionName?: string;
+  toRegionId?: number;
+  toRegionName?: string;
 
-    toDistrictId?: number;
-    toDistrictName?: string;
+  toDistrictId?: number;
+  toDistrictName?: string;
 
-    toAddress?: string;
-    toNumber?: string;
+  toAddress?: string;
+  toNumber?: string;
 
-    cost?: number;
+  cost?: number;
 
-    seatCount?: number;
+  seatCount?: number;
 
-    info?: string;
+  info?: string;
 
-    frontSeat?: boolean;
+  frontSeat?: boolean;
 
-    otherPerson?: boolean;
+  otherPerson?: boolean;
 
-    otherNumber?: string;
+  otherNumber?: string;
 
-    otherName?: string;
+  otherName?: string;
 
-    name?: string;
+  name?: string;
 
-    note?: string;
+  note?: string;
 
-    customerName?: string;
+  customerName?: string;
 
-    customerPhone?: number;
+  customerPhone?: number;
 
-    insurance?: number;
+  insurance?: number;
 
-    matter?: boolean;
+  matter?: boolean;
 
-    costType?: boolean;
+  costType?: boolean;
 
-    transportType?: string;
+  transportType?: string;
 
-    weight?: boolean;
+  weight?: boolean;
 
-    images?: ImageSourcePropType[];
+  images?: ImageSourcePropType[];
 }
 
 const initialState: ICreateOrder = {
-    fromRegionId: 1,
-    fromRegionName: "",
+  fromRegionId: 1,
+  fromRegionName: "",
 
-    fromDistrictId: 0,
-    fromDistrictName: "",
+  fromDistrictId: 0,
+  fromDistrictName: "",
 
-    fromAddress: "",
-    fromNumber: "",
+  fromAddress: "",
+  fromNumber: "",
 
-    toRegionId: 0,
-    toRegionName: "",
+  toRegionId: 0,
+  toRegionName: "",
 
-    toDistrictId: 0,
-    toDistrictName: "",
+  toDistrictId: 0,
+  toDistrictName: "",
 
-    toAddress: "",
-    toNumber: "",
+  toAddress: "",
+  toNumber: "",
 
-    cost: 0,
+  cost: 0,
 
-    seatCount: 0,
+  seatCount: 0,
 
-    info: "",
+  info: "",
 
-    frontSeat: false,
+  frontSeat: false,
 
-    otherPerson: false,
+  otherPerson: false,
 
-    otherNumber: "",
+  otherNumber: "",
 
-    otherName: "",
+  otherName: "",
 
-    transportType: "",
+  transportType: "",
 
-    weight: false,
+  weight: false,
 
-    images: [],
+  images: [],
 };
 
 const orderSlice = createSlice({
-    name: "order",
-    initialState,
-    reducers: {
-        setOrderData: (state, { payload }) => {
-            state = { ...state, ...payload };
-            return state;
-        },
+  name: "order",
+  initialState,
+  reducers: {
+    setOrderData: (state, { payload }) => {
+      state = { ...state, ...payload };
+      return state;
     },
+  },
 });
 
 export const selectOrderState = (state: IRoot) => state && state.order;

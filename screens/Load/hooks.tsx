@@ -16,6 +16,7 @@ export let useLoadHook = () => {
   let myOrder = Object.values(load).filter(
     (item) => item.creator_id == user.id
   );
+  console.log(user, "nmadir");
 
   let dispatch = useDispatch();
   let effect = async () => {

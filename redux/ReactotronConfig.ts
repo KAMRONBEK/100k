@@ -16,5 +16,6 @@ const reactotron = Reactotron.setAsyncStorageHandler!(AsyncStorage) // AsyncStor
     }) // add all built-in react native plugins
     .use(reactotronRedux())
     .connect(); // let's connect!
+    reactotron.log!("connected")
 
 export default reactotron;

@@ -95,7 +95,7 @@ const EditPassanger = ({ navigation }) => {
         toRegionName: currentOrder.to_full_address.split(",")[0],
 
         toDistrictId: currentOrder.to_district_id,
-        toDistrictName: currentOrder.from_full_address.split(",")[1],
+        toDistrictName: currentOrder.to_full_address.split(",")[1],
 
         toAddress: currentOrder.to_address,
         toNumber: "",
@@ -223,7 +223,7 @@ const EditPassanger = ({ navigation }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: "500",
+              fontWeight: "bold",
               marginBottom: 17,
             }}
           >
@@ -361,7 +361,9 @@ const EditPassanger = ({ navigation }) => {
             backgroundColor: "#fff",
           }}
         >
-          <Text>Bitta orin uchun summa taklif qiling</Text>
+          <Text style={{ fontWeight: "bold" }}>
+            Bitta orin uchun summa taklif qiling
+          </Text>
           <TextInput
             value={state.cost?.toString()}
             onChangeText={(e) => dispatch(setOrderData({ cost: e }))}

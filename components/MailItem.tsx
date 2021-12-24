@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { images } from "../assets";
+import { PlusIcon } from "../assets/icons/icons";
 
 export default function MailItem({ item }) {
   console.log("item ", item);
@@ -122,7 +123,6 @@ export default function MailItem({ item }) {
           Amal qilish muddati:
         </Text>
         <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-          {" "}
           {item.expired_at}
         </Text>
       </View>
@@ -144,7 +144,6 @@ export default function MailItem({ item }) {
           Sug'urta summasi:
         </Text>
         <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-          {" "}
           {item.insurance_amount} sum
         </Text>
       </View>
@@ -174,12 +173,23 @@ export default function MailItem({ item }) {
           </View>
         </View>
         <TouchableOpacity style={styles.btn1}>
-          <Image style={{ width: 16.84, height: 16.84 }} source={images.plus} />
+          <View
+            style={{
+              borderWidth: 1,
+              borderRadius: 20,
+              height: 15,
+              width: 15,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <PlusIcon size={16} />
+          </View>
           <Text
             style={{
               marginLeft: 4,
-              fontWeight: "normal",
-              fontSize: 12,
+              fontWeight: "bold",
+              fontSize: 11,
             }}
           >
             QABUL QILISH
@@ -191,13 +201,13 @@ export default function MailItem({ item }) {
 }
 const styles = StyleSheet.create({
   btn1: {
-    borderWidth: 1,
-    borderColor: "#bf9100",
     borderRadius: 8,
     paddingHorizontal: 5,
     paddingVertical: 8,
     backgroundColor: "#FFCD30",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    elevation: 3,
   },
 });
