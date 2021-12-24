@@ -5,6 +5,13 @@ import AppNavigator from "./navigation/AppNavigator";
 import { PersistGate } from "redux-persist/integration/react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FlashMessage from "react-native-flash-message";
+import { Platform, UIManager } from "react-native";
+
+if (Platform.OS === "android") {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 
 const App = () => {
   return (

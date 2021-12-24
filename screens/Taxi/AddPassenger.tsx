@@ -12,6 +12,7 @@ import { TextInputMask } from "react-native-masked-text";
 import { ActivityIndicator, Checkbox } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "../../assets";
+import { LeftArrowIcon, LocationIcon } from "../../assets/icons/icons";
 import SeatSelector from "../../components/SeatSelector";
 import { locationType } from "../../constants/values";
 import { routes } from "../../navigation/routes";
@@ -44,7 +45,7 @@ const AddPassenger = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate(routes.TAB_STACK)}>
-          <Image source={images.leftArrow} />
+          <LeftArrowIcon size={22} />
         </TouchableOpacity>
         <Text style={styles.questionsadd}>Taksiga sorov kiritish</Text>
       </View>
@@ -70,10 +71,9 @@ const AddPassenger = ({ navigation }) => {
             }
             style={styles.btnOne}
           >
-            <Image source={images.location} />
+            <LocationIcon />
             <Text
               style={{
-                marginLeft: 10,
                 color: "#8a8a8a",
                 fontSize: 14,
               }}
@@ -111,10 +111,9 @@ const AddPassenger = ({ navigation }) => {
             }
             style={styles.btnOne}
           >
-            <Image source={images.location} />
+            <LocationIcon />
             <Text
               style={{
-                marginLeft: 10,
                 color: "#8a8a8a",
                 fontSize: 14,
               }}
@@ -355,6 +354,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 16,
     paddingVertical: 20,
+    elevation: 10,
   },
   questionsadd: {
     fontSize: 18,

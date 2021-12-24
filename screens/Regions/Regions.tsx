@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { images } from "../../assets";
+import { LeftArrowIcon } from "../../assets/icons/icons";
 import RegionItem from "../../components/RegionItem";
 import { routes } from "../../navigation/routes";
 import { useRegions } from "./hook";
@@ -28,7 +29,7 @@ const Regions = ({ navigation }) => {
               style={styles.touchableOpacityBox}
               onPress={() => navigation.goBack()}
             >
-              <Image source={images.arrowback} />
+              <LeftArrowIcon />
             </TouchableOpacity>
           </View>
           <Text style={styles.textBox}>Viloyatni tanlang</Text>

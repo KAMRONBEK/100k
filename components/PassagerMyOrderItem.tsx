@@ -204,7 +204,7 @@ const PassagerMyOrderItem = ({ item }: IPassangerProp) => {
             }}
           >
             <TouchableOpacity style={styles.btn1}>
-              <XIcon />
+              <XIcon size={18} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.pensolbutton}

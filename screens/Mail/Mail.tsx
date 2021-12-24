@@ -18,6 +18,7 @@ import {
   FilterIcon,
   GlobeIcon,
   LocationIcon,
+  PlusIcon,
   QuestionsIcon,
   ReverseArrowIcon,
 } from "../../assets/icons/icons";
@@ -147,7 +148,7 @@ const Mail = ({ navigation }) => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "first", title: "Barchasi" },
-    { key: "second", title: "Mening buyurtmalarim" },
+    { key: "second", title: "Mening jo'natmalarim" },
     { key: "third", title: "Ro'yxat" },
     { key: "fourth", title: "Kirim" },
   ]);
@@ -162,21 +163,25 @@ const Mail = ({ navigation }) => {
       >
         <View style={styles.top}>
           <View>
-            <QuestionsIcon size={22} />
+            <TouchableOpacity style={{ padding: 5 }}>
+              <QuestionsIcon size={22} />
+            </TouchableOpacity>
           </View>
           <View>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 18,
                 color: "#000",
-                fontWeight: "400",
+                fontWeight: "bold",
               }}
             >
-              Express pochta(1)
+              Express pochta
             </Text>
           </View>
           <View>
-            <FilterIcon size={22} />
+            <TouchableOpacity style={{ padding: 5 }}>
+              <FilterIcon size={22} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.header}>
@@ -200,19 +205,16 @@ const Mail = ({ navigation }) => {
               scrollEnabled={true}
               indicatorStyle={{
                 backgroundColor: "#047DE8",
-                left: 4,
-                borderWidth: 0.4,
+                left: 11,
+                borderWidth: 0.5,
                 borderColor: "#047de8",
+                marginLeft: -6,
               }}
               tabStyle={{
                 width: "auto",
                 paddingBottom: 2,
-                marginLeft: 20,
-                marginRight: -24,
-                right: 30,
+                marginRight: 10,
               }}
-              activeColor={"#047de8"}
-              inactiveColor={"#8a8a8a"}
               renderLabel={(e) => {
                 return (
                   <View style={styles.tabView}>
@@ -223,10 +225,10 @@ const Mail = ({ navigation }) => {
                       />
                     )}
                     <Text
-                      numberOfLines={1}
+                      // numberOfLines={1}
                       style={{
+                        fontWeight: "bold",
                         fontSize: 13,
-                        paddingHorizontal: 10,
                         color: e.focused ? "#047DE8" : "#8a8a8a",
                       }}
                     >
@@ -244,23 +246,19 @@ const Mail = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate("AdMail")}
         style={{
-          borderColor: "#BF9100",
-          borderWidth: 1,
           position: "absolute",
-          right: 16,
-          bottom: 87,
+          right: 26,
+          bottom: 97,
           alignItems: "center",
           justifyContent: "center",
-          width: 65,
-          height: 65,
+          width: 55,
+          height: 55,
           borderRadius: 65,
           backgroundColor: "#ffcd30",
+          elevation: 2,
         }}
       >
-        <Image
-          style={{ width: 26, height: 26 }}
-          source={require("../../assets/plus2.png")}
-        />
+        <PlusIcon size={35} />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -283,11 +281,11 @@ const styles = StyleSheet.create({
   tabView: {
     flexDirection: "row",
     color: "#8a8a8a",
+    alignItems: "center",
   },
   tabimg: {
     width: 20,
     height: 20,
-    // marginRight: 5,
   },
   top: {
     flexDirection: "row",
