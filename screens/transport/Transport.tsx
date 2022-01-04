@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   View,
@@ -27,6 +28,7 @@ import {
 import TransportItem from "../../components/TransportItem";
 import { colors } from "../../constants/color";
 import { useTransportHook } from "./hooks";
+import { routes as Routes } from "../../navigation/routes";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -81,6 +83,7 @@ const FirstRoute = ({}) => {
 };
 
 const SecondRoute = () => {
+  let [activeIndex, setActiveIndex] = useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
   const { transport, myOrder, useRefresh } = useTransportHook();
 
@@ -144,12 +147,35 @@ const ThirdRoute = () => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
-    ></ScrollView>
+    >
+      <FlatList
+        contentContainerStyle={{
+          flex: 1,
+        }}
+        data={Object.values(transport)}
+        renderItem={({ item }) => <TransportItem item={item} />}
+        ListEmptyComponent={() => (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={images.tarnsport}
+              style={{
+                height: 140,
+                alignItems: "center",
+                width: 140,
+                marginBottom: 80,
+              }}
+            />
+          </View>
+        )}
+      />
+    </ScrollView>
   );
-};
-
-let titleIconMapper = {
-  first: <GlobeIcon />,
 };
 
 const renderScene = SceneMap({
@@ -158,8 +184,15 @@ const renderScene = SceneMap({
   third: ThirdRoute,
 });
 
-const Transport = ({ navigation }) => {
+export interface TransportViewProps {}
+
+let titleIconMapper = {
+  first: <GlobeIcon />,
+};
+
+const Transport = ({}: TransportViewProps) => {
   const layout = useWindowDimensions();
+  let navigation = useNavigation();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "first", title: "Barchasi" },
@@ -289,18 +322,12 @@ const Transport = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View>
-          <Text
-            style={{
-              fontSize: 20,
-              color: colors.black,
-              fontWeight: "400",
-            }}
-          >
-            Transportlar (3)
-          </Text>
+          <Text style={styles.transportText}>Transportlar</Text>
         </View>
         <View>
-          <FilterIcon size={22} />
+          <TouchableOpacity style={{ padding: 5 }}>
+            <FilterIcon size={22} />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.header}>
@@ -322,14 +349,16 @@ const Transport = ({ navigation }) => {
         renderTabBar={(props) => (
           <TabBar
             indicatorStyle={{
-              left: 12,
+              left: 11,
               borderWidth: 0.5,
               borderColor: colors.navyBlue,
               backgroundColor: colors.navyBlue,
+              marginLeft: -6,
             }}
             tabStyle={{
               width: "auto",
               paddingBottom: 2,
+              marginRight: 10,
             }}
             renderLabel={(e) => {
               return (
@@ -337,16 +366,14 @@ const Transport = ({ navigation }) => {
                   {titleIconMapper[e.route.key] && (
                     <GlobeIcon
                       size={22}
-                      color={e.focused ? "#047DE8" : "#8a8a8a"}
+                      color={e.focused ? colors.navyBlue : colors.darkGray}
                     />
                   )}
                   <Text
-                    numberOfLines={1}
                     style={{
+                      fontWeight: "bold",
                       fontSize: 13,
-                      paddingHorizontal: 10,
-
-                      color: colors.navyBlue,
+                      color: e.focused ? colors.navyBlue : colors.darkGray,
                     }}
                   >
                     {e.route.title}
@@ -363,19 +390,8 @@ const Transport = ({ navigation }) => {
         )}
       />
       <TouchableOpacity
-        onPress={() => navigation.navigate("AdTransport")}
-        style={{
-          width: 55,
-          height: 55,
-          borderRadius: 65,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#ffcc33",
-          bottom: 97,
-          position: "absolute",
-          right: 26,
-          elevation: 2,
-        }}
+        onPress={() => navigation.navigate(Routes.ADD_TRANSPORT)}
+        style={styles.touchOpacity}
       >
         <PlusIcon size={35} />
       </TouchableOpacity>
@@ -413,6 +429,7 @@ const styles = StyleSheet.create({
   tabView: {
     flexDirection: "row",
     color: colors.darkGray,
+    alignItems: "center",
   },
   tabimg: {
     width: 20,
@@ -430,5 +447,31 @@ const styles = StyleSheet.create({
   btntext: {
     color: colors.darkGray,
     fontSize: 13,
+  },
+  touchOpacity: {
+    borderColor: colors.darkOrange,
+    position: "absolute",
+    right: 26,
+    bottom: 97,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 55,
+    height: 55,
+    borderRadius: 65,
+    backgroundColor: colors.lightOrange,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  transportText: {
+    fontSize: 18,
+    color: colors.black,
+    fontWeight: "bold",
   },
 });

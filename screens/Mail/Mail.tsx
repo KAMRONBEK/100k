@@ -21,6 +21,10 @@ import {
   FilterIcon,
   GlobeIcon,
   LocationIcon,
+<<<<<<< HEAD
+=======
+  PlusIcon,
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
   QuestionsIcon,
   ReverseArrowIcon,
   UpdateIcon,
@@ -30,10 +34,13 @@ import MailItem from "../../components/MailItem";
 import { colors } from "../../constants/color";
 import { useMailHook } from "./hooks";
 
+<<<<<<< HEAD
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
+=======
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
 const FirstRoute = ({}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const { mail, useRefresh } = useMailHook();
@@ -50,9 +57,12 @@ const FirstRoute = ({}) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
+<<<<<<< HEAD
       {Object.values(mail).map((item) => (
         <MailItem item={item} key={`${item.id}`} />
       ))}
+=======
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
       <FlatList
         contentContainerStyle={{
           flex: 1,
@@ -175,9 +185,13 @@ const FourthRoute = () => (
     </Text>
   </View>
 );
+<<<<<<< HEAD
 let titleIconMapper = {
   first: <GlobeIcon />,
 };
+=======
+
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
@@ -185,6 +199,7 @@ const renderScene = SceneMap({
   fourth: FourthRoute,
 });
 
+<<<<<<< HEAD
 const Mail = ({ navigation }) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -197,6 +212,31 @@ const Mail = ({ navigation }) => {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
+=======
+const wait = (timeout: number) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+export interface MailViewProps {}
+
+let titleIconMapper = {
+  first: <GlobeIcon />,
+};
+
+const Mail = ({}: MailViewProps) => {
+  const layout = useWindowDimensions();
+  let navigation = useNavigation();
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "first", title: "Barchasi" },
+    { key: "second", title: "Mening buyurtmalarim" },
+    { key: "third", title: "Ro'yxat" },
+    { key: "fourth", title: "Kirim" },
+  ]);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -322,6 +362,7 @@ const Mail = ({ navigation }) => {
             </Modal>
             <TouchableOpacity onPress={toggleModal}>
               <QuestionsIcon size={22} />
+<<<<<<< HEAD
             </TouchableOpacity>
           </View>
           <View>
@@ -338,6 +379,18 @@ const Mail = ({ navigation }) => {
           <View>
             <FilterIcon size={22} />
           </View>
+=======
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text style={styles.mailtext}>Express pochta</Text>
+          </View>
+          <View>
+            <TouchableOpacity style={{ padding: 5 }}>
+              <FilterIcon size={22} />
+            </TouchableOpacity>
+          </View>
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
         </View>
         <View style={styles.header}>
           <TouchableOpacity style={styles.btn}>
@@ -360,16 +413,27 @@ const Mail = ({ navigation }) => {
               scrollEnabled={true}
               indicatorStyle={{
                 backgroundColor: colors.navyBlue,
+<<<<<<< HEAD
                 left: 4,
                 borderWidth: 0.4,
                 borderColor: colors.navyBlue,
+=======
+                left: 11,
+                borderWidth: 0.5,
+                borderColor: colors.navyBlue,
+                marginLeft: -6,
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
               }}
               tabStyle={{
                 width: "auto",
                 paddingBottom: 2,
+<<<<<<< HEAD
                 marginLeft: 20,
                 marginRight: -24,
                 right: 30,
+=======
+                marginRight: 10,
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
               }}
               activeColor={colors.navyBlue}
               inactiveColor={colors.darkGray}
@@ -385,8 +449,13 @@ const Mail = ({ navigation }) => {
                     <Text
                       numberOfLines={1}
                       style={{
+<<<<<<< HEAD
                         fontSize: 13,
                         paddingHorizontal: 10,
+=======
+                        fontWeight: "bold",
+                        fontSize: 13,
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
                         color: e.focused ? colors.navyBlue : colors.darkGray,
                       }}
                     >
@@ -406,6 +475,7 @@ const Mail = ({ navigation }) => {
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("AdMail")}
+<<<<<<< HEAD
         style={{
           borderColor: colors.darkOrange,
           borderWidth: 1,
@@ -424,13 +494,22 @@ const Mail = ({ navigation }) => {
           style={{ width: 26, height: 26 }}
           source={require("../../assets/plus2.png")}
         />
+=======
+        style={styles.touchOpacity}
+      >
+        <PlusIcon size={35} />
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   scrollView: {
+<<<<<<< HEAD
     // paddingBottom: 120,
+=======
+    paddingBottom: 120,
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
   },
   btntext: {
     color: colors.darkGray,
@@ -449,6 +528,10 @@ const styles = StyleSheet.create({
   tabView: {
     flexDirection: "row",
     color: colors.darkGray,
+<<<<<<< HEAD
+=======
+    alignItems: "center",
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
   },
   tabimg: {
     width: 20,
@@ -471,5 +554,34 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: "space-between",
   },
+<<<<<<< HEAD
+=======
+  touchOpacity: {
+    borderColor: colors.darkOrange,
+    position: "absolute",
+    right: 26,
+    bottom: 97,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 55,
+    height: 55,
+    borderRadius: 65,
+    backgroundColor: colors.lightOrange,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  mailtext: {
+    fontSize: 18,
+    color: colors.black,
+    fontWeight: "bold",
+  },
+>>>>>>> 5d1b95064c00b66446a5302e86bcdc6c6e1b6795
 });
 export default Mail;
