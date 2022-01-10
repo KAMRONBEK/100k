@@ -9,88 +9,85 @@ import { routes } from "../../navigation/routes";
 import { selectUser } from "../../redux/slices/user/user";
 
 export let useTaxiHook = () => {
-  let navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
-  let taxi = useSelector(selectTaxi);
-  let user = useSelector(selectUser);
-  let myOrder = Object.values(taxi).filter(
-    (item) => item.creator_id == user.id
-  );
+    let navigation = useNavigation();
+    const [loading, setLoading] = useState(false);
+    let taxi = useSelector(selectTaxi);
+    let user = useSelector(selectUser);
+    let myOrder = Object.values(taxi).filter(
+        (item) => item.creator_id == user.id
+    );
 
-  let dispatch = useDispatch();
-  let effect = async () => {
-    try {
-      let res = await requests.taxi.getTaxi();
-      dispatch(setTaxi(res.data.data.reverse()));
-      console.log({ data: res.data });
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-  useEffect(() => {
-    effect();
-  }, []);
+    let dispatch = useDispatch();
+    let effect = async () => {
+        try {
+            let res = await requests.taxi.getTaxi();
+            dispatch(setTaxi(res.data.data.reverse()));
+        } catch (err) {
+            console.log(err.response);
+        }
+    };
+    useEffect(() => {
+        effect();
+    }, []);
 
-  const refreshTaxi = () => {
-    effect();
-  };
+    const refreshTaxi = () => {
+        effect();
+    };
 
-  const createPassanger = async (credentials) => {
-    setLoading(true);
-    try {
-      let res = await requests.taxi.createPassanger(credentials);
-      console.log(res, "new passanger created");
-      showMessage({
-        message: "Zakaz qabul qilindi",
-        type: "success",
-        icon: "success",
-        floating: true,
-      });
-      navigation.goBack();
-    } catch (error) {
-      reactotron.log!(error);
-      showMessage({
-        message: error.message,
-        type: "danger",
-        icon: "danger",
-        floating: true,
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    const createPassanger = async (credentials) => {
+        setLoading(true);
+        try {
+            let res = await requests.taxi.createPassanger(credentials);
+            showMessage({
+                message: "Zakaz qabul qilindi",
+                type: "success",
+                icon: "success",
+                floating: true,
+            });
+            navigation.goBack();
+        } catch (error) {
+            reactotron.log!(error);
+            showMessage({
+                message: error.message,
+                type: "danger",
+                icon: "danger",
+                floating: true,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  const editPassanger = async (credentials, id) => {
-    setLoading(true);
-    try {
-      let res = await requests.taxi.createPassanger(credentials, id);
-      console.log(res, "new passanger created");
-      showMessage({
-        message: "Zakaz qabul qilindi",
-        type: "success",
-        icon: "success",
-        floating: true,
-      });
-      navigation.navigate(routes.PASSENGER);
-    } catch (error) {
-      reactotron.log!(error);
-      showMessage({
-        message: error.message,
-        type: "danger",
-        icon: "danger",
-        floating: true,
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    const editPassanger = async (credentials, id) => {
+        setLoading(true);
+        try {
+            let res = await requests.taxi.createPassanger(credentials, id);
+            showMessage({
+                message: "Zakaz qabul qilindi",
+                type: "success",
+                icon: "success",
+                floating: true,
+            });
+            navigation.navigate(routes.PASSENGER);
+        } catch (error) {
+            reactotron.log!(error);
+            showMessage({
+                message: error.message,
+                type: "danger",
+                icon: "danger",
+                floating: true,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return {
-    taxi,
-    refreshTaxi,
-    createPassanger,
-    loading,
-    editPassanger,
-    myOrder,
-  };
+    return {
+        taxi,
+        refreshTaxi,
+        createPassanger,
+        loading,
+        editPassanger,
+        myOrder,
+    };
 };

@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    //mail
+  //mail
 };
 
 const mailSlice = createSlice({
-    name: "mail",
-    initialState,
-    reducers: {
-        setMail: (state, { payload }) => {
-            state = { ...state, ...payload };
-            //asyncstorage save token
-            return state;
-        },
-        update: (state, { payload }) => {
-            state = { ...state, ...payload };
-            return state;
-        },
+  name: "mail",
+  initialState,
+  reducers: {
+    setMail: (state, { payload }) => {
+      state = { ...state, ...payload };
+      //asyncstorage save token
+      return state;
     },
+    update: (state, { payload }) => {
+      state = { ...state, ...payload };
+      return state;
+    },
+  },
 });
 
 export const selectMail = (state) => state.mail;

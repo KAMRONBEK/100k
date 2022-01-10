@@ -6,6 +6,7 @@ import { images } from "../assets";
 import { colors } from "../constants/color";
 import { locationType } from "../constants/values";
 import { routes } from "../navigation/routes";
+import { setFilterData } from "../redux/slices/filter/filter";
 import { setOrderData } from "../redux/slices/order/order";
 import { updateProfile } from "../redux/slices/user/user";
 
@@ -21,21 +22,33 @@ const DistrictItem = ({ name, id, type, route }: DistrictItemProps) => {
     const dispatch = useDispatch();
 
     let onPress = () => {
-        if (type == locationType.user) {
-            dispatch(
-                updateProfile({
-                    district_name: name,
-                    district_id: id,
-                })
-            );
-        } else {
-            dispatch(
-                setOrderData({
-                    [`${type}DistrictId`]: id,
-                    [`${type}DistrictName`]: name,
-                })
-            );
+        switch (type) {
+            case locationType.user:
+                dispatch(
+                    updateProfile({
+                        district_name: name,
+                        district_id: id,
+                    })
+                );
+                break;
+            case locationType.filterFrom:
+            case locationType.filterTo:
+                dispatch(
+                    setFilterData({
+                        [`${type}DistrictId`]: id,
+                        [`${type}DistrictName`]: name,
+                    })
+                );
+            default:
+                dispatch(
+                    setOrderData({
+                        [`${type}DistrictId`]: id,
+                        [`${type}DistrictName`]: name,
+                    })
+                );
+                break;
         }
+
         // navigation.navigate(routes.ADD_MAIL);
         // navigation.popToTop();
         // navigation.pop().pop;
