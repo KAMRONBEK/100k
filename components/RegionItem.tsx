@@ -6,6 +6,7 @@ import { images } from "../assets";
 import { colors } from "../constants/color";
 import { locationType } from "../constants/values";
 import { routes } from "../navigation/routes";
+import { setFilterData } from "../redux/slices/filter/filter";
 import { setOrderData } from "../redux/slices/order/order";
 import { updateProfile } from "../redux/slices/user/user";
 
@@ -29,16 +30,30 @@ const RegionItem = ({ name, district, id, type, route }: RegionItemProps) => {
     let navigation = useNavigation();
     const dispatch = useDispatch();
     let onPress = () => {
-        if (type == locationType.user) {
-            dispatch(updateProfile({ region_name: name, region_id: id }));
-        } else {
-            dispatch(
-                setOrderData({
-                    [`${type}RegionId`]: id,
-                    [`${type}RegionName`]: name,
-                })
-            );
+        console.log(type);
+
+        switch (type) {
+            case locationType.user:
+                dispatch(updateProfile({ region_name: name, region_id: id }));
+                break;
+            case locationType.filterFrom:
+            case locationType.filterTo:
+                dispatch(
+                    setFilterData({
+                        [`${type}RegionId`]: id,
+                        [`${type}RegionName`]: name,
+                    })
+                );
+            default:
+                dispatch(
+                    setOrderData({
+                        [`${type}RegionId`]: id,
+                        [`${type}RegionName`]: name,
+                    })
+                );
+                break;
         }
+
         navigation.navigate(
             routes.DISTRICT as never,
             {
