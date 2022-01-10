@@ -1,5 +1,7 @@
 export enum locationType {
     from = "from",
     to = "to",
-    user = 'user',
+    user = "user",
+    filterFrom = "filterFrom",
+    filterTo = "filterTo",
 }

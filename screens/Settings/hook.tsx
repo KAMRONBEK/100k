@@ -1,9 +1,14 @@
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
+import { routes } from "../../navigation/routes";
+import {
+    selectUser,
+    updateProfile,
+    updateUser,
+} from "../../redux/slices/user/user";
 import { LayoutAnimation } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { requests } from "../../api/requests";
-import { selectUser, updateProfile } from "../../redux/slices/user/user";
 
 export let useSettingsHook = () => {
     let navigation = useNavigation();

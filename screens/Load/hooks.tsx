@@ -22,7 +22,6 @@ export let useLoadHook = () => {
         try {
             let res = await requests.load.getLoad();
             dispatch(setLoad(res.data.data.reverse()));
-            console.log({ data: res.data });
         } catch (err) {
             console.log(err.response);
         }
@@ -65,7 +64,6 @@ export let useLoadHook = () => {
         setLoading(true);
         try {
             let res = await requests.load.createLoad(credentials, id);
-            console.log(res, "new passanger created");
             showMessage({
                 message: "Zakaz qabul qilindi",
                 type: "success",

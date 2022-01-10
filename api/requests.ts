@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import { showMessage } from "react-native-flash-message";
+import axios, { AxiosError } from "axios";
 import reactotron from "reactotron-react-native";
 import { navigate } from "../navigation/NavigationService";
 import { routes } from "../navigation/routes";
@@ -36,15 +36,13 @@ axios.interceptors.response.use(
             store.dispatch(logoutUser());
             navigate(routes.LOGIN, {});
             return error;
-        } else if (error.response.status !== 401) {
+        } else if (error.reponse.status !== 401) {
             return new Promise((resolve, reject) => {
                 reject(error);
             });
         }
-        console.log("Refreshing token");
         // const token = AsyncStorage.getItem("@token");
         const token = store.getState().user.data;
-        console.log("token in store/storage");
 
         return axios
             .post(`${url}/auth/refresh-token?token=${token}`)

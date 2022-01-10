@@ -5,5 +5,14 @@ import taxi from "./slices/taxi/taxi";
 import transport from "./slices/transport/transport";
 import load from "./slices/load/load";
 import order from "./slices/order/order";
+import filter from "./slices/filter/filter";
 
-export default combineReducers({ user, mail, taxi, order, load, transport });
+export default combineReducers({
+    user,
+    mail,
+    taxi,
+    order,
+    load,
+    transport,
+    filter,
+});

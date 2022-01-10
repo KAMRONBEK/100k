@@ -81,7 +81,6 @@ const EditLoad = ({ navigation }) => {
         let currentOrder = Object.values(load).filter(
             (item) => item.id == id
         )[0];
-        console.log(currentOrder);
 
         dispatch(
             setOrderData({
