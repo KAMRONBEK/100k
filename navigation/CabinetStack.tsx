@@ -13,7 +13,6 @@ let Stack = createNativeStackNavigator();
 
 export const CabinetStack = () => {
     let token = useSelector(selectToken);
-    reactotron.log!({ token }, "token");
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {!token && <Stack.Screen name={routes.LOGIN} component={Login} />}

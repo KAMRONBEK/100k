@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { requests } from "../../api/requests";
 import { selectUser, updateProfile } from "../../redux/slices/user/user";
 
-export let useSettingsHook = () => {
+export let useKuriyerHook = () => {
     let navigation = useNavigation();
     const [loading, setLoading] = useState(false);
     let user = useSelector(selectUser);
@@ -20,9 +20,11 @@ export let useSettingsHook = () => {
                 )
             );
             setLoading(true);
-            let res = await requests.user.updateUser(credentials);
+            let res = await requests.courier.becomeCourier(credentials);
+
             dispatch(updateProfile(res.data.data));
         } catch (err) {
+            console.log(err);
         } finally {
             LayoutAnimation.configureNext(
                 LayoutAnimation.create(
@@ -35,13 +37,13 @@ export let useSettingsHook = () => {
         }
     };
 
-    const saveSetting = (credentials) => {
+    const becomeCourier = (credentials) => {
         effect(credentials);
     };
 
     return {
         user,
-        saveSetting,
+        becomeCourier,
         loading,
     };
 };

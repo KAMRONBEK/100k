@@ -103,7 +103,7 @@ const GetMoney = ({ navigation }) => {
           keyboardType="numeric"
         />
       </View>
-      <View style={{ paddingHorizontal: 31 }}>
+      <View style={styles.buyView}>
         <TouchableOpacity style={styles.btnOne}>
           <Text style={{ textAlign: "center", fontSize: 18 }}>To'lash</Text>
         </TouchableOpacity>
@@ -120,9 +120,9 @@ const GetMoney = ({ navigation }) => {
         </Text>
         <Text
           style={{
-            fontWeight: "500",
+            fontWeight: "bold",
             fontSize: 12,
-            color: colors.black,
+            color: colors.lightOrange,
           }}
         >
           +998 71 800 80 50
@@ -156,19 +156,21 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: colors.darkGray,
-    paddingVertical: 16,
+    paddingVertical: 10,
     paddingHorizontal: 17,
     backgroundColor: colors.white,
     borderRadius: 10,
     fontWeight: "bold",
     marginTop: 13,
   },
+  buyView: {
+    paddingHorizontal: 17,
+  },
   btnOne: {
-    backgroundColor: colors.lightOrangeTwo,
     color: colors.black,
-    fontWeight: "bold",
+    backgroundColor: colors.lightOrangeTwo,
     borderRadius: 10,
+    marginTop: 30,
     paddingVertical: 14,
-    marginTop: 66,
   },
 });

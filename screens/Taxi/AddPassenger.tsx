@@ -420,7 +420,11 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         paddingHorizontal: 16,
         paddingVertical: 20,
-        elevation: 10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
     },
     questionsadd: {
         fontSize: 18,

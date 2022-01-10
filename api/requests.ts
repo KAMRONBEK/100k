@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { showMessage } from "react-native-flash-message";
 import reactotron from "reactotron-react-native";
 import { navigate } from "../navigation/NavigationService";
 import { routes } from "../navigation/routes";
@@ -9,15 +10,14 @@ import { logoutUser } from "../redux/slices/user/user";
 export let url = "https://dev.100k.uz/api";
 
 axios.interceptors.request.use((response) => {
-    if (response.method === "POST") {
-        let form = new FormData();
-        for (let el in response.data) {
-            form.append(el, response.data[el]);
-        }
-        response.data = form;
-    }
+    // if (response.method === "post") {
+    //     let form = new FormData();
+    //     for (let el in response.data) {
+    //         form.append(el, response.data[el]);
+    //     }
+    //     response.data = form;
+    // }
     let token = store.getState().user.data;
-    console.log({ token });
     if (!!token) {
         response.headers = {
             ...response.headers,
@@ -33,7 +33,7 @@ axios.interceptors.response.use(
     },
     (error) => {
         if (error.response.status === 555) {
-            store.dispatch(logoutUser);
+            store.dispatch(logoutUser());
             navigate(routes.LOGIN, {});
             return error;
         } else if (error.response.status !== 401) {
@@ -112,7 +112,11 @@ export let requests = {
     help: {
         getRegions: () => axios.get(`${url}/locations`),
     },
-    // settings: {
-    //     getSettings: () => axios.get(`${url}`)
-    // }
+    courier: {
+        becomeCourier: (credentials) =>
+            axios.post(`${url}/user/become-driver`, credentials),
+    },
+    uploads: {
+        uploadImage: (form) => axios.post(`${url}/upload-file`, form),
+    },
 };
