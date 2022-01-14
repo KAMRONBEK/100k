@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
+    FlatList,
     Image,
     ImageBackground,
     RefreshControl,
@@ -32,6 +33,32 @@ import { routes as Routes } from "../../navigation/routes";
 import { useLoadHook } from "./hooks";
 
 const FirstRoute = () => {
+    const { commonLoad, refreshLoad } = useLoadHook();
+    const [refreshing, setRefreshing] = useState(false);
+    let navigation = useNavigation();
+
+    const onRefresh = React.useCallback(() => {
+        refreshLoad();
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
+    return (
+        <ScrollView
+            contentContainerStyle={styles.scrollView}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
+            <FlatList
+                contentContainerStyle={{ flex: 1 }}
+                data={!!commonLoad ? commonLoad : []}
+                renderItem={({ item }) => <LoadItem item={item} />}
+            />
+        </ScrollView>
+    );
+};
+const SecondRoute = () => {
     const { load, refreshLoad } = useLoadHook();
     const [refreshing, setRefreshing] = useState(false);
     let navigation = useNavigation();
@@ -53,45 +80,17 @@ const FirstRoute = () => {
                     />
                 }
             >
-                {Object.values(load).map((item) => (
-                    <LoadItem item={item} key={`${item.id}`} />
-                ))}
-            </ScrollView>
-        </View>
-    );
-};
-const SecondRoute = () => {
-    const { load, myOrder, refreshLoad } = useLoadHook();
-    const [refreshing, setRefreshing] = useState(false);
-    let navigation = useNavigation();
-
-    const onRefresh = React.useCallback(() => {
-        refreshLoad();
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-
-    return (
-        <View style={styles.container}>
-            <ScrollView
-                contentContainerStyle={styles.scrollView}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
-                }
-            >
-                {Object.values(load).map((item) => (
-                    <LoadItem item={item} key={`${item.id}`} />
-                ))}
+                {/* {!!load &&
+                    load.map((item) => (
+                        <LoadItem item={item} key={`${item.id}`} />
+                    ))} */}
             </ScrollView>
         </View>
     );
 };
 
 const ThirdRoute = () => {
-    const { load, myOrder, refreshLoad } = useLoadHook();
+    const { load, refreshLoad } = useLoadHook();
     const [refreshing, setRefreshing] = useState(false);
     let navigation = useNavigation();
 
@@ -112,9 +111,14 @@ const ThirdRoute = () => {
                     />
                 }
             >
-                {myOrder.map((item) => (
-                    <LoadItem item={item} key={`${item.id}`} editable={true} />
-                ))}
+                {!!load &&
+                    load.map((item) => (
+                        <LoadItem
+                            item={item}
+                            key={`${item.id}`}
+                            editable={true}
+                        />
+                    ))}
             </ScrollView>
         </View>
     );
@@ -312,7 +316,6 @@ const Load = ({ navigation }: PassengerViewProps) => {
                                         />
                                     )}
                                     <Text
-                                        // numberOfLines={1}
                                         style={{
                                             fontSize: 13,
                                             fontWeight: "bold",
@@ -484,5 +487,9 @@ const styles = StyleSheet.create({
     },
     globe: {
         fontSize: 16,
+    },
+    nothingText: {
+        fontSize: 18,
+        color: colors.darkGray,
     },
 });

@@ -1,27 +1,31 @@
-import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
-import { requests } from "../../api/requests";
-import { showMessage, hideMessage } from "react-native-flash-message";
-import reactotron from "reactotron-react-native";
 import { useNavigation } from "@react-navigation/core";
+import { useEffect, useState } from "react";
+import { showMessage } from "react-native-flash-message";
+import { useDispatch, useSelector } from "react-redux";
+import reactotron from "reactotron-react-native";
+import { requests } from "../../api/requests";
 import { routes } from "../../navigation/routes";
+import {
+    selectCommonLoad,
+    selectLoad,
+    setCommonLoad,
+    setLoad,
+} from "../../redux/slices/load/load";
 import { selectUser } from "../../redux/slices/user/user";
-import { selectLoad, setLoad } from "../../redux/slices/load/load";
 
 export let useLoadHook = () => {
+    let load = useSelector(selectLoad);
+    let commonLoad = useSelector(selectCommonLoad);
     let navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-    let load = useSelector(selectLoad);
     let user = useSelector(selectUser);
-    let myOrder = Object.values(load).filter(
-        (item) => item.creator_id == user.id
-    );
-
     let dispatch = useDispatch();
     let effect = async () => {
         try {
             let res = await requests.load.getLoad();
             dispatch(setLoad(res.data.data.reverse()));
+            let resCommon = await requests.load.getCommonLoad();
+            dispatch(setCommonLoad(resCommon.data.data.reverse()));
         } catch (err) {
             console.log(err.response);
         }
@@ -86,10 +90,10 @@ export let useLoadHook = () => {
 
     return {
         load,
+        commonLoad,
         refreshLoad,
         createLoad,
         loading,
         editLoad,
-        myOrder,
     };
 };

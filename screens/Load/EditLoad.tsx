@@ -12,6 +12,7 @@ import {
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "../../assets";
+import { LeftArrowIcon } from "../../assets/icons/icons";
 import LoadSelector from "../../components/LoadSelector";
 import { colors } from "../../constants/color";
 import { locationType } from "../../constants/values";
@@ -116,7 +117,7 @@ const EditLoad = ({ navigation }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate(routes.TAB_STACK)}
                 >
-                    <Image source={images.leftArrow} />
+                    <LeftArrowIcon size={22} />
                 </TouchableOpacity>
                 <Text style={styles.editloadtxt}>Yukni o'zgartirish</Text>
             </View>
@@ -301,10 +302,11 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         paddingHorizontal: 16,
         paddingVertical: 20,
-        shadowColor: "#1a1a1a",
-        shadowOffset: { width: -2, height: 10 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
     },
     input: {
         flex: 1,

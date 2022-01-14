@@ -32,7 +32,6 @@ const MailItem = ({ item, editable }: IMailProp) => {
     let user = useSelector(selectUser);
     let dispatch = useDispatch();
 
-    // const [modalVisible, setModalVisible] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
@@ -46,131 +45,37 @@ const MailItem = ({ item, editable }: IMailProp) => {
     };
 
     return (
-        <View
-            style={{
-                backgroundColor: colors.white,
-                paddingVertical: 21,
-                paddingHorizontal: 16,
-                borderWidth: 0.5,
-                borderColor: colors.gray,
-                marginBottom: 10,
-                borderRadius: 10,
-            }}
-        >
-            <View
-                style={{
-                    paddingBottom: 15,
-                    justifyContent: "space-between",
-                    flexDirection: "row",
-                }}
-            >
-                <View
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "flex-end",
-                    }}
-                >
-                    <Image source={images.coin} />
-                    <Text
-                        style={{
-                            fontWeight: "bold",
-                            fontSize: 15,
-                            marginLeft: 12,
-                        }}
-                    >
-                        {item.cash_amount} sum
-                    </Text>
+        <View style={styles.container}>
+            <View style={styles.boxOrders}>
+                <View style={styles.moneyView}>
+                    <Text style={styles.moneyText}>{item.cash_amount}</Text>
+                    <Text style={styles.cashText}>so'm</Text>
                 </View>
-                <View
-                    style={{
-                        backgroundColor: "#dbfaec",
-                        paddingHorizontal: 10,
-                        padding: 5,
-                        borderRadius: 8,
-                        opacity: 1,
-                    }}
-                >
-                    <Text style={{ color: colors.darkGreen }}>
-                        {item.status}
-                    </Text>
+                <View style={styles.statusView}>
+                    <Text style={styles.statusText}>{item.status_label}</Text>
                 </View>
             </View>
-            <View
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                }}
-            >
-                <View
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        paddingBottom: 5,
-                    }}
-                >
-                    <Image
-                        style={{
-                            width: 10,
-                            height: 10,
-                            marginRight: 12,
-                        }}
-                        source={images.ellipse}
-                    />
-                    <Text style={{ fontSize: 15, fontWeight: "normal" }}>
-                        {item.from_full_address}
+            <View style={styles.addressView}>
+                <View style={styles.imageView}>
+                    <Text style={styles.addressText}>
+                        - {item.from_full_address}
                     </Text>
                 </View>
                 <View>
-                    <Text style={{ color: colors.darkGray, fontSize: 12 }}>
-                        #{item.id}
-                    </Text>
+                    <Text style={styles.idView}>#{item.id}</Text>
                 </View>
             </View>
-
-            <View
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginTop: -5.3,
-                }}
-            >
-                <Image
-                    style={{ width: 10, height: 10, marginRight: 12 }}
-                    source={images.ellipse}
-                />
-                <Text
-                    style={{
-                        fontSize: 15,
-                        fontWeight: "normal",
-                        color: colors.black,
-                    }}
-                >
-                    {item.to_full_address}
+            <View style={styles.toAddressView}>
+                <Text style={styles.toAddressText}>
+                    - {item.to_full_address}
                 </Text>
             </View>
-            <View
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginTop: 21,
-                }}
-            >
-                <Image source={images.clock} />
-                <Text
-                    style={{
-                        marginLeft: 10,
-                        color: colors.darkGray,
-                        fontSize: 15,
-                    }}
-                >
-                    Amal qilish muddati:
-                </Text>
+            {/* <View style={styles.clockView}>
                 <Text style={{ fontWeight: "bold", fontSize: 17 }}>
                     {item.expired_at}
                 </Text>
-            </View>
-            <View
+            </View> */}
+            {/* <View
                 style={{
                     flexDirection: "row",
                     alignItems: "center",
@@ -192,48 +97,22 @@ const MailItem = ({ item, editable }: IMailProp) => {
                 <Text style={{ fontWeight: "bold", fontSize: 17 }}>
                     {item.insurance_amount} sum
                 </Text>
-            </View>
-            <View
-                style={{
-                    borderTopWidth: 1,
-                    borderStyle: "solid",
-                    borderColor: colors.grey,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    paddingHorizontal: 10,
-                    alignItems: "center",
-                }}
-            >
+            </View> */}
+            <View style={styles.avatarView}>
                 <View style={styles.borderBottom}>
                     <View style={styles.avatarwrapper}>
                         <Image
                             source={{ uri: item.creator_avatar }}
-                            style={{
-                                width: 35,
-                                height: 35,
-                                borderRadius: 25,
-                            }}
+                            style={styles.avatarImgBox}
                         />
                         <View>
-                            <Text
-                                style={{
-                                    marginLeft: 10,
-                                    color: "gray",
-                                    fontWeight: "500",
-                                }}
-                            >
+                            <Text style={styles.nameText}>
                                 {!!item.creator_name
                                     ? item.creator_name
                                     : "Anonim"}
                                 {user.id == item.creator_id && " (siz)"}
                             </Text>
-                            <Text
-                                style={{
-                                    marginLeft: 10,
-                                    color: "gray",
-                                    fontWeight: "600",
-                                }}
-                            >
+                            <Text style={styles.creatorAtText}>
                                 {item.created_at}
                             </Text>
                         </View>
@@ -451,35 +330,14 @@ const MailItem = ({ item, editable }: IMailProp) => {
                     ) : (
                         user.id !== item.creator_id && (
                             <>
-                                <View
-                                    style={{
-                                        marginTop: 20,
-                                    }}
-                                >
-                                    <TouchableOpacity style={styles.btn1}>
-                                        <View
-                                            style={{
-                                                borderRadius: 20,
-                                                width: 15,
-                                                height: 15,
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                borderWidth: 1,
-                                            }}
-                                        >
-                                            <PlusIcon size={16} />
-                                        </View>
-                                        <Text
-                                            style={{
-                                                marginLeft: 4,
-                                                fontWeight: "bold",
-                                                fontSize: 11,
-                                            }}
-                                        >
-                                            QABUL QILISH
-                                        </Text>
-                                    </TouchableOpacity>
-                                </View>
+                                <TouchableOpacity style={styles.btn1}>
+                                    <View style={styles.plusView}>
+                                        <PlusIcon size={16} />
+                                    </View>
+                                    <Text style={styles.receiveText}>
+                                        QABUL QILISH
+                                    </Text>
+                                </TouchableOpacity>
                             </>
                         )
                     )}
@@ -492,9 +350,21 @@ const MailItem = ({ item, editable }: IMailProp) => {
 export default MailItem;
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: colors.white,
+        borderColor: colors.gray,
+        paddingVertical: 20,
+        paddingHorizontal: 16,
+        marginBottom: 10,
+        borderRadius: 10,
+    },
+    boxOrders: {
+        marginBottom: 5,
+        justifyContent: "space-between",
+        flexDirection: "row",
+        alignItems: "center",
+    },
     btn1: {
-        borderWidth: 1,
-        marginTop: 10,
         borderColor: colors.darkOrange,
         borderRadius: 8,
         paddingHorizontal: 5,
@@ -503,7 +373,23 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        elevation: 3,
+        marginTop: 13,
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    plusView: {
+        borderRadius: 20,
+        width: 15,
+        height: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
     },
     pensolbutton: {
         borderWidth: 1.5,
@@ -543,10 +429,12 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         flex: 1,
-        paddingTop: 10,
+        // paddingTop: 10,
     },
     avatarwrapper: {
         flexDirection: "row",
+        // borderWidth: 1,
+        marginTop: 10,
     },
     centeredView: {
         flex: 1,
@@ -595,5 +483,101 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         color: colors.black,
         paddingHorizontal: 5,
+    },
+    moneyView: {
+        flexDirection: "row",
+        alignItems: "flex-end",
+    },
+    moneyText: {
+        fontWeight: "bold",
+        fontSize: 18,
+    },
+    cashText: {
+        marginLeft: 5,
+        fontSize: 17,
+        fontWeight: "bold",
+        color: colors.darkGray,
+    },
+    statusView: {
+        backgroundColor: "#dbfaec",
+        paddingHorizontal: 10,
+        padding: 5,
+        borderRadius: 8,
+        opacity: 1,
+    },
+    statusText: {
+        color: colors.darkGreen,
+    },
+    addressView: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
+    imageView: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingBottom: 5,
+    },
+    ellipseBox: {
+        width: 10,
+        height: 10,
+        marginRight: 12,
+    },
+    addressText: {
+        fontSize: 15,
+        fontWeight: "normal",
+    },
+    idView: {
+        color: colors.darkGray,
+        fontSize: 12,
+    },
+    toAddressView: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: -5.3,
+    },
+    toAddressText: {
+        fontSize: 15,
+        fontWeight: "normal",
+        color: colors.black,
+    },
+    clockView: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 21,
+    },
+    validityText: {
+        marginLeft: 10,
+        color: colors.darkGray,
+        fontSize: 15,
+    },
+    avatarView: {
+        borderTopWidth: 1,
+        borderStyle: "solid",
+        borderColor: colors.grey,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        // marginTop: 10,
+    },
+    avatarImgBox: {
+        width: 35,
+        height: 35,
+        borderRadius: 25,
+    },
+    nameText: {
+        marginLeft: 10,
+        color: "gray",
+        fontWeight: "500",
+    },
+    creatorAtText: {
+        marginLeft: 10,
+        color: "gray",
+        fontWeight: "600",
+    },
+    receiveText: {
+        marginLeft: 4,
+        fontWeight: "bold",
+        fontSize: 11,
     },
 });

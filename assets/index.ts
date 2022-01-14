@@ -36,4 +36,12 @@ export const images = {
   frontalTruck: require("./frontal-truck.png"),
   tarnsport: require("./delivery-truck.png"),
   angle: require("./angle.png"),
+  settingimg: require("./settings.png"),
+  billimg: require("./hisob.png"),
+  useImg: require('./use.png'),
+  infoImg: require('./info.png'),
+  supportImg: require('./qollab.png'),
+  biznesImg: require('./biznes.png'),
+  historyImg: require('./history.png'),
+  cameraImg: require('./CameraImage.png')
 };

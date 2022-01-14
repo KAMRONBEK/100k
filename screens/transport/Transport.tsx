@@ -36,7 +36,7 @@ const wait = (timeout) => {
 };
 const FirstRoute = ({}) => {
     const [refreshing, setRefreshing] = React.useState(false);
-    const { transport, useRefresh } = useTransportHook();
+    const { commonTransport, useRefresh } = useTransportHook();
 
     const onRefresh = React.useCallback(() => {
         useRefresh();
@@ -50,14 +50,11 @@ const FirstRoute = ({}) => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
-            {Object.values(transport).map((item) => (
-                <TransportItem item={item} key={`${item.id}`} />
-            ))}
             <FlatList
                 contentContainerStyle={{
                     flex: 1,
                 }}
-                data={Object.values(transport)}
+                data={!!commonTransport ? commonTransport : []}
                 renderItem={({ item }) => <TransportItem item={item} />}
                 ListEmptyComponent={() => (
                     <View
@@ -86,7 +83,7 @@ const FirstRoute = ({}) => {
 const SecondRoute = () => {
     let [activeIndex, setActiveIndex] = useState(0);
     const [refreshing, setRefreshing] = React.useState(false);
-    const { transport, myOrder, useRefresh } = useTransportHook();
+    const { transport, useRefresh } = useTransportHook();
 
     const onRefresh = React.useCallback(() => {
         useRefresh();
@@ -100,14 +97,11 @@ const SecondRoute = () => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
-            {myOrder.map((item) => (
-                <TransportItem item={item} key={`${item.id}`} editable={true} />
-            ))}
             <FlatList
                 contentContainerStyle={{
                     flex: 1,
                 }}
-                data={Object.values(transport)}
+                data={!!transport ? transport : transport}
                 renderItem={({ item }) => <TransportItem item={item} />}
                 ListEmptyComponent={() => (
                     <View
@@ -153,7 +147,7 @@ const ThirdRoute = () => {
                 contentContainerStyle={{
                     flex: 1,
                 }}
-                data={Object.values(transport)}
+                data={!!transport ? transport : []}
                 renderItem={({ item }) => <TransportItem item={item} />}
                 ListEmptyComponent={() => (
                     <View

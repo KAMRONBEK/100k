@@ -5,24 +5,26 @@ import { useNavigation } from "@react-navigation/core";
 import { showMessage } from "react-native-flash-message";
 import reactotron from "reactotron-react-native";
 import {
+    selectCommonTransport,
     selectTransport,
+    setCommonTransport,
     setTransport,
 } from "../../redux/slices/transport/transport";
 import { selectUser } from "../../redux/slices/user/user";
 
 export let useTransportHook = () => {
     let transport = useSelector(selectTransport);
+    let commonTransport = useSelector(selectCommonTransport);
     let navigation = useNavigation();
     const [loading, setLoading] = useState(false);
     let user = useSelector(selectUser);
-    let myOrder = Object.values(transport).filter(
-        (item) => item.creator_id == user.id
-    );
     let dispatch = useDispatch();
     let effect = async () => {
         try {
             let res = await requests.transport.getTransport();
-            return dispatch(setTransport(res.data.data));
+            dispatch(setTransport(res.data.data));
+            let resCommon = await requests.transport.getCommonTransport();
+            dispatch(setCommonTransport(resCommon.data.data));
         } catch (err: any) {
             console.log(err.response.data, "error in mail");
         }
@@ -59,5 +61,5 @@ export let useTransportHook = () => {
             setLoading(false);
         }
     };
-    return { transport, useRefresh, createTransport, loading, myOrder };
+    return { transport, commonTransport, useRefresh, createTransport, loading };
 };

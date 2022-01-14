@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React from "react";
+import React, { useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
 import {
@@ -11,6 +11,7 @@ import { colors } from "../constants/color";
 import { locationType } from "../constants/values";
 import { routes } from "../navigation/routes";
 import { selectFilterState } from "../redux/slices/filter/filter";
+import { generateData } from "./data";
 
 const Filter = ({ route }) => {
     let navigation = useNavigation();
@@ -36,7 +37,7 @@ const Filter = ({ route }) => {
                 <View style={styles.textBox}>
                     <LocationIcon size={22} color={colors.darkGray} />
                     <TouchableOpacity style={styles.bt} onPress={onPressFrom}>
-                        <View>
+                        <View style={styles.addressTexts}>
                             <Text style={styles.btntext}>
                                 {!!state.filterFromRegionName
                                     ? state.filterFromRegionName
@@ -58,7 +59,7 @@ const Filter = ({ route }) => {
                 <View style={styles.textBox}>
                     <LocationIcon size={22} color={colors.darkGray} />
                     <TouchableOpacity style={styles.bt} onPress={onPressTo}>
-                        <View>
+                        <View style={styles.addressTexts}>
                             <Text style={styles.btntext}>
                                 {!!state.filterToRegionName
                                     ? state.filterToRegionName
@@ -82,8 +83,8 @@ export default Filter;
 const styles = StyleSheet.create({
     btntext: {
         fontSize: 13,
-        marginHorizontal: 8,
         color: colors.darkGray,
+        marginLeft: 5,
     },
     btn: {
         borderWidth: 1,
@@ -106,9 +107,14 @@ const styles = StyleSheet.create({
     bt: {
         flexDirection: "row",
         alignItems: "center",
+        paddingHorizontal: 5,
     },
     textBox: {
         paddingHorizontal: 5,
+        alignItems: "center",
+        flexDirection: "row",
+    },
+    addressTexts: {
         alignItems: "center",
         flexDirection: "row",
     },
