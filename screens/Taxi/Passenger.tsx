@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import {
-    Image,
+    FlatList,
     ImageBackground,
     RefreshControl,
     ScrollView,
@@ -18,21 +18,54 @@ import { images } from "../../assets";
 import {
     FilterIcon,
     GlobeIcon,
-    LocationIcon,
     PlusIcon,
     QuestionsIcon,
-    ReverseArrowIcon,
     UpdateIcon,
     UserIcon,
 } from "../../assets/icons/icons";
 import Filter from "../../components/Filter";
-import PassagerMyOrderItem from "../../components/PassagerMyOrderItem";
 import PassangerItem from "../../components/PassangerItem";
 import { colors } from "../../constants/color";
 import { routes as Routes } from "../../navigation/routes";
+import reactotron from "../../redux/ReactotronConfig";
 import { useTaxiHook } from "./hooks";
 
 const FirstRoute = () => {
+    const { commonTaxi, refreshTaxi } = useTaxiHook();
+    const [refreshing, setRefreshing] = useState(false);
+    let navigation = useNavigation();
+
+    const onRefresh = React.useCallback(() => {
+        refreshTaxi();
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
+    return (
+        <ScrollView
+            contentContainerStyle={styles.scrollView}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
+            <FlatList
+                contentContainerStyle={{
+                    flex: 1,
+                }}
+                data={!!commonTaxi ? commonTaxi : []}
+                renderItem={({ item }) => <PassangerItem item={item} />}
+                ListEmptyComponent={() => (
+                    <View style={styles.container}>
+                        <Text style={styles.nothingText}>
+                            Hech Narsa Topilmadi 😕
+                        </Text>
+                    </View>
+                )}
+            />
+        </ScrollView>
+    );
+};
+const SecondRoute = () => {
     const { taxi, refreshTaxi } = useTaxiHook();
     const [refreshing, setRefreshing] = useState(false);
     let navigation = useNavigation();
@@ -54,42 +87,14 @@ const FirstRoute = () => {
                     />
                 }
             >
-                {Object.values(taxi).map((item) => (
-                    <PassangerItem item={item} key={`${item.id}`} />
-                ))}
-            </ScrollView>
-        </View>
-    );
-};
-const SecondRoute = () => {
-    const { taxi, myOrder, refreshTaxi } = useTaxiHook();
-    const [refreshing, setRefreshing] = useState(false);
-    let navigation = useNavigation();
-
-    const onRefresh = React.useCallback(() => {
-        refreshTaxi();
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-
-    return (
-        <View style={styles.container}>
-            <ScrollView
-                contentContainerStyle={styles.scrollView}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
-                }
-            >
-                {myOrder.map((item) => (
-                    <PassangerItem
-                        item={item}
-                        key={`${item.id}`}
-                        editable={true}
-                    />
-                ))}
+                {!!taxi &&
+                    taxi.map((item) => (
+                        <PassangerItem
+                            item={item}
+                            key={`${item.id}`}
+                            editable={true}
+                        />
+                    ))}
             </ScrollView>
         </View>
     );
@@ -135,36 +140,11 @@ const Passenger = ({}: PassengerViewProps) => {
                         testID={"modal"}
                         onBackdropPress={() => setModalVisible(false)}
                         swipeDirection={["up", "left", "right", "down"]}
-                        style={{ justifyContent: "center", margin: 0 }}
+                        style={styles.modal}
                     >
-                        <View
-                            style={{
-                                marginHorizontal: 20,
-                                backgroundColor: colors.white,
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    paddingVertical: 20,
-                                    paddingHorizontal: 20,
-                                    fontWeight: "bold",
-                                    fontSize: 24,
-                                    color: colors.darkBlue,
-                                }}
-                            >
-                                Taksi xizmati
-                            </Text>
-                            <Text
-                                style={{
-                                    fontSize: 15,
-                                    fontWeight: "600",
-                                    lineHeight: 26,
-                                    paddingBottom: 20,
-                                    paddingVertical: 10,
-                                    paddingHorizontal: 20,
-                                    color: colors.darkBlue,
-                                }}
-                            >
+                        <View style={styles.taxiView}>
+                            <Text style={styles.taxiText}>Taksi xizmati</Text>
+                            <Text style={styles.paragraphText}>
                                 Ushbu bo'lim viloyatlar aro odam tashish
                                 xizmatini avtomatlashtirish. Mijozlarga
                                 qulayliklar yaratish uchun tashkil etilgan. Agar
@@ -178,68 +158,30 @@ const Passenger = ({}: PassengerViewProps) => {
                                 ushbu muammolarni barchasini uydan chiqmasdan
                                 hal qilishingiz yordam beradi.
                             </Text>
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    marginVertical: 10,
-                                    marginBottom: 30,
-                                }}
-                            >
+                            <View style={styles.imgView}>
                                 <ImageBackground
                                     source={images.angle}
                                     resizeMode="contain"
-                                    style={{
-                                        width: 50,
-                                        height: 50,
-                                        marginHorizontal: 10,
-                                        marginLeft: 30,
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                    }}
+                                    style={styles.imgBack}
                                 >
                                     <UpdateIcon />
                                 </ImageBackground>
-                                <Text
-                                    style={{
-                                        width: 245,
-                                        fontSize: 12,
-                                        lineHeight: 18,
-                                    }}
-                                >
+                                <Text style={styles.imgText}>
                                     Narxni va ketish vaqtini siz belgilaysiz
                                     haydovchiga maqul kelsa uyingizdan
                                     yuklaringizni bilan olib ketadi. Vaqtingiz
                                     tejaladi.
                                 </Text>
                             </View>
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    marginVertical: 10,
-                                    marginBottom: 30,
-                                }}
-                            >
+                            <View style={styles.userImgView}>
                                 <ImageBackground
                                     source={images.angle}
                                     resizeMode="contain"
-                                    style={{
-                                        width: 50,
-                                        height: 50,
-                                        marginHorizontal: 10,
-                                        marginLeft: 30,
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                    }}
+                                    style={styles.userImgBack}
                                 >
                                     <UserIcon />
                                 </ImageBackground>
-                                <Text
-                                    style={{
-                                        width: 245,
-                                        fontSize: 12,
-                                        lineHeight: 18,
-                                    }}
-                                >
+                                <Text style={styles.userImgText}>
                                     Narxni va ketish vaqtini siz belgilaysiz
                                     haydovchiga maqul kelsa uyingizdan
                                     yuklaringiz bilan olib ketadi. Vaqtingiz
@@ -256,7 +198,7 @@ const Passenger = ({}: PassengerViewProps) => {
                     <Text style={styles.passengerbox}>Yo'lovchilar</Text>
                 </View>
                 <View>
-                    <TouchableOpacity style={{ padding: 5 }}>
+                    <TouchableOpacity style={styles.filterBtn}>
                         <FilterIcon size={22} />
                     </TouchableOpacity>
                 </View>
@@ -443,5 +385,72 @@ const styles = StyleSheet.create({
     tabViewtxt: {
         fontSize: 13,
         color: colors.navyBlue,
+    },
+    modal: {
+        justifyContent: "center",
+        margin: 0,
+    },
+    taxiView: {
+        marginHorizontal: 20,
+        backgroundColor: colors.white,
+    },
+    taxiText: {
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        fontWeight: "bold",
+        fontSize: 24,
+        color: colors.darkBlue,
+    },
+    paragraphText: {
+        fontSize: 15,
+        fontWeight: "600",
+        lineHeight: 26,
+        paddingBottom: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        color: colors.darkBlue,
+    },
+    imgView: {
+        flexDirection: "row",
+        marginVertical: 10,
+        marginBottom: 30,
+    },
+    imgBack: {
+        width: 50,
+        height: 50,
+        marginHorizontal: 10,
+        marginLeft: 30,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    imgText: {
+        width: 245,
+        fontSize: 12,
+        lineHeight: 18,
+    },
+    userImgView: {
+        flexDirection: "row",
+        marginVertical: 10,
+        marginBottom: 30,
+    },
+    userImgBack: {
+        width: 50,
+        height: 50,
+        marginHorizontal: 10,
+        marginLeft: 30,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    userImgText: {
+        width: 245,
+        fontSize: 12,
+        lineHeight: 18,
+    },
+    filterBtn: {
+        padding: 5,
+    },
+    nothingText: {
+        fontSize: 18,
+        color: colors.darkGray,
     },
 });

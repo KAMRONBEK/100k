@@ -17,39 +17,10 @@ import { ActivityIndicator, Checkbox } from "react-native-paper";
 import { locationType } from "../../constants/values";
 import { colors } from "../../constants/color";
 import { LeftArrowIcon } from "../../assets/icons/icons";
+import MailSelector from "../../components/MailSelector";
+import { TextInputMask } from "react-native-masked-text";
 
 const AdMail = ({ navigation }) => {
-    const [type, setType] = useState("#fff");
-    const [typeOne, setTypeOne] = useState("#fff");
-    const [typeTwo, setTypeTwo] = useState("#fff");
-    const Change = () => {
-        if (type === "#fff") {
-            setType("#FFCD30");
-            setTypeOne("#fff");
-            setTypeTwo("#fff");
-        } else if (type === "#FFCD30") {
-            setType("#fff");
-        }
-    };
-    const ChangeOne = () => {
-        if (typeOne === "#fff") {
-            setTypeOne("#FFCD30");
-            setType("#fff");
-            setTypeTwo("#fff");
-        } else if (typeOne === "#FFCD30") {
-            setTypeOne("#fff");
-        }
-    };
-    const ChangeTwo = () => {
-        if (typeTwo === "#fff") {
-            setTypeTwo("#FFCD30");
-            setType("#fff");
-            setTypeOne("#fff");
-        } else if (typeTwo === "#FFCD30") {
-            setTypeTwo("#fff");
-        }
-    };
-
     const state = useSelector(selectOrderState);
 
     const dispatch = useDispatch();
@@ -59,22 +30,22 @@ const AdMail = ({ navigation }) => {
         createMail({
             from_region_id: state.fromRegionId,
             from_district_id: state.fromDistrictId,
-            from_address: state.fromAddress,
             to_region_id: state.toRegionId,
             to_district_id: state.toDistrictId,
+            from_address: state.fromFullAddress,
             to_address: state.toAddress,
-            note: state.info,
+            note: state.note,
             cash_amount: state.cost,
             delivery_fee_amount: state.cost,
-            recipient_phone: state.customerPhone,
+            creator_phone: state.creatorPhone,
             recipient_name: state.customerName,
+            recipient_phone: state.recipientPhone,
             client_name: state.name,
             insurance_amount: state.insurance,
             matter: state.matter,
             vehicle_type: state.vehicleType,
         });
     };
-
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -85,135 +56,12 @@ const AdMail = ({ navigation }) => {
                 </TouchableOpacity>
                 <Text style={styles.mailText}>Pochta qo’shish</Text>
             </View>
-            {/* <View style={{ marginTop: 32, paddingHorizontal: 16 }}>
-        <Text style={{ fontSize: 16, fontWeight: "500" }}>
-          Qachon olish va yetkazib berish?
-        </Text>
-        <View style={{ marginTop: 18, flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => {
-              Handle();
-            }}
-            style={[styles.btn, { backgroundColor: color }]}
-          >
-            <Text>Hoziroq</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              HandleOne();
-            }}
-            style={[styles.btn, { marginLeft: 20, backgroundColor: colorOne }]}
-          >
-            <Text>Vaqtincha belgilash</Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
-            <View style={{ marginTop: 20, paddingHorizontal: 16 }}>
-                <Text
-                    style={{
-                        fontWeight: "bold",
-                        fontSize: 15,
-                        paddingHorizontal: 3,
-                    }}
-                >
-                    Nimadan yetqazish?
-                </Text>
-                <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    style={{ marginTop: 10 }}
-                >
-                    <TouchableOpacity
-                        onPress={() => {
-                            Change();
-                        }}
-                        style={[
-                            styles.btn,
-                            { paddingHorizontal: 15, backgroundColor: type },
-                        ]}
-                    >
-                        <Text
-                            onPress={() =>
-                                dispatch(
-                                    setOrderData({
-                                        vehicleType: "Yengil avtomobilda",
-                                    })
-                                )
-                            }
-                        >
-                            Yengil avtomobilda
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => {
-                            ChangeOne();
-                        }}
-                        style={[
-                            styles.btn,
-                            {
-                                paddingHorizontal: 15,
-                                marginLeft: 10,
-                                backgroundColor: typeOne,
-                            },
-                        ]}
-                    >
-                        <Text
-                            onPress={() =>
-                                dispatch(
-                                    setOrderData({
-                                        vehicleType: "Yuk mashinasida",
-                                    })
-                                )
-                            }
-                        >
-                            Yuk mashinasida
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => {
-                            ChangeTwo();
-                        }}
-                        style={[
-                            styles.btn,
-                            {
-                                paddingHorizontal: 15,
-                                marginLeft: 10,
-                                backgroundColor: typeTwo,
-                            },
-                        ]}
-                    >
-                        <Text
-                            onPress={() =>
-                                dispatch(
-                                    setOrderData({ vehicleType: "Piyoda" })
-                                )
-                            }
-                        >
-                            Piyoda
-                        </Text>
-                    </TouchableOpacity>
-                </ScrollView>
-            </View>
-            <View
-                style={{
-                    paddingBottom: 19,
-                    paddingHorizontal: 16,
-                    backgroundColor: colors.white,
-                    marginTop: 20,
-                    paddingTop: 19,
-                }}
-            >
-                <Text
-                    style={{
-                        fontSize: 18,
-                        marginBottom: 10,
-                        fontWeight: "bold",
-                    }}
-                >
-                    Qayerdan/olish
-                </Text>
+            <MailSelector
+                value={state.vehicleType}
+                setValue={(e) => dispatch(setOrderData({ vehicleType: e }))}
+            />
+            <View style={styles.whereGived}>
+                <Text style={styles.whereGivedText}>Qayerdan/olish</Text>
                 <TouchableOpacity
                     onPress={() =>
                         navigation.navigate(routes.REGION, {
@@ -224,16 +72,10 @@ const AdMail = ({ navigation }) => {
                     style={styles.btnOne}
                 >
                     <Image source={images.location} />
-                    <Text
-                        style={{
-                            marginLeft: 10,
-                            color: colors.darkGray,
-                            fontSize: 14,
-                        }}
-                    >
+                    <Text style={styles.locationText}>
                         {!!state.fromRegionName
                             ? state.fromRegionName
-                            : "Viloyat"}{" "}
+                            : "Viloyat"}
                         ,
                         {!!state.fromDistrictName
                             ? state.fromDistrictName
@@ -256,14 +98,18 @@ const AdMail = ({ navigation }) => {
                     keyboardType="default"
                     placeholder="Yuboruvchi Ismi"
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder={"+998"}
-                    value={state.otherNumber!}
+                <TextInputMask
+                    type={"custom"}
+                    options={{
+                        mask: "+999 99 999 99 99",
+                    }}
+                    value={state.creatorPhone}
                     onChangeText={(e) =>
-                        dispatch(setOrderData({ otherNumber: e }))
+                        dispatch(setOrderData({ creatorPhone: e }))
                     }
+                    style={[styles.input, { backgroundColor: colors.white }]}
                     keyboardType="phone-pad"
+                    placeholder="+998"
                 />
             </View>
             <View
@@ -286,7 +132,7 @@ const AdMail = ({ navigation }) => {
                 </Text>
                 <TouchableOpacity
                     onPress={() =>
-                        navigation.navigate("Region", {
+                        navigation.navigate(routes.REGION, {
                             type: locationType.to,
                             route: routes.ADD_MAIL,
                         })
@@ -301,8 +147,7 @@ const AdMail = ({ navigation }) => {
                             fontSize: 14,
                         }}
                     >
-                        {!!state.toRegionName ? state.toRegionName : "Viloyat"}{" "}
-                        ,
+                        {!!state.toRegionName ? state.toRegionName : "Viloyat"},
                         {!!state.toDistrictName
                             ? state.toDistrictName
                             : "tuman"}
@@ -326,14 +171,18 @@ const AdMail = ({ navigation }) => {
                     keyboardType="default"
                     placeholder="Mijoz"
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder={"+998"}
-                    value={state.customerPhone!}
+                <TextInputMask
+                    type={"custom"}
+                    options={{
+                        mask: "+999 99 999 99 99",
+                    }}
+                    value={state.recipientPhone}
                     onChangeText={(e) =>
-                        dispatch(setOrderData({ customerPhone: e }))
+                        dispatch(setOrderData({ recipientPhone: e }))
                     }
+                    style={[styles.input, { backgroundColor: colors.white }]}
                     keyboardType="phone-pad"
+                    placeholder="+998"
                 />
             </View>
             <View
@@ -395,25 +244,6 @@ const AdMail = ({ navigation }) => {
                     </Text>
                 </View>
                 <View style={{ marginTop: 14 }}>
-                    {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Checkbox.Android
-              color={"black"}
-              uncheckedColor={"#ccc"}
-              status={frontSeat ? "checked" : "unchecked"}
-              onPress={() => setFrontSeat(!frontSeat)}
-            />
-            <TouchableOpacity onPress={() => setFrontSeat(!frontSeat)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: "600",
-                  marginLeft: 12,
-                }}
-              >
-                Katta hajimdagi jo’natma
-              </Text>
-            </TouchableOpacity>
-          </View> */}
                     <View>
                         <Text style={{ fontWeight: "bold", fontSize: 16 }}>
                             Qo'shimcha ma'lumot
@@ -489,6 +319,7 @@ const AdMail = ({ navigation }) => {
                                     dispatch(setOrderData({ insurance: e }))
                                 }
                                 keyboardType="numeric"
+                                placeholder="Narxi"
                             />
                             <Text
                                 style={{
@@ -519,7 +350,7 @@ const AdMail = ({ navigation }) => {
                 }}
             >
                 <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-                    Buyurtma summasini taklif qiling
+                    Yetkazib berish narxi *
                 </Text>
                 <TextInput
                     value={state.cost?.toString()}
@@ -557,15 +388,21 @@ const AdMail = ({ navigation }) => {
                             flexDirection: "column",
                             marginTop: 23,
                             backgroundColor: colors.orange,
+                            shadowColor: "#000",
+                            shadowOffset: { width: 0, height: 1 },
+                            shadowOpacity: 0.8,
+                            shadowRadius: 2,
+                            elevation: 5,
                         },
                     ]}
                     onPress={onSubmitFrom}
                 >
                     <Text
                         style={{
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: "500",
                             textAlign: "center",
+                            textTransform: "uppercase",
                         }}
                     >
                         {loading ? <ActivityIndicator /> : "Yuborish"}
@@ -585,6 +422,11 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         paddingHorizontal: 16,
         paddingVertical: 20,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
     },
     mailText: {
         fontSize: 18,
@@ -617,7 +459,7 @@ const styles = StyleSheet.create({
     btnOne: {
         backgroundColor: colors.white,
         paddingHorizontal: 16,
-        paddingVertical: 14,
+        paddingVertical: 10,
         borderRadius: 10,
         borderColor: colors.lightgray,
         borderWidth: 1,
@@ -635,5 +477,22 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         marginRight: 20,
         color: colors.darkGray,
+    },
+    whereGived: {
+        paddingBottom: 19,
+        paddingHorizontal: 16,
+        backgroundColor: colors.white,
+        marginTop: 20,
+        paddingTop: 19,
+    },
+    whereGivedText: {
+        fontSize: 18,
+        marginBottom: 10,
+        fontWeight: "bold",
+    },
+    locationText: {
+        marginLeft: 10,
+        color: colors.darkGray,
+        fontSize: 14,
     },
 });

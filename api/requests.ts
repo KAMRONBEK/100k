@@ -1,7 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { showMessage } from "react-native-flash-message";
-import axios, { AxiosError } from "axios";
-import reactotron from "reactotron-react-native";
+import axios from "axios";
 import { navigate } from "../navigation/NavigationService";
 import { routes } from "../navigation/routes";
 import { store } from "../redux/configureStore";
@@ -36,7 +33,7 @@ axios.interceptors.response.use(
             store.dispatch(logoutUser());
             navigate(routes.LOGIN, {});
             return error;
-        } else if (error.reponse.status !== 401) {
+        } else if (error.response.status !== 401) {
             return new Promise((resolve, reject) => {
                 reject(error);
             });
@@ -49,7 +46,9 @@ axios.interceptors.response.use(
             .then(({ data }) => {
                 const config = error.config;
                 store.dispatch(update({ data: data.token }));
-                config.headers = { Authorization: `Bearer ${data.token}` };
+                config.headers = {
+                    Authorization: `Bearer ${data.token}`,
+                };
                 return new Promise((resolve, reject) => {
                     axios
                         .request(config)
@@ -82,9 +81,10 @@ export let requests = {
             axios.post(`${url}/user/update`, credentials),
     },
     mail: {
-        getMail: (status = "") => axios.get(`${url}/user/packages`),
+        getMail: () => axios.get(`${url}/user/packages`),
         createMail: (credentials) =>
             axios.post(`${url}/user/packages`, credentials),
+        getCommonMail: () => axios.get(`${url}/packages`),
     },
     transport: {
         getTransport: (status = "") => axios.get(`${url}/driver/transports`),
@@ -92,6 +92,7 @@ export let requests = {
             axios.post(`${url}/driver/transports`, credentials),
         deleteTransport: (credentials, id) =>
             axios.post(`${url}/driver/transport/${id}`, credentials),
+        getCommonTransport: () => axios.get(`${url}/transports`),
     },
     taxi: {
         getTaxi: () => axios.get(`${url}/user/caborders`),
@@ -99,6 +100,7 @@ export let requests = {
             axios.post(`${url}/user/caborders`, credentials),
         editPassanger: (credentials, id) =>
             axios.post(`${url}/user/caborders/${id}`, credentials),
+        getCommonTaxi: () => axios.get(`${url}/caborders`),
     },
     load: {
         getLoad: () => axios.get(`${url}/user/cargo`),
@@ -106,6 +108,7 @@ export let requests = {
             axios.post(`${url}/user/cargo`, credentials),
         editLoad: (credentials, id) =>
             axios.post(`${url}/user/cargo/${id}`, credentials),
+        getCommonLoad: () => axios.get(`${url}/cargo`),
     },
     help: {
         getRegions: () => axios.get(`${url}/locations`),

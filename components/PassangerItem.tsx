@@ -43,6 +43,7 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
     const toggleModalTwo = () => {
         setIsModalVisibleTwo(!isModalVisibleTwo);
     };
+
     return (
         <>
             <View
@@ -115,19 +116,11 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                     <View
                         style={{ flexDirection: "row", alignItems: "center" }}
                     >
-                        <Image
-                            style={{ width: 10, height: 10, marginRight: 12 }}
-                            source={images.ellipse}
-                        />
                         <Text style={{ fontSize: 15, fontWeight: "normal" }}>
                             {item.from_full_address}
                         </Text>
                     </View>
                 </View>
-                <Image
-                    style={{ height: 17, marginLeft: 4, marginTop: -5 }}
-                    source={images.lines}
-                ></Image>
                 <View
                     style={{
                         flexDirection: "row",
@@ -135,15 +128,12 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                         marginTop: -5.3,
                     }}
                 >
-                    <Image
-                        style={{ width: 10, height: 10, marginRight: 12 }}
-                        source={images.lines}
-                    />
                     <Text
                         style={{
                             fontSize: 15,
                             fontWeight: "normal",
                             color: colors.black,
+                            marginTop: 10,
                         }}
                     >
                         {item.to_full_address}
@@ -225,7 +215,6 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                                         ? item.creator_name
                                         : "Anonim"}
                                     {user.id == item.creator_id && " (siz)"}
-                                    {/* {user.id == item.creator_id ? "( siz)" : " (begona)"} */}
                                 </Text>
                                 <Text
                                     style={{

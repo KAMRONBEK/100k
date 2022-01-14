@@ -96,7 +96,7 @@ const AddLoad = ({ navigation }) => {
                         <Text style={styles.distaktor}>
                             {!!state.toRegionName
                                 ? state.toRegionName
-                                : "Viloyat"}{" "}
+                                : "Viloyat"}
                             ,
                             {!!state.toDistrictName
                                 ? state.toDistrictName

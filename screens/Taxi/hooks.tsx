@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setTaxi, selectTaxi, update } from "../../redux/slices/taxi/taxi";
+import {
+    setTaxi,
+    selectTaxi,
+    update,
+    selectCommonTaxi,
+    setCommonTaxi,
+} from "../../redux/slices/taxi/taxi";
 import React, { useEffect, useState } from "react";
 import { requests } from "../../api/requests";
 import { showMessage, hideMessage } from "react-native-flash-message";
@@ -9,21 +15,23 @@ import { routes } from "../../navigation/routes";
 import { selectUser } from "../../redux/slices/user/user";
 
 export let useTaxiHook = () => {
+    let taxi = useSelector(selectTaxi);
+    let commonTaxi = useSelector(selectCommonTaxi);
     let navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-    let taxi = useSelector(selectTaxi);
-    let user = useSelector(selectUser);
-    let myOrder = Object.values(taxi).filter(
-        (item) => item.creator_id == user.id
-    );
-
     let dispatch = useDispatch();
+    let user = useSelector(selectUser);
+    // let myOrder = Object.values(taxi).filter(
+    //     (item) => item.creator_id == user.id
+    // );
     let effect = async () => {
         try {
             let res = await requests.taxi.getTaxi();
-            dispatch(setTaxi(res.data.data.reverse()));
-        } catch (err) {
-            console.log(err.response);
+            dispatch(setTaxi(res.data.data));
+            let resCommon = await requests.taxi.getCommonTaxi();
+            dispatch(setCommonTaxi(resCommon.data.data));
+        } catch (err: any) {
+            console.log(err.response.data, "error in mail");
         }
     };
     useEffect(() => {
@@ -84,10 +92,10 @@ export let useTaxiHook = () => {
 
     return {
         taxi,
+        commonTaxi,
         refreshTaxi,
         createPassanger,
         loading,
         editPassanger,
-        myOrder,
     };
 };
