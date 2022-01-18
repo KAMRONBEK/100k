@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import {
+    Dimensions,
     Image,
     StyleSheet,
     Text,
@@ -12,6 +13,7 @@ import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "../assets";
 import {
+    CallIcon,
     CheckedIcon,
     LeftArrowIcon,
     PensolIcon,
@@ -31,15 +33,22 @@ const TransportItem = ({ item, editable }: ITransportProp) => {
     let user = useSelector(selectUser);
     let navigation = useNavigation();
     let dispatch = useDispatch();
-    const [isModalVisible, setModalVisible] = useState(false);
 
+    const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
     const toggleModal = () => {
-        setModalVisible(!isModalVisible);
+        setDeleteModalVisibility(!deleteModalVisibility);
     };
-    const [isModalVisibleTwo, setModalVisibleTwo] = useState(false);
 
+    const [checkedModalVisibility, setCheckedModalVisibility] = useState(false);
     const toggleModalTwo = () => {
-        setModalVisibleTwo(!isModalVisibleTwo);
+        setCheckedModalVisibility(!checkedModalVisibility);
+    };
+
+    const [isModalVisibleAccept, setModalVisibleAccept] = useState(false);
+    const toggleAcceptanceModal = () => {
+        if (user.is_deliveryman == false) {
+            setModalVisibleAccept(!isModalVisibleAccept);
+        }
     };
 
     return (
@@ -232,10 +241,10 @@ const TransportItem = ({ item, editable }: ITransportProp) => {
                             >
                                 <View>
                                     <Modal
-                                        isVisible={isModalVisible}
+                                        isVisible={deleteModalVisibility}
                                         testID={"modal"}
                                         onBackdropPress={() =>
-                                            setModalVisible(false)
+                                            setDeleteModalVisibility(false)
                                         }
                                         swipeDirection={[
                                             "up",
@@ -323,17 +332,11 @@ const TransportItem = ({ item, editable }: ITransportProp) => {
                                 </TouchableOpacity>
                                 <View>
                                     <Modal
-                                        isVisible={isModalVisibleTwo}
+                                        isVisible={checkedModalVisibility}
                                         testID={"modal"}
                                         onBackdropPress={() =>
-                                            setModalVisibleTwo(false)
+                                            setCheckedModalVisibility(false)
                                         }
-                                        swipeDirection={[
-                                            "up",
-                                            "left",
-                                            "right",
-                                            "down",
-                                        ]}
                                         style={{
                                             justifyContent: "flex-end",
                                             margin: 0,
@@ -443,35 +446,84 @@ const TransportItem = ({ item, editable }: ITransportProp) => {
                         ) : (
                             user.id !== item.creator_id && (
                                 <>
-                                    <View
+                                    <Modal
+                                        isVisible={isModalVisibleAccept}
+                                        testID={"modal"}
+                                        swipeDirection={[
+                                            "right",
+                                            "down",
+                                            "left",
+                                        ]}
+                                        swipeThreshold={
+                                            Dimensions.get("window").width / 2
+                                        }
+                                        onSwipeComplete={() => {
+                                            setModalVisibleAccept(false);
+                                        }}
                                         style={{
-                                            marginTop: 20,
+                                            justifyContent: "center",
+                                            margin: 0,
                                         }}
                                     >
-                                        <TouchableOpacity style={styles.btn1}>
+                                        <View
+                                            style={{
+                                                flex: 1,
+                                                backgroundColor: colors.white,
+                                                paddingHorizontal: 25,
+                                                alignItems: "center",
+                                                justifyContent: "space-between",
+                                            }}
+                                        >
                                             <View
-                                                style={{
-                                                    borderRadius: 20,
-                                                    width: 15,
-                                                    height: 15,
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    borderWidth: 1,
-                                                }}
+                                                style={styles.expressImageView}
                                             >
-                                                <PlusIcon size={16} />
+                                                <Image
+                                                    source={images.bee}
+                                                    style={styles.beeImage}
+                                                />
+                                                <Text
+                                                    style={styles.expressText}
+                                                >
+                                                    100k Express
+                                                </Text>
+                                                <Text style={styles.paragraph}>
+                                                    Haydovchi sifatida siz ham
+                                                    yuk, ham yo'lovchi tashish
+                                                    transport vositalarni
+                                                    qo'shishingiz mumkin. Ushbu
+                                                    xizmatdan foydalanish uchun
+                                                    Kuryer bo'lib ro'yxatdan
+                                                    o'ting
+                                                </Text>
                                             </View>
-                                            <Text
-                                                style={{
-                                                    marginLeft: 4,
-                                                    fontWeight: "bold",
-                                                    fontSize: 11,
-                                                }}
+                                            <TouchableOpacity
+                                                style={styles.getCourier}
+                                                activeOpacity={0.8}
+                                                onPress={() =>
+                                                    navigation.navigate(
+                                                        routes.COURIER
+                                                    )
+                                                }
                                             >
-                                                QABUL QILISH
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                                <Text
+                                                    style={
+                                                        styles.getCourierText
+                                                    }
+                                                >
+                                                    Kuryer bo'lish
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </Modal>
+                                    <TouchableOpacity
+                                        style={styles.btn1}
+                                        onPress={toggleAcceptanceModal}
+                                    >
+                                        <CallIcon size={10} />
+                                        <Text style={styles.receiveText}>
+                                            Bog'lanish
+                                        </Text>
+                                    </TouchableOpacity>
                                 </>
                             )
                         )}
@@ -482,7 +534,6 @@ const TransportItem = ({ item, editable }: ITransportProp) => {
     );
 };
 export default TransportItem;
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -491,14 +542,22 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     btn1: {
-        borderWidth: 1,
         borderColor: colors.darkOrange,
         borderRadius: 8,
-        paddingHorizontal: 5,
-        paddingVertical: 8,
+        paddingHorizontal: 10,
+        paddingVertical: 9,
         backgroundColor: colors.lightOrange,
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "center",
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     pensolbutton: {
         borderWidth: 1.5,
@@ -605,5 +664,60 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 5,
         borderRadius: 7,
+    },
+    expressImageView: {
+        alignItems: "center",
+        paddingHorizontal: 20,
+        marginTop: 70,
+    },
+    beeImage: {
+        marginVertical: 15,
+        marginTop: 20,
+        width: 90,
+        height: 90,
+    },
+    expressText: {
+        color: colors.black,
+        fontWeight: "bold",
+        fontSize: 20,
+        paddingBottom: 30,
+    },
+    paragraph: {
+        width: 280,
+        textAlign: "center",
+        fontSize: 20,
+        color: colors.darkGray,
+    },
+    getCourier: {
+        backgroundColor: colors.lightOrange,
+        paddingHorizontal: 98,
+        paddingVertical: 14,
+        borderRadius: 10,
+        marginVertical: 40,
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    getCourierText: {
+        color: colors.black,
+        fontSize: 16,
+    },
+    receiveText: {
+        marginLeft: 4,
+        fontSize: 11,
+        textTransform: "uppercase",
+    },
+    plusView: {
+        borderRadius: 20,
+        width: 15,
+        height: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
     },
 });

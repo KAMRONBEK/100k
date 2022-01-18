@@ -21,9 +21,6 @@ export let useTaxiHook = () => {
     const [loading, setLoading] = useState(false);
     let dispatch = useDispatch();
     let user = useSelector(selectUser);
-    // let myOrder = Object.values(taxi).filter(
-    //     (item) => item.creator_id == user.id
-    // );
     let effect = async () => {
         try {
             let res = await requests.taxi.getTaxi();

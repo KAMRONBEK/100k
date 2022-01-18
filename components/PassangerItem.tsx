@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
     Alert,
+    Dimensions,
     Image,
     Pressable,
     StyleSheet,
@@ -32,16 +33,22 @@ interface IPassangerProp {
 const PassangerItem = ({ item, editable }: IPassangerProp) => {
     let user = useSelector(selectUser);
     let navigation = useNavigation();
-    const [isModalVisible, setModalVisible] = useState(false);
 
+    const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
     const toggleModal = () => {
-        setModalVisible(!isModalVisible);
+        setDeleteModalVisibility(!deleteModalVisibility);
     };
 
-    const [isModalVisibleTwo, setIsModalVisibleTwo] = useState(false);
-
+    const [checkedModalVisibility, setCheckedModalVisibility] = useState(false);
     const toggleModalTwo = () => {
-        setIsModalVisibleTwo(!isModalVisibleTwo);
+        setCheckedModalVisibility(!checkedModalVisibility);
+    };
+
+    const [isModalVisibleAccept, setModalVisibleAccept] = useState(false);
+    const toggleAcceptanceModal = () => {
+        if (user.is_deliveryman == false) {
+            setModalVisibleAccept(!isModalVisibleAccept);
+        }
     };
 
     return (
@@ -237,16 +244,10 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                             >
                                 <View>
                                     <Modal
-                                        isVisible={isModalVisible}
+                                        isVisible={deleteModalVisibility}
                                         testID={"modal"}
-                                        swipeDirection={[
-                                            "up",
-                                            "left",
-                                            "right",
-                                            "down",
-                                        ]}
                                         onBackdropPress={() =>
-                                            setModalVisible(false)
+                                            setDeleteModalVisibility(false)
                                         }
                                         style={{
                                             justifyContent: "center",
@@ -334,16 +335,10 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                                 </TouchableOpacity>
                                 <View>
                                     <Modal
-                                        isVisible={isModalVisibleTwo}
+                                        isVisible={checkedModalVisibility}
                                         testID={"modal"}
-                                        swipeDirection={[
-                                            "up",
-                                            "left",
-                                            "right",
-                                            "down",
-                                        ]}
                                         onBackdropPress={() =>
-                                            setIsModalVisibleTwo(false)
+                                            setCheckedModalVisibility(false)
                                         }
                                         style={{
                                             justifyContent: "flex-end",
@@ -446,36 +441,82 @@ const PassangerItem = ({ item, editable }: IPassangerProp) => {
                         ) : (
                             user.id !== item.creator_id && (
                                 <>
-                                    <View
+                                    <Modal
+                                        isVisible={isModalVisibleAccept}
+                                        testID={"modal"}
+                                        swipeDirection={[
+                                            "right",
+                                            "down",
+                                            "left",
+                                        ]}
+                                        swipeThreshold={
+                                            Dimensions.get("window").width / 2
+                                        }
+                                        onSwipeComplete={() => {
+                                            setModalVisibleAccept(false);
+                                        }}
                                         style={{
-                                            marginTop: 20,
-                                            marginLeft: 50,
+                                            justifyContent: "center",
+                                            margin: 0,
                                         }}
                                     >
-                                        <TouchableOpacity style={styles.btn1}>
+                                        <View
+                                            style={{
+                                                flex: 1,
+                                                backgroundColor: colors.white,
+                                                paddingHorizontal: 25,
+                                                alignItems: "center",
+                                                justifyContent: "space-between",
+                                            }}
+                                        >
                                             <View
-                                                style={{
-                                                    borderRadius: 20,
-                                                    width: 15,
-                                                    height: 15,
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    borderWidth: 1,
-                                                }}
+                                                style={styles.expressImageView}
                                             >
-                                                <PlusIcon size={16} />
+                                                <Image
+                                                    source={images.bee}
+                                                    style={styles.beeImage}
+                                                />
+                                                <Text
+                                                    style={styles.expressText}
+                                                >
+                                                    100k Express
+                                                </Text>
+                                                <Text style={styles.paragraph}>
+                                                    Haydovchi sifatida siz ham
+                                                    yuk, ham yo'lovchi tashish
+                                                    transport vositalarni
+                                                    qo'shishingiz mumkin. Ushbu
+                                                    xizmatdan foydalanish uchun
+                                                    Kuryer bo'lib ro'yxatdan
+                                                    o'ting
+                                                </Text>
                                             </View>
-                                            <Text
-                                                style={{
-                                                    marginLeft: 4,
-                                                    fontWeight: "bold",
-                                                    fontSize: 11,
-                                                }}
+                                            <TouchableOpacity
+                                                style={styles.getCourier}
+                                                activeOpacity={0.8}
                                             >
-                                                QABUL QILISH
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                                <Text
+                                                    style={
+                                                        styles.getCourierText
+                                                    }
+                                                >
+                                                    Kuryer bo'lish
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </Modal>
+
+                                    <TouchableOpacity
+                                        style={styles.btn1}
+                                        onPress={toggleAcceptanceModal}
+                                    >
+                                        <View style={styles.plusView}>
+                                            <PlusIcon size={16} />
+                                        </View>
+                                        <Text style={styles.receiveText}>
+                                            QABUL QILISH
+                                        </Text>
+                                    </TouchableOpacity>
                                 </>
                             )
                         )}
@@ -493,11 +534,20 @@ const styles = StyleSheet.create({
         borderColor: colors.darkOrange,
         borderRadius: 8,
         paddingHorizontal: 5,
-        paddingVertical: 10,
+        paddingVertical: 8,
         backgroundColor: colors.lightOrange,
         flexDirection: "row",
         alignItems: "center",
-        elevation: 3,
+        justifyContent: "center",
+        // marginTop: 13,
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     borderBottom: {
         flexDirection: "row",
@@ -604,5 +654,59 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         textTransform: "uppercase",
         color: "#FFCD30",
+    },
+    expressImageView: {
+        alignItems: "center",
+        paddingHorizontal: 20,
+        marginTop: 70,
+    },
+    beeImage: {
+        marginVertical: 15,
+        marginTop: 20,
+        width: 90,
+        height: 90,
+    },
+    expressText: {
+        color: colors.black,
+        fontWeight: "bold",
+        fontSize: 20,
+        paddingBottom: 30,
+    },
+    paragraph: {
+        width: 280,
+        textAlign: "center",
+        fontSize: 20,
+        color: colors.darkGray,
+    },
+    getCourier: {
+        backgroundColor: colors.lightOrange,
+        paddingHorizontal: 98,
+        paddingVertical: 14,
+        borderRadius: 10,
+        marginVertical: 40,
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    getCourierText: {
+        color: colors.black,
+        fontSize: 16,
+    },
+    receiveText: {
+        marginLeft: 4,
+        fontSize: 11,
+    },
+    plusView: {
+        borderRadius: 20,
+        width: 15,
+        height: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
     },
 });

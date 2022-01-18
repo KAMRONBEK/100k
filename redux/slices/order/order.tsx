@@ -26,6 +26,8 @@ export interface ICreateOrder {
 
     cost?: number;
     costType?: boolean;
+    deliveryFeeAmount?: number;
+    cashAmount?: number;
 
     seatCount?: number;
 
@@ -47,11 +49,12 @@ export interface ICreateOrder {
 
     customerPhone?: number;
 
-    recipientPhone?: number;
+    recipientPhone?: boolean;
+    recipientName?: string;
 
     insurance?: number;
 
-    matter?: boolean;
+    matter?: number;
 
     transportType?: string;
 
@@ -59,11 +62,14 @@ export interface ICreateOrder {
 
     images?: ImageSourcePropType[];
 
-    vehicleType?: number;
+    vehicleType?: string;
 
     creatorPhone?: number;
+    creatorName?: string;
 
     carImageId?: string;
+
+    isPurchaseble?: number;
 }
 
 const initialState: ICreateOrder = {
@@ -88,6 +94,8 @@ const initialState: ICreateOrder = {
 
     cost: 0,
     costType: false,
+    deliveryFeeAmount: 0,
+    cashAmount: 0,
 
     seatCount: 0,
 
@@ -107,15 +115,21 @@ const initialState: ICreateOrder = {
 
     images: [],
 
-    vehicleType: 0,
+    vehicleType: "",
 
-    recipientPhone: 0,
+    recipientPhone: false,
+    recipientName: "",
 
     creatorPhone: 0,
+    creatorName: "",
 
-    matter: false,
+    insurance: 0,
+
+    matter: 0,
 
     carImageId: "",
+
+    isPurchaseble: 0,
 };
 
 const orderSlice = createSlice({

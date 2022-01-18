@@ -13,6 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import { images } from "../assets";
 import {
+    CallIcon,
     CheckedIcon,
     LeftArrowIcon,
     PensolIcon,
@@ -112,19 +113,11 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                     <View
                         style={{ flexDirection: "row", alignItems: "center" }}
                     >
-                        {/* <Image
-              style={{ width: 10, height: 10, marginRight: 12 }}
-              source={images.ellipse}
-            /> */}
                         <Text style={{ fontSize: 15, fontWeight: "normal" }}>
                             {item.from_full_address}
                         </Text>
                     </View>
                 </View>
-                {/* <Image
-          style={{ height: 17, marginLeft: 4, marginTop: -5 }}
-          source={images.lines}
-        ></Image> */}
                 <View
                     style={{
                         flexDirection: "row",
@@ -132,10 +125,6 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                         marginTop: 5,
                     }}
                 >
-                    {/* <Image
-            style={{ width: 10, height: 10, marginRight: 12 }}
-            source={images.lines}
-          /> */}
                     <Text
                         style={{
                             fontSize: 15,
@@ -246,12 +235,6 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                                     <Modal
                                         isVisible={isModalVisible}
                                         testID={"modal"}
-                                        swipeDirection={[
-                                            "up",
-                                            "left",
-                                            "right",
-                                            "down",
-                                        ]}
                                         onBackdropPress={() =>
                                             setModalVisible(false)
                                         }
@@ -340,12 +323,6 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                                     <Modal
                                         isVisible={isModalVisibleTwo}
                                         testID={"modal"}
-                                        swipeDirection={[
-                                            "up",
-                                            "left",
-                                            "right",
-                                            "down",
-                                        ]}
                                         onBackdropPress={() =>
                                             setIsModalVisibleTwo(false)
                                         }
@@ -450,35 +427,18 @@ const LoadItem = ({ item, editable }: ILoadProp) => {
                         ) : (
                             user.id !== item.creator_id && (
                                 <>
-                                    <View
-                                        style={{
-                                            marginTop: 20,
-                                        }}
-                                    >
-                                        <TouchableOpacity style={styles.btn1}>
-                                            <View
-                                                style={{
-                                                    width: 15,
-                                                    height: 15,
-                                                    borderRadius: 20,
-                                                    borderWidth: 1,
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                }}
-                                            >
-                                                <PlusIcon size={16} />
-                                            </View>
-                                            <Text
-                                                style={{
-                                                    marginLeft: 4,
-                                                    fontWeight: "bold",
-                                                    fontSize: 11,
-                                                }}
-                                            >
-                                                QABUL QILISH
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                    <TouchableOpacity style={styles.btn1}>
+                                        <CallIcon size={10} />
+                                        <Text
+                                            style={{
+                                                marginLeft: 4,
+                                                fontSize: 11,
+                                                textTransform: "uppercase",
+                                            }}
+                                        >
+                                            Bog'lanish
+                                        </Text>
+                                    </TouchableOpacity>
                                 </>
                             )
                         )}
@@ -495,15 +455,20 @@ const styles = StyleSheet.create({
     btn1: {
         borderColor: colors.darkOrange,
         borderRadius: 8,
-        paddingHorizontal: 5,
-        paddingVertical: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 9,
         backgroundColor: colors.lightOrange,
         flexDirection: "row",
         alignItems: "center",
-        marginLeft: 60,
-        marginBottom: 10,
-        elevation: 1,
         justifyContent: "center",
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     borderBottom: {
         flexDirection: "row",

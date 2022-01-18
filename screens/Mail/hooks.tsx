@@ -13,12 +13,13 @@ import { useNavigation } from "@react-navigation/core";
 import { showMessage } from "react-native-flash-message";
 import reactotron from "reactotron-react-native";
 import { selectUser } from "../../redux/slices/user/user";
+import { routes } from "../../navigation/routes";
 
 export let useMailHook = () => {
     let mail = useSelector(selectMail);
-    let [filteredMail, setFilteredMail] = useState<IMail[]>();
     let commonMail = useSelector(selectCommonMail);
     let navigation = useNavigation();
+    let [filteredMail, setFilteredMail] = useState<IMail[]>();
     const [loading, setLoading] = useState(false);
     let dispatch = useDispatch();
     let user = useSelector(selectUser);
@@ -75,6 +76,30 @@ export let useMailHook = () => {
             setLoading(false);
         }
     };
+
+    const editMail = async (credentials, id) => {
+        setLoading(true);
+        try {
+            let res = await requests.mail.createMail(credentials, id);
+            showMessage({
+                message: "Zakaz qabul qilindi",
+                type: "success",
+                icon: "success",
+                floating: true,
+            });
+            navigation.navigate(routes.MAIL);
+        } catch (error) {
+            reactotron.log!(error);
+            showMessage({
+                message: error.message,
+                type: "danger",
+                icon: "danger",
+                floating: true,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
     return {
         mail,
         filteredMail,
@@ -83,5 +108,6 @@ export let useMailHook = () => {
         useRefresh,
         createMail,
         loading,
+        editMail,
     };
 };

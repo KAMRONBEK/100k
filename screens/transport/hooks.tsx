@@ -11,6 +11,7 @@ import {
     setTransport,
 } from "../../redux/slices/transport/transport";
 import { selectUser } from "../../redux/slices/user/user";
+import { routes } from "../../navigation/routes";
 
 export let useTransportHook = () => {
     let transport = useSelector(selectTransport);
@@ -61,5 +62,36 @@ export let useTransportHook = () => {
             setLoading(false);
         }
     };
-    return { transport, commonTransport, useRefresh, createTransport, loading };
+
+    const editTransport = async (credentials, id) => {
+        setLoading(true);
+        try {
+            let res = await requests.transport.createTranport(credentials, id);
+            showMessage({
+                message: "Zakaz qabul qilindi",
+                type: "success",
+                icon: "success",
+                floating: true,
+            });
+            navigation.navigate(routes.TRANSPORT);
+        } catch (error) {
+            reactotron.log!(error);
+            showMessage({
+                message: error.message,
+                type: "danger",
+                icon: "danger",
+                floating: true,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+    return {
+        transport,
+        commonTransport,
+        useRefresh,
+        createTransport,
+        loading,
+        editTransport,
+    };
 };

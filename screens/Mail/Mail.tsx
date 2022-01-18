@@ -213,7 +213,7 @@ const Mail = ({}: MailViewProps) => {
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: "first", title: "Barchasi" },
-        { key: "second", title: "Mening buyurtmalarim" },
+        { key: "second", title: "Mening jo'natmalarim" },
         { key: "third", title: "Ro'yxat" },
         { key: "fourth", title: "Kirim" },
     ]);
@@ -456,7 +456,6 @@ const styles = StyleSheet.create({
     tabimg: {
         width: 20,
         height: 20,
-        // marginRight: 5,
     },
     top: {
         flexDirection: "row",

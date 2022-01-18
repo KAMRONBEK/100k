@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+    Dimensions,
     Image,
     StyleSheet,
     Text,
@@ -20,6 +21,7 @@ import {
 } from "../assets/icons/icons";
 import { colors } from "../constants/color";
 import { routes } from "../navigation/routes";
+import reactotron from "../redux/ReactotronConfig";
 import { selectUser } from "../redux/slices/user/user";
 
 interface IMailProp {
@@ -32,17 +34,28 @@ const MailItem = ({ item, editable }: IMailProp) => {
     let user = useSelector(selectUser);
     let dispatch = useDispatch();
 
-    const [isModalVisible, setModalVisible] = useState(false);
-
+    const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
     const toggleModal = () => {
-        setModalVisible(!isModalVisible);
+        setDeleteModalVisibility(!deleteModalVisibility);
     };
 
-    const [isModalVisibleTwo, setModalVisibleTwo] = useState(false);
+    const [checkedModalVisibility, setCheckedModalVisibility] = useState(false);
 
     const toggleModalTwo = () => {
-        setModalVisibleTwo(!isModalVisibleTwo);
+        setCheckedModalVisibility(!checkedModalVisibility);
     };
+
+    const [isModalVisibleAccept, setModalVisibleAccept] = useState(false);
+
+    const toggleAcceptanceModal = () => {
+        if (user.is_deliveryman == false) {
+            setModalVisibleAccept(!isModalVisibleAccept);
+        }
+    };
+
+    useEffect(() => {
+        console.log(isModalVisibleAccept);
+    }, [isModalVisibleAccept]);
 
     return (
         <View style={styles.container}>
@@ -70,34 +83,15 @@ const MailItem = ({ item, editable }: IMailProp) => {
                     - {item.to_full_address}
                 </Text>
             </View>
-            {/* <View style={styles.clockView}>
-                <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-                    {item.expired_at}
-                </Text>
-            </View> */}
-            {/* <View
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginTop: 10,
-                    marginBottom: 5,
-                }}
-            >
-                <Image source={images.security} />
-                <Text
-                    style={{
-                        marginLeft: 10,
-                        color: colors.darkGray,
-                        fontSize: 15,
-                        paddingLeft: 3,
-                    }}
-                >
-                    Sug'urta summasi:
-                </Text>
-                <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-                    {item.insurance_amount} sum
-                </Text>
-            </View> */}
+            <View style={styles.thingOrder}>
+                <Image source={images.boxOne} style={styles.boxOneImage} />
+                <Text style={styles.matterText}>{item.matter}</Text>
+            </View>
+            <View style={styles.securityView}>
+                <Image source={images.security} style={styles.boxOneImage} />
+                <Text style={styles.matterText}>{item.insurance_amount}</Text>
+            </View>
+
             <View style={styles.avatarView}>
                 <View style={styles.borderBottom}>
                     <View style={styles.avatarwrapper}>
@@ -127,17 +121,11 @@ const MailItem = ({ item, editable }: IMailProp) => {
                         >
                             <View>
                                 <Modal
-                                    isVisible={isModalVisible}
+                                    isVisible={deleteModalVisibility}
                                     testID={"modal"}
                                     onBackdropPress={() =>
-                                        setModalVisible(false)
+                                        setDeleteModalVisibility(false)
                                     }
-                                    swipeDirection={[
-                                        "up",
-                                        "left",
-                                        "right",
-                                        "down",
-                                    ]}
                                     style={{
                                         justifyContent: "center",
                                         margin: 0,
@@ -205,7 +193,7 @@ const MailItem = ({ item, editable }: IMailProp) => {
                             <TouchableOpacity
                                 style={styles.pensolbutton}
                                 onPress={() =>
-                                    navigation.navigate(routes.ADD_MAIL, {
+                                    navigation.navigate(routes.EDIT_MAIL, {
                                         id: item.id,
                                     })
                                 }
@@ -214,17 +202,11 @@ const MailItem = ({ item, editable }: IMailProp) => {
                             </TouchableOpacity>
                             <View>
                                 <Modal
-                                    isVisible={isModalVisibleTwo}
+                                    isVisible={checkedModalVisibility}
                                     testID={"modal"}
                                     onBackdropPress={() =>
-                                        setModalVisibleTwo(false)
+                                        setCheckedModalVisibility(false)
                                     }
-                                    swipeDirection={[
-                                        "up",
-                                        "left",
-                                        "right",
-                                        "down",
-                                    ]}
                                     style={{
                                         justifyContent: "flex-end",
                                         margin: 0,
@@ -330,7 +312,66 @@ const MailItem = ({ item, editable }: IMailProp) => {
                     ) : (
                         user.id !== item.creator_id && (
                             <>
-                                <TouchableOpacity style={styles.btn1}>
+                                <Modal
+                                    isVisible={isModalVisibleAccept}
+                                    testID={"modal"}
+                                    swipeDirection={["right", "down", "left"]}
+                                    swipeThreshold={
+                                        Dimensions.get("window").width / 2
+                                    }
+                                    onSwipeComplete={() => {
+                                        setModalVisibleAccept(false);
+                                    }}
+                                    style={{
+                                        justifyContent: "center",
+                                        margin: 0,
+                                    }}
+                                >
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                            backgroundColor: colors.white,
+                                            paddingHorizontal: 25,
+                                            alignItems: "center",
+                                            justifyContent: "space-between",
+                                        }}
+                                    >
+                                        <View style={styles.expressImageView}>
+                                            <Image
+                                                source={images.bee}
+                                                style={styles.beeImage}
+                                            />
+                                            <Text style={styles.expressText}>
+                                                100k Express
+                                            </Text>
+                                            <Text style={styles.paragraph}>
+                                                Haydovchi sifatida siz ham yuk,
+                                                ham yo'lovchi tashish transport
+                                                vositalarni qo'shishingiz
+                                                mumkin. Ushbu xizmatdan
+                                                foydalanish uchun Kuryer bo'lib
+                                                ro'yxatdan o'ting
+                                            </Text>
+                                        </View>
+                                        <TouchableOpacity
+                                            style={styles.getCourier}
+                                            activeOpacity={0.8}
+                                            onPress={() =>
+                                                navigation.navigate(
+                                                    routes.COURIER
+                                                )
+                                            }
+                                        >
+                                            <Text style={styles.getCourierText}>
+                                                Kuryer bo'lish
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </Modal>
+                                <TouchableOpacity
+                                    style={styles.btn1}
+                                    onPress={toggleAcceptanceModal}
+                                >
                                     <View style={styles.plusView}>
                                         <PlusIcon size={16} />
                                     </View>
@@ -558,7 +599,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        // marginTop: 10,
     },
     avatarImgBox: {
         width: 35,
@@ -577,7 +617,68 @@ const styles = StyleSheet.create({
     },
     receiveText: {
         marginLeft: 4,
-        fontWeight: "bold",
         fontSize: 11,
+    },
+    thingOrder: {
+        paddingHorizontal: 11,
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 10,
+    },
+    boxOneImage: {
+        width: 20,
+        height: 20,
+        tintColor: colors.lightOrange,
+    },
+    matterText: {
+        marginLeft: 5,
+    },
+    securityView: {
+        flexDirection: "row",
+        paddingHorizontal: 11,
+        alignItems: "center",
+        marginVertical: 10,
+    },
+    beeImage: {
+        marginVertical: 15,
+        marginTop: 20,
+        width: 90,
+        height: 90,
+    },
+    expressText: {
+        color: colors.black,
+        fontWeight: "bold",
+        fontSize: 20,
+        paddingBottom: 30,
+    },
+    paragraph: {
+        width: 280,
+        textAlign: "center",
+        fontSize: 20,
+        color: colors.darkGray,
+    },
+    getCourier: {
+        backgroundColor: colors.lightOrange,
+        paddingHorizontal: 98,
+        paddingVertical: 14,
+        borderRadius: 10,
+        marginVertical: 40,
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    expressImageView: {
+        alignItems: "center",
+        paddingHorizontal: 20,
+        marginTop: 70,
+    },
+    getCourierText: {
+        color: colors.black,
+        fontSize: 16,
     },
 });

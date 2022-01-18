@@ -28,4 +28,5 @@ export const routes = {
     ONBOARDING: "Onboarding",
     LOCATION: "Location",
     SUPPORT: "Support",
+    EDIT_MAIL: "EditMail",
 };

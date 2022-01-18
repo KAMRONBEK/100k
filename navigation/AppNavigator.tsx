@@ -24,6 +24,7 @@ import { navigationRef } from "./NavigationService";
 import TabStack from "./TabStack";
 import AddTransport from "../screens/transport/AddTransport";
 import SupportView from "../screens/Support/Support";
+import EditMail from "../screens/Mail/EditMail";
 
 const Stack = createStackNavigator();
 
@@ -74,6 +75,7 @@ const AppNavigator = () => {
                     component={OnboardingScreen}
                 />
                 <Stack.Screen name={routes.SUPPORT} component={SupportView} />
+                <Stack.Screen name={routes.EDIT_MAIL} component={EditMail} />
             </Stack.Navigator>
         </NavigationContainer>
     );

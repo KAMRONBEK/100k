@@ -1,15 +1,15 @@
+import { useRoute } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import {
     Image,
-    Picker,
     ScrollView,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
     View,
+    Picker,
 } from "react-native";
-import * as ImagePicker from "react-native-image-picker";
 import { TextInputMask } from "react-native-masked-text";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,47 +18,112 @@ import { images } from "../../assets";
 import { LeftArrowIcon } from "../../assets/icons/icons";
 import { ImagePickerTransportAvatar } from "../../components/imagePickerTransport/ImagePickerTransportAvatar";
 import TrantsportTypeSelector from "../../components/TrantsportTypeSelector";
-// import {
-//     launchImageLibrary,
-//     Callback,
-//     CameraOptions,
-//     ImageLibraryOptions,
-//     ImagePickerResponse,
-// } from "react-native-image-picker";
 import { colors } from "../../constants/color";
-import { locationType, transportCostType } from "../../constants/values";
+import { locationType } from "../../constants/values";
 import { routes } from "../../navigation/routes";
 import { selectOrderState, setOrderData } from "../../redux/slices/order/order";
+import { selectTransport } from "../../redux/slices/transport/transport";
 import { useTransportHook } from "./hooks";
+import * as ImagePicker from "react-native-image-picker";
 
-const AddTransport = ({ navigation }) => {
-    const [img, setImg] = useState<"none" | "flex">("none");
-    const [imgs, setImgs] = useState<"none" | "flex">("flex");
-    const [carImageId, setCarImageId] = useState(null);
-
-    let [costTypes, setCostTypes] = useState(transportCostType);
-
-    const state = useSelector(selectOrderState);
+const EditPassanger = ({ navigation }) => {
+    //--------------------------------------------------------------
     const dispatch = useDispatch();
 
-    const { createTransport, loading } = useTransportHook();
-    const onSubmitFrom = async () => {
-        createTransport({
-            from_region_id: state.fromRegionId,
-            from_district_id: state.fromDistrictId,
-            from_full_address: state.fromFullAddress,
-            to_region_id: state.toRegionId,
-            to_district_id: state.toDistrictId,
-            transport_type: state.transportType,
-            cost: state.cost,
-            cost_type: state.costType,
-            note: state.note,
-            weight: state.weight,
-            images: state.carImageId,
-            otherName: state.otherName,
-            otherNumber: state.otherNumber,
-        });
+    const state = useSelector(selectOrderState);
+    const transport = useSelector(selectTransport);
+
+    const { editTransport, loading } = useTransportHook();
+    const { id } = useRoute().params ? useRoute().params : { id: 0 };
+    const onSubmitFrom = () => {
+        editTransport(
+            {
+                from_region_id: state.fromRegionId,
+                from_district_id: state.fromDistrictId,
+                from_full_address: state.fromFullAddress,
+                to_region_id: state.toRegionId,
+                to_district_id: state.toDistrictId,
+                transport_type: state.transportType,
+                cost: state.cost,
+                cost_type: state.costType,
+                note: state.note,
+                weight: state.weight,
+                images: state.carImageId,
+                otherName: state.otherName,
+                otherNumber: state.otherNumber,
+            },
+            id
+        );
     };
+
+    // let temp = {
+    //     book_front_seat: 1,
+    //     cost: 23000,
+    //     created_at: "2021-12-08 16:49:30",
+    //     created_at_label: "1 сония аввал",
+    //     creator_avatar:
+    //         "https://www.gravatar.com/avatar/423bc8ebb88f4ead6b5fef84483cf3fc?s=100&d=mm",
+    //     creator_id: 372334,
+    //     creator_name: null,
+    //     creator_phone: "+998998032226",
+    //     driver_avatar: null,
+    //     driver_id: null,
+    //     driver_name: null,
+    //     driver_phone: null,
+    //     from_address: "Yakkasaroy kochasi 15-uy777",
+    //     from_district_id: 13,
+    //     from_full_address: "Fargona, Rishton, Yakkasaroy kochasi 15-uy777",
+    //     from_latitude: null,
+    //     from_longitude: null,
+    //     from_region_id: 1,
+    //     id: 1,
+    //     note: "Alohida olib keling",
+    //     seat_count: 1,
+    //     seat_count_label: "1 kishi",
+    //     status: "active",
+    //     to_address: "Guliston katta ko'cha 25-uy777",
+    //     to_district_id: 62,
+    //     to_full_address: "Sirdaryo, Guliston, Guliston katta ko'cha 25-uy777",
+    //     to_region_id: 3,
+    // };
+
+    useEffect(() => {
+        let currentOrder = Object.values(transport).filter(
+            (item) => item.id == id
+        )[0];
+        dispatch(
+            setOrderData({
+                fromRegionId: currentOrder.from_region_id,
+                fromRegionName: currentOrder.from_full_address.split(",")[0],
+
+                fromDistrictId: currentOrder.from_district_id,
+                fromDistrictName: currentOrder.from_full_address.split(",")[1],
+
+                fromAddress: currentOrder.from_address,
+                fromNumber: "",
+
+                toRegionId: currentOrder.to_region_id,
+                toRegionName: currentOrder.to_full_address.split(",")[0],
+
+                toDistrictId: currentOrder.to_district_id,
+                toDistrictName: currentOrder.to_full_address.split(",")[1],
+
+                toAddress: currentOrder.to_address,
+                toNumber: "",
+
+                otherPerson: false,
+
+                otherNumber: "",
+
+                otherName: "",
+
+                transportType: currentOrder.transport_type,
+            })
+        );
+    }, [id]);
+
+    //-----------------------------------------------------------------------
+
 
     const [carImageResponse, setCarImageResponse] = useState<ImagePicker.Asset>(
         {}
@@ -324,9 +389,7 @@ const AddTransport = ({ navigation }) => {
                             { backgroundColor: colors.white, marginBottom: 21 },
                         ]}
                     />
-                    <Text style={styles.text}>
-                        Telefon raqamini kiriting *{" "}
-                    </Text>
+                    <Text style={styles.text}>Telefon raqamini kiriting *</Text>
                     <TextInputMask
                         value={state.otherNumber!}
                         onChangeText={(e) =>
@@ -422,7 +485,7 @@ const AddTransport = ({ navigation }) => {
     );
 };
 
-export default AddTransport;
+export default EditPassanger;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.white,
@@ -437,22 +500,8 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 5,
     },
-    addTransportText: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginLeft: 20,
-    },
-    inputView: {
-        width: 200,
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 10,
-        backgroundColor: colors.white,
-        paddingHorizontal: 14,
-        marginBottom: 10,
-        justifyContent: "space-between",
-    },
     input: {
+        flex: 1,
         borderWidth: 1,
         borderColor: colors.lightgray,
         borderRadius: 10,
@@ -470,17 +519,32 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     btn: {
-        paddingHorizontal: 13,
+        paddingHorizontal: 16,
         paddingVertical: 12,
         borderColor: colors.darkOrange,
-        borderRadius: 7,
+        borderRadius: 10,
         borderWidth: 1,
-        marginRight: 10,
+        marginRight: 18,
     },
     text: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: "500",
         marginRight: 20,
         color: colors.darkGray,
+    },
+    addTransportText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginLeft: 20,
+    },
+    inputView: {
+        width: 200,
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 10,
+        backgroundColor: colors.white,
+        paddingHorizontal: 14,
+        marginBottom: 10,
+        justifyContent: "space-between",
     },
 });

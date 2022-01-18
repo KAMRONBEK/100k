@@ -84,12 +84,16 @@ export let requests = {
         getMail: () => axios.get(`${url}/user/packages`),
         createMail: (credentials) =>
             axios.post(`${url}/user/packages`, credentials),
+        editMail: (credentials, id) =>
+            axios.post(`${url}/user/packeges/${id}`, credentials),
         getCommonMail: () => axios.get(`${url}/packages`),
     },
     transport: {
         getTransport: (status = "") => axios.get(`${url}/driver/transports`),
         createTranport: (credentials) =>
             axios.post(`${url}/driver/transports`, credentials),
+        editTransport: (credentials, id) =>
+            axios.post(`${url}/driver/transports/${id}`, credentials),
         deleteTransport: (credentials, id) =>
             axios.post(`${url}/driver/transport/${id}`, credentials),
         getCommonTransport: () => axios.get(`${url}/transports`),

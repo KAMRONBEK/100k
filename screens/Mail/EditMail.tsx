@@ -1,52 +1,132 @@
-import React, { useState } from "react";
+import { useRoute } from "@react-navigation/native";
+import React, { useEffect, useReducer, useState } from "react";
 import {
-    View,
+    Image,
+    ScrollView,
+    StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    Image,
-    StyleSheet,
-    ScrollView,
+    View,
 } from "react-native";
+import { TextInputMask } from "react-native-masked-text";
+import { ActivityIndicator, Checkbox } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "../../assets";
-import { routes } from "../../navigation/routes";
-import { selectOrderState, setOrderData } from "../../redux/slices/order/order";
-import { useMailHook } from "./hooks";
-import { ActivityIndicator, Checkbox } from "react-native-paper";
-import { locationType } from "../../constants/values";
-import { colors } from "../../constants/color";
 import { LeftArrowIcon } from "../../assets/icons/icons";
 import MailSelector from "../../components/MailSelector";
-import { TextInputMask } from "react-native-masked-text";
+import SeatSelector from "../../components/SeatSelector";
+import { colors } from "../../constants/color";
+import { locationType } from "../../constants/values";
+import { routes } from "../../navigation/routes";
+import { selectMail } from "../../redux/slices/mail/mail";
+import { selectOrderState, setOrderData } from "../../redux/slices/order/order";
+import { useMailHook } from "./hooks";
 
-const AdMail = ({ navigation }) => {
-    const state = useSelector(selectOrderState);
-
+const EditMail = ({ navigation }) => {
+    //--------------------------------------------------------------
     const dispatch = useDispatch();
 
-    const { createMail, loading } = useMailHook();
+    const state = useSelector(selectOrderState);
+    const mail = useSelector(selectMail);
 
+    const { editMail, loading } = useMailHook();
+    const { id } = useRoute().params ? useRoute().params : { id: 0 };
     const onSubmitFrom = () => {
-        createMail({
-            from_address: state.fromAddress,
-            from_region_id: state.fromRegionId,
-            from_district_id: state.fromDistrictId,
-            to_region_id: state.toRegionId,
-            to_district_id: state.toDistrictId,
-            to_address: state.toAddress,
-            note: state.note,
-            cash_amount: state.cashAmount,
-            delivery_fee_amount: state.deliveryFeeAmount,
-            creator_phone: state.creatorPhone,
-            recipient_name: state.recipientName,
-            recipient_phone: state.recipientPhone,
-            creator_name: state.creatorName,
-            insurance_amount: state.insurance,
-            matter: state.matter,
-            vehicle_type: "on_car",
-        });
+        editMail(
+            {
+                from_region_id: state.fromRegionId,
+                from_district_id: state.fromDistrictId,
+                to_region_id: state.toRegionId,
+                to_district_id: state.toDistrictId,
+                from_address: state.fromFullAddress,
+                to_address: state.toAddress,
+                note: state.note,
+                cash_amount: state.cashAmount,
+                delivery_fee_amount: state.deliveryFeeAmount,
+                creator_phone: state.creatorPhone,
+                recipient_name: state.recipientName,
+                recipient_phone: state.recipientPhone,
+                client_name: state.name,
+                insurance_amount: state.insurance,
+                matter: state.matter,
+                vehicle_type: state.vehicleType,
+            },
+            id
+        );
     };
+
+    // let temp = {
+    //     book_front_seat: 1,
+    //     cost: 23000,
+    //     created_at: "2021-12-08 16:49:30",
+    //     created_at_label: "1 сония аввал",
+    //     creator_avatar:
+    //         "https://www.gravatar.com/avatar/423bc8ebb88f4ead6b5fef84483cf3fc?s=100&d=mm",
+    //     creator_id: 372334,
+    //     creator_name: null,
+    //     creator_phone: "+998998032226",
+    //     driver_avatar: null,
+    //     driver_id: null,
+    //     driver_name: null,
+    //     driver_phone: null,
+    //     from_address: "Yakkasaroy kochasi 15-uy777",
+    //     from_district_id: 13,
+    //     from_full_address: "Fargona, Rishton, Yakkasaroy kochasi 15-uy777",
+    //     from_latitude: null,
+    //     from_longitude: null,
+    //     from_region_id: 1,
+    //     id: 1,
+    //     note: "Alohida olib keling",
+    //     seat_count: 1,
+    //     seat_count_label: "1 kishi",
+    //     status: "active",
+    //     to_address: "Guliston katta ko'cha 25-uy777",
+    //     to_district_id: 62,
+    //     to_full_address: "Sirdaryo, Guliston, Guliston katta ko'cha 25-uy777",
+    //     to_region_id: 3,
+    // };
+
+    useEffect(() => {
+        let currentOrder = Object.values(mail).filter(
+            (item) => item.id == id
+        )[0];
+        dispatch(
+            setOrderData({
+                fromRegionId: currentOrder.from_region_id,
+                fromRegionName: currentOrder.from_full_address.split(",")[0],
+
+                fromDistrictId: currentOrder.from_district_id,
+                fromDistrictName: currentOrder.from_full_address.split(",")[1],
+
+                fromAddress: currentOrder.from_address,
+                fromNumber: "",
+
+                toRegionId: currentOrder.to_region_id,
+                toRegionName: currentOrder.to_full_address.split(",")[0],
+
+                toDistrictId: currentOrder.to_district_id,
+                toDistrictName: currentOrder.to_full_address.split(",")[1],
+
+                toAddress: currentOrder.to_address,
+                toNumber: "",
+
+                // cashAmount: currentOrder.cash_amount,
+                delivery_fee_amount: currentOrder.delivery_fee_amount,
+
+                otherPerson: false,
+
+                otherNumber: "",
+
+                otherName: "",
+
+                insurance_amount: currentOrder.insurance_amount,
+            })
+        );
+    }, [id]);
+
+    console.log("state: ", JSON.stringify(state, null, 4));
+
     return (
         <>
             <View style={styles.container}>
@@ -55,7 +135,11 @@ const AdMail = ({ navigation }) => {
                 >
                     <LeftArrowIcon size={22} />
                 </TouchableOpacity>
-                <Text style={styles.mailText}>Pochta qo’shish</Text>
+                <Text
+                    style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}
+                >
+                    Pochta o'zgartirish
+                </Text>
             </View>
             <ScrollView>
                 <MailSelector
@@ -68,7 +152,6 @@ const AdMail = ({ navigation }) => {
                         onPress={() =>
                             navigation.navigate(routes.REGION, {
                                 type: locationType.from,
-                                route: routes.ADD_MAIL,
                             })
                         }
                         style={styles.btnOne}
@@ -95,9 +178,9 @@ const AdMail = ({ navigation }) => {
                     />
                     <TextInput
                         style={styles.input}
-                        value={state.creatorName!}
+                        value={state.name!}
                         onChangeText={(e) =>
-                            dispatch(setOrderData({ creatorName: e }))
+                            dispatch(setOrderData({ name: e }))
                         }
                         keyboardType="default"
                         placeholder="Yuboruvchi Ismi"
@@ -109,11 +192,7 @@ const AdMail = ({ navigation }) => {
                         }}
                         value={state.creatorPhone?.toString()}
                         onChangeText={(e) =>
-                            dispatch(
-                                setOrderData({
-                                    creatorPhone: e.replace(/\s/g, ""),
-                                })
-                            )
+                            dispatch(setOrderData({ creatorPhone: e }))
                         }
                         style={[
                             styles.input,
@@ -145,7 +224,6 @@ const AdMail = ({ navigation }) => {
                         onPress={() =>
                             navigation.navigate(routes.REGION, {
                                 type: locationType.to,
-                                route: routes.ADD_MAIL,
                             })
                         }
                         style={styles.btnOne}
@@ -192,11 +270,7 @@ const AdMail = ({ navigation }) => {
                         }}
                         value={state.recipientPhone?.toString()}
                         onChangeText={(e) =>
-                            dispatch(
-                                setOrderData({
-                                    recipientPhone: e.replace(/\s/g, ""),
-                                })
-                            )
+                            dispatch(setOrderData({ recipientPhone: e }))
                         }
                         style={[
                             styles.input,
@@ -250,11 +324,7 @@ const AdMail = ({ navigation }) => {
                                 style={styles.input}
                                 value={state.cashAmount?.toString()}
                                 onChangeText={(e) =>
-                                    dispatch(
-                                        setOrderData({
-                                            cashAmount: e,
-                                        })
-                                    )
+                                    dispatch(setOrderData({ cashAmount: e }))
                                 }
                                 keyboardType="numeric"
                                 placeholder="Mijozdan olinadigan summa"
@@ -329,10 +399,6 @@ const AdMail = ({ navigation }) => {
                             </Text>
                             <TextInput
                                 style={styles.inputInformation}
-                                value={state.note}
-                                onChangeText={(e) =>
-                                    dispatch(setOrderData({ note: e }))
-                                }
                                 keyboardType="default"
                                 placeholder="Masalan: tungi soat 8-gacha yetkazib berish kerak"
                             />
@@ -378,7 +444,7 @@ const AdMail = ({ navigation }) => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        {state.otherPerson && (
+                        {!!state.otherPerson ? (
                             <View
                                 style={{
                                     paddingVertical: 19,
@@ -424,7 +490,7 @@ const AdMail = ({ navigation }) => {
                                     3 ish kunida ushbu summa tiklab beradi.
                                 </Text>
                             </View>
-                        )}
+                        ) : undefined}
                     </View>
                 </View>
                 <View
@@ -451,7 +517,7 @@ const AdMail = ({ navigation }) => {
                         <TouchableOpacity
                             onPress={() =>
                                 dispatch(
-                                    setOrderData({ deliveryFeeAmount: 20000 })
+                                    setOrderData({ deliveryFeeAmount: "20000" })
                                 )
                             }
                         >
@@ -460,7 +526,7 @@ const AdMail = ({ navigation }) => {
                         <TouchableOpacity
                             onPress={() =>
                                 dispatch(
-                                    setOrderData({ deliveryFeeAmount: 30000 })
+                                    setOrderData({ deliveryFeeAmount: "30000" })
                                 )
                             }
                         >
@@ -469,7 +535,7 @@ const AdMail = ({ navigation }) => {
                         <TouchableOpacity
                             onPress={() =>
                                 dispatch(
-                                    setOrderData({ deliveryFeeAmount: 40000 })
+                                    setOrderData({ deliveryFeeAmount: "40000" })
                                 )
                             }
                         >
@@ -478,7 +544,7 @@ const AdMail = ({ navigation }) => {
                         <TouchableOpacity
                             onPress={() =>
                                 dispatch(
-                                    setOrderData({ deliveryFeeAmount: 50000 })
+                                    setOrderData({ deliveryFeeAmount: "50000" })
                                 )
                             }
                         >
@@ -509,7 +575,7 @@ const AdMail = ({ navigation }) => {
                                 textTransform: "uppercase",
                             }}
                         >
-                            {loading ? <ActivityIndicator /> : "Yuborish"}
+                            {loading ? <ActivityIndicator /> : "Saqlash"}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -518,7 +584,7 @@ const AdMail = ({ navigation }) => {
     );
 };
 
-export default AdMail;
+export default EditMail;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.white,
@@ -533,47 +599,36 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 5,
     },
-    mailText: {
-        fontSize: 18,
-        marginLeft: 20,
-        fontWeight: "bold",
-    },
-    btn: {
-        paddingVertical: 12,
-        paddingHorizontal: 22,
-        borderRadius: 10,
-        borderColor: colors.lightgray,
-        borderWidth: 1,
-    },
     input: {
+        flex: 1,
         borderWidth: 1,
         borderColor: colors.lightgray,
         borderRadius: 10,
         padding: 14,
         marginTop: 10,
     },
-    inputInformation: {
-        height: 100,
-        fontSize: 14,
-        marginTop: 10,
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: colors.lightgray,
-        paddingHorizontal: 14,
-    },
     btnOne: {
         backgroundColor: colors.white,
         paddingHorizontal: 16,
-        paddingVertical: 10,
+        paddingVertical: 14,
         borderRadius: 10,
         borderColor: colors.lightgray,
         borderWidth: 1,
         flexDirection: "row",
         alignItems: "center",
     },
+    btn: {
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        borderColor: colors.darkOrange,
+        borderRadius: 10,
+        borderWidth: 1,
+        marginRight: 18,
+    },
     text: {
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: "500",
+        marginRight: 20,
         color: colors.darkGray,
     },
     texts: {
@@ -598,5 +653,19 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: colors.darkGray,
         fontSize: 14,
+    },
+    inputInformation: {
+        height: 100,
+        fontSize: 14,
+        marginTop: 10,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: colors.lightgray,
+        paddingHorizontal: 14,
+    },
+    mailText: {
+        fontSize: 18,
+        marginLeft: 20,
+        fontWeight: "bold",
     },
 });

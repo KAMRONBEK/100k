@@ -96,34 +96,7 @@ const SecondRoute = () => {
             refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-        >
-            <FlatList
-                contentContainerStyle={{
-                    flex: 1,
-                }}
-                data={!!transport ? transport : transport}
-                renderItem={({ item }) => <TransportItem item={item} />}
-                ListEmptyComponent={() => (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            source={images.tarnsport}
-                            style={{
-                                height: 140,
-                                alignItems: "center",
-                                width: 140,
-                                marginBottom: 80,
-                            }}
-                        />
-                    </View>
-                )}
-            />
-        </ScrollView>
+        ></ScrollView>
     );
 };
 
@@ -136,40 +109,28 @@ const ThirdRoute = () => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
     }, []);
+
     return (
-        <ScrollView
-            style={{ flex: 1 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <FlatList
-                contentContainerStyle={{
-                    flex: 1,
-                }}
-                data={!!transport ? transport : []}
-                renderItem={({ item }) => <TransportItem item={item} />}
-                ListEmptyComponent={() => (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            source={images.tarnsport}
-                            style={{
-                                height: 140,
-                                alignItems: "center",
-                                width: 140,
-                                marginBottom: 80,
-                            }}
+        <View style={styles.container}>
+            <ScrollView
+                contentContainerStyle={styles.scrollView}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
+                {!!transport &&
+                    transport.map((item) => (
+                        <TransportItem
+                            item={item}
+                            key={`${item.id}`}
+                            editable={true}
                         />
-                    </View>
-                )}
-            />
-        </ScrollView>
+                    ))}
+            </ScrollView>
+        </View>
     );
 };
 
@@ -191,8 +152,8 @@ const Transport = ({}: TransportViewProps) => {
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: "first", title: "Barchasi" },
-        { key: "second", title: "Mening buyurtmalarim" },
-        { key: "third", title: "Ro'yxat" },
+        { key: "second", title: "Ko'rilganlar" },
+        { key: "third", title: "Mening buyurtmalarim" },
     ]);
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -401,7 +362,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "red",
+        // backgroundColor: "red",
     },
     top: {
         flexDirection: "row",

@@ -167,7 +167,7 @@ const EditLoad = ({ navigation }) => {
                         <Text style={styles.tolocation}>
                             {!!state.toRegionName
                                 ? state.toRegionName
-                                : "Viloyat"}{" "}
+                                : "Viloyat"}
                             ,
                             {!!state.toDistrictName
                                 ? state.toDistrictName

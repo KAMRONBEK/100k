@@ -27,7 +27,6 @@ import Filter from "../../components/Filter";
 import PassangerItem from "../../components/PassangerItem";
 import { colors } from "../../constants/color";
 import { routes as Routes } from "../../navigation/routes";
-import reactotron from "../../redux/ReactotronConfig";
 import { useTaxiHook } from "./hooks";
 
 const FirstRoute = () => {
