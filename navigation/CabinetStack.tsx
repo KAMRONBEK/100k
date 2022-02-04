@@ -8,21 +8,25 @@ import { routes } from "./routes";
 import reactotron from "reactotron-react-native";
 import Code from "../screens/Auth/Login/Code";
 import { MyCabinetStack } from "./MyCabinetStack";
+import LoginProfile from "../screens/LogindPofile";
 
 let Stack = createNativeStackNavigator();
 
 export const CabinetStack = () => {
-    let token = useSelector(selectToken);
-    return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {!token && <Stack.Screen name={routes.LOGIN} component={Login} />}
-            {!token && <Stack.Screen name={routes.CODE} component={Code} />}
-            {!!token && (
-                <Stack.Screen
-                    name={routes.MY_CABINET_STACK}
-                    component={MyCabinetStack}
-                />
-            )}
-        </Stack.Navigator>
-    );
+  let token = useSelector(selectToken);
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {!token && (
+        <Stack.Screen name={routes.LOGINPROFILE} component={LoginProfile} />
+      )}
+      {!token && <Stack.Screen name={routes.LOGIN} component={Login} />}
+      {!token && <Stack.Screen name={routes.CODE} component={Code} />}
+      {!!token && (
+        <Stack.Screen
+          name={routes.MY_CABINET_STACK}
+          component={MyCabinetStack}
+        />
+      )}
+    </Stack.Navigator>
+  );
 };

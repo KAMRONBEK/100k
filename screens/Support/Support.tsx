@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginHorizontal: 30,
     backgroundColor: colors.white,
+    borderRadius: 10,
   },
   callBox: {
     marginVertical: 5,

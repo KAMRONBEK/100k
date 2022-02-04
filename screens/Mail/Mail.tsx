@@ -1,503 +1,407 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import {
-    FlatList,
-    Image,
-    ImageBackground,
-    RefreshControl,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    useWindowDimensions,
-    View,
+  FlatList,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from "react-native";
-import Modal from "react-native-modal";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
-import { images } from "../../assets";
+import { useDispatch, useSelector } from "react-redux";
 import {
-    FilterIcon,
-    GlobeIcon,
-    PlusIcon,
-    QuestionsIcon,
-    UpdateIcon,
-    UserIcon,
+  FilterIcon,
+  GlobeIcon,
+  PlusIcon,
+  QuestionsIcon,
 } from "../../assets/icons/icons";
 import Filter from "../../components/Filter";
+import FilterModal from "../../components/FilterModal";
 import MailItem from "../../components/MailItem";
 import { colors } from "../../constants/color";
 import { mailStatus } from "../../constants/values";
 import { routes as Routes } from "../../navigation/routes";
+import { selectOrderState } from "../../redux/slices/order/order";
 import { useMailHook } from "./hooks";
 
 const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
+  return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
 const FirstRoute = ({}) => {
-    const [refreshing, setRefreshing] = React.useState(false);
-    const { commonMail, useRefresh } = useMailHook();
+  const [refreshing, setRefreshing] = React.useState(false);
+  const { commonMail, useRefresh } = useMailHook();
 
-    const onRefresh = React.useCallback(() => {
-        useRefresh();
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-    return (
-        <ScrollView
-            style={{ marginBottom: 80 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <FlatList
-                contentContainerStyle={{
-                    flex: 1,
-                }}
-                data={!!commonMail ? commonMail : []}
-                renderItem={({ item }) => <MailItem item={item} />}
-                ListEmptyComponent={() => (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            source={images.openBox}
-                            style={{
-                                height: 140,
-                                width: 140,
-                                marginBottom: 80,
-                            }}
-                        />
-                    </View>
-                )}
-            />
-        </ScrollView>
-    );
+  const onRefresh = React.useCallback(() => {
+    useRefresh();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  const [showFilter, setShowFilter] = useState(false);
+  const toggleShowFilter = () => {
+    setShowFilter(!showFilter);
+  };
+
+  const [hideFilter, setHideFilter] = useState(false);
+  const toggleHideFilter = () => {
+    setHideFilter(!hideFilter);
+  };
+
+  return (
+    <ScrollView
+      style={{ marginBottom: 80 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <Filter route={Routes.MAIL} />
+      <FlatList
+        contentContainerStyle={{
+          flex: 1,
+        }}
+        data={!!commonMail ? commonMail : []}
+        renderItem={({ item }) => <MailItem item={item} />}
+      />
+    </ScrollView>
+  );
 };
 
 const SecondRoute = () => {
-    let [activeIndex, setActiveIndex] = useState(0);
-    const { mail, filteredMail, useRefresh, filterMail } = useMailHook();
-    const [refreshing, setRefreshing] = useState(false);
-    let navigation = useNavigation();
+  let [activeIndex, setActiveIndex] = useState(0);
+  const { mail, filteredMail, useRefresh, filterMail } = useMailHook();
+  const [refreshing, setRefreshing] = useState(false);
+  let navigation = useNavigation();
 
-    const onRefresh = React.useCallback(() => {
-        useRefresh();
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
+  const onRefresh = React.useCallback(() => {
+    useRefresh();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
-    const onPressFilter = (id) => {
-        setActiveIndex(id);
-        filterMail(mailStatus[id].title);
-    };
+  const onPressFilter = (id) => {
+    setActiveIndex(id);
+    filterMail(mailStatus[id].title);
+  };
 
-    return (
-        <View style={{ flex: 1, backgroundColor: colors.lightWhite }}>
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginHorizontal: 10,
-                    marginVertical: 10,
-                    paddingVertical: 2,
-                }}
-            >
-                <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
+  return (
+    <View style={{ flex: 1, backgroundColor: colors.lightWhite }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 10,
+          marginVertical: 10,
+          paddingVertical: 2,
+        }}
+      >
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {mailStatus.map((e, i) => {
+            return (
+              <TouchableOpacity onPress={() => onPressFilter(i)}>
+                <Text
+                  style={{
+                    backgroundColor:
+                      activeIndex === i ? colors.cornsilk : colors.lightWhite,
+                    color:
+                      activeIndex === i ? colors.orange : colors.linghtGray,
+                    borderWidth: 0.6,
+                    borderRadius: 5,
+                    borderColor:
+                      activeIndex === i ? colors.orange : colors.linghtGray,
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    fontWeight: "600",
+                    marginLeft: 10,
+                  }}
                 >
-                    {mailStatus.map((e, i) => {
-                        return (
-                            <TouchableOpacity onPress={() => onPressFilter(i)}>
-                                <Text
-                                    style={{
-                                        backgroundColor:
-                                            activeIndex === i
-                                                ? colors.cornsilk
-                                                : colors.lightWhite,
-                                        color:
-                                            activeIndex === i
-                                                ? colors.orange
-                                                : colors.linghtGray,
-                                        borderWidth: 0.6,
-                                        borderRadius: 5,
-                                        borderColor:
-                                            activeIndex === i
-                                                ? colors.orange
-                                                : colors.linghtGray,
-                                        paddingHorizontal: 10,
-                                        paddingVertical: 5,
-                                        fontWeight: "600",
-                                        marginLeft: 10,
-                                    }}
-                                >
-                                    {e.title}
-                                </Text>
-                            </TouchableOpacity>
-                        );
-                    })}
-                </ScrollView>
-            </View>
-            <View>
-                <ScrollView
-                    contentContainerStyle={styles.scrollView}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }
-                >
-                    {!!filteredMail &&
-                        filteredMail.map((item) => (
-                            <MailItem
-                                item={item}
-                                key={`${item.id}`}
-                                editable={true}
-                            />
-                        ))}
-                </ScrollView>
-            </View>
-        </View>
-    );
+                  {e.title}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+      <View>
+        <ScrollView
+          contentContainerStyle={styles.scrollView}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          {!!filteredMail &&
+            filteredMail.map((item) => (
+              <MailItem item={item} key={`${item.id}`} editable={true} />
+            ))}
+        </ScrollView>
+      </View>
+    </View>
+  );
 };
-const ThirdRoute = () => (
-    <View
-        style={{
-            flex: 1,
-            backgroundColor: colors.lightWhite,
-            justifyContent: "center",
-        }}
+const ThirdRoute = () => {
+  const [refreshing, setRefreshing] = useState(false);
+  const { packageListMail, useRefresh } = useMailHook();
+
+  const onRefresh = React.useCallback(() => {
+    useRefresh();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  return (
+    <ScrollView
+      style={{ marginBottom: 80 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
-        <Text style={{ fontSize: 18, textAlign: "center", color: colors.gray }}>
-            Hech narsa topilmadi 😔
-        </Text>
-    </View>
-);
-const FourthRoute = () => (
-    <View
-        style={{
-            flex: 1,
-            backgroundColor: colors.lightWhite,
-            justifyContent: "center",
+      <FlatList
+        contentContainerStyle={{
+          flex: 1,
         }}
+        data={!!packageListMail ? packageListMail : []}
+        renderItem={({ item }) => <MailItem item={item} />}
+      />
+    </ScrollView>
+  );
+};
+const FourthRoute = () => {
+  let navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
+  const { receiveMail, useRefresh } = useMailHook();
+
+  const onRefresh = React.useCallback(() => {
+    useRefresh();
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  return (
+    <ScrollView
+      style={{ marginBottom: 80 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
-        <Text style={{ fontSize: 18, textAlign: "center", color: colors.gray }}>
-            Hech narsa topilmadi 😔
-        </Text>
-    </View>
-);
+      <FlatList
+        contentContainerStyle={{
+          flex: 1,
+        }}
+        data={!!receiveMail ? receiveMail : []}
+        renderItem={({ item }) => <MailItem item={item} />}
+      />
+    </ScrollView>
+  );
+};
 const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-    third: ThirdRoute,
-    fourth: FourthRoute,
+  first: FirstRoute,
+  second: SecondRoute,
+  third: ThirdRoute,
+  fourth: FourthRoute,
 });
 
 export interface MailViewProps {}
 
 let titleIconMapper = {
-    first: <GlobeIcon />,
+  first: <GlobeIcon />,
 };
 
 const Mail = ({}: MailViewProps) => {
-    const layout = useWindowDimensions();
-    let navigation = useNavigation();
-    const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        { key: "first", title: "Barchasi" },
-        { key: "second", title: "Mening jo'natmalarim" },
-        { key: "third", title: "Ro'yxat" },
-        { key: "fourth", title: "Kirim" },
-    ]);
+  const layout = useWindowDimensions();
+  let navigation = useNavigation();
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "first", title: "Barchasi" },
+    { key: "second", title: "Mening jo'natmalarim" },
+    { key: "third", title: "Ro'yxat" },
+    { key: "fourth", title: "Kirim" },
+  ]);
 
-    const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-    };
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.lightWhite }}>
-            <StatusBar backgroundColor={colors.lightOrange} />
-            <View
-                style={{
-                    flex: 1,
-                }}
-            >
-                <View style={styles.top}>
-                    <View>
-                        <Modal
-                            isVisible={isModalVisible}
-                            testID={"modal"}
-                            onBackdropPress={() => setModalVisible(false)}
-                            swipeDirection={["up", "left", "right", "down"]}
-                            style={{ justifyContent: "center", margin: 0 }}
-                        >
-                            <View
-                                style={{
-                                    marginHorizontal: 20,
-                                    backgroundColor: colors.white,
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        paddingVertical: 20,
-                                        paddingHorizontal: 20,
-                                        fontWeight: "bold",
-                                        fontSize: 24,
-                                        color: colors.darkBlue,
-                                    }}
-                                >
-                                    Express pochta
-                                </Text>
-                                <Text
-                                    style={{
-                                        fontSize: 16,
-                                        fontWeight: "600",
-                                        lineHeight: 25,
-                                        paddingBottom: 20,
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 20,
-                                        color: colors.darkBlue,
-                                    }}
-                                >
-                                    Express jo'natmalar bo'limida siz uyingizdan
-                                    turib jo'natmangizni boshqa viloyat yoki
-                                    shaharga berib yuborishigiz mumkin. Bazi
-                                    hollarda qimmatbaho buyumlarni yuborish
-                                    zaruruyati tug'ulib qoladi va bunday
-                                    holatlarda esa ishonchli tanish haydovchi
-                                    topa olmasangiz ko'nglingiz notinch bo'ladi.
-                                    Biz shu kabi muammolar yechimi tayyor
-                                    buyurtma berish formasini toldirish vaqtida
-                                    qimmatbaho buyumingiz qiymatini kirinig
-                                    hotirjam ishlaringizni davom ettiring
-                                </Text>
-                                <View
-                                    style={{
-                                        flexDirection: "row",
-                                        marginVertical: 10,
-                                        marginBottom: 30,
-                                    }}
-                                >
-                                    <ImageBackground
-                                        source={images.angle}
-                                        resizeMode="contain"
-                                        style={{
-                                            width: 50,
-                                            height: 50,
-                                            marginHorizontal: 10,
-                                            marginLeft: 30,
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        <UpdateIcon />
-                                    </ImageBackground>
-                                    <Text
-                                        style={{
-                                            width: 245,
-                                            fontSize: 12,
-                                            lineHeight: 18,
-                                        }}
-                                    >
-                                        Buyurtma berish formasini
-                                        to'ldirganizda, tizim bir zumda
-                                        summasini hisoblab beradi.
-                                    </Text>
-                                </View>
-                                <View
-                                    style={{
-                                        flexDirection: "row",
-                                        marginVertical: 10,
-                                        marginBottom: 30,
-                                    }}
-                                >
-                                    <ImageBackground
-                                        source={images.angle}
-                                        resizeMode="contain"
-                                        style={{
-                                            width: 50,
-                                            height: 50,
-                                            marginHorizontal: 10,
-                                            marginLeft: 30,
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        <UserIcon />
-                                    </ImageBackground>
-                                    <Text
-                                        style={{
-                                            width: 245,
-                                            fontSize: 12,
-                                            lineHeight: 18,
-                                        }}
-                                    >
-                                        Tahminan 10 daqiqa ishida sizga eng
-                                        yaqin va yuqori reytingli kuryer
-                                        biriktiladi
-                                    </Text>
-                                </View>
-                            </View>
-                        </Modal>
-                        <TouchableOpacity onPress={toggleModal}>
-                            <QuestionsIcon size={22} />
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <Text style={styles.mailtext}>Express pochta</Text>
-                    </View>
-                    <View>
-                        <TouchableOpacity style={{ padding: 5 }}>
-                            <FilterIcon size={22} />
-                        </TouchableOpacity>
-                    </View>
+  const state = useSelector(selectOrderState);
+
+  const dispatch = useDispatch();
+
+  const { createMail, loading } = useMailHook();
+
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const filterToggleModal = () => {
+    setFilterModalVisible(!filterModalVisible);
+  };
+
+  const onSubmitFrom = () => {
+    createMail({
+      from_address: state.fromAddress,
+      from_region_id: state.fromRegionId,
+      from_district_id: state.fromDistrictId,
+      to_region_id: state.toRegionId,
+      to_district_id: state.toDistrictId,
+      to_address: state.toAddress,
+      note: state.note,
+      cash_amount: state.cashAmount,
+      delivery_fee_amount: state.deliveryFeeAmount,
+      creator_phone: state.creatorPhone,
+      recipient_name: state.recipientName,
+      recipient_phone: state.recipientPhone,
+      creator_name: state.creatorName,
+      insurance_amount: state.insurance,
+      matter: state.matter,
+      vehicle_type: "on_car",
+    });
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.lightWhite }}>
+      <StatusBar backgroundColor={colors.lightOrange} />
+      <View style={styles.top}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(Routes.QUESTIONMAIL)}
+        >
+          <QuestionsIcon size={22} />
+        </TouchableOpacity>
+        <View>
+          <Text style={styles.mailText}>Express pochta</Text>
+        </View>
+        <View>
+          <TouchableOpacity onPress={filterToggleModal}>
+            <FilterIcon size={22} />
+          </TouchableOpacity>
+          <FilterModal
+            value={filterModalVisible}
+            setValue={setFilterModalVisible}
+            toggleValue={filterToggleModal}
+          />
+        </View>
+      </View>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={(props) => (
+          <TabBar
+            scrollEnabled={true}
+            indicatorStyle={{
+              backgroundColor: colors.navyBlue,
+              left: 11,
+              borderWidth: 0.5,
+              borderColor: colors.navyBlue,
+              marginLeft: -6,
+            }}
+            tabStyle={{
+              width: "auto",
+              paddingBottom: 2,
+              marginRight: 10,
+            }}
+            activeColor={colors.navyBlue}
+            inactiveColor={colors.darkGray}
+            renderLabel={(e) => {
+              return (
+                <View style={styles.tabView}>
+                  {titleIconMapper[e.route.key] && (
+                    <GlobeIcon
+                      color={e.focused ? colors.navyBlue : colors.darkGray}
+                      size={22}
+                    />
+                  )}
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 13,
+                      color: e.focused ? colors.navyBlue : colors.darkGray,
+                    }}
+                  >
+                    {e.route.title}
+                  </Text>
                 </View>
-                <Filter route={Routes.MAIL} />
-                <TabView
-                    navigationState={{ index, routes }}
-                    renderScene={renderScene}
-                    onIndexChange={setIndex}
-                    initialLayout={{ width: layout.width }}
-                    renderTabBar={(props) => (
-                        <TabBar
-                            scrollEnabled={true}
-                            indicatorStyle={{
-                                backgroundColor: colors.navyBlue,
-                                left: 11,
-                                borderWidth: 0.5,
-                                borderColor: colors.navyBlue,
-                                marginLeft: -6,
-                            }}
-                            tabStyle={{
-                                width: "auto",
-                                paddingBottom: 2,
-                                marginRight: 10,
-                            }}
-                            activeColor={colors.navyBlue}
-                            inactiveColor={colors.darkGray}
-                            renderLabel={(e) => {
-                                return (
-                                    <View style={styles.tabView}>
-                                        {titleIconMapper[e.route.key] && (
-                                            <GlobeIcon
-                                                color={
-                                                    e.focused
-                                                        ? colors.navyBlue
-                                                        : colors.darkGray
-                                                }
-                                                size={22}
-                                            />
-                                        )}
-                                        <Text
-                                            numberOfLines={1}
-                                            style={{
-                                                fontWeight: "bold",
-                                                fontSize: 13,
-                                                color: e.focused
-                                                    ? colors.navyBlue
-                                                    : colors.darkGray,
-                                            }}
-                                        >
-                                            {e.route.title}
-                                        </Text>
-                                    </View>
-                                );
-                            }}
-                            style={{
-                                backgroundColor: colors.lightWhite,
-                                paddingLeft: 10,
-                            }}
-                            {...props}
-                        />
-                    )}
-                />
-            </View>
-            <TouchableOpacity
-                onPress={() => navigation.navigate(Routes.ADD_MAIL)}
-                style={styles.touchOpacity}
-            >
-                <PlusIcon size={35} />
-            </TouchableOpacity>
-        </SafeAreaView>
-    );
+              );
+            }}
+            style={{
+              backgroundColor: colors.lightWhite,
+              paddingLeft: 10,
+            }}
+            {...props}
+          />
+        )}
+      />
+      <TouchableOpacity
+        onPress={() => navigation.navigate(Routes.ADD_MAIL)}
+        style={styles.touchOpacity}
+      >
+        <PlusIcon size={35} />
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
 };
 const styles = StyleSheet.create({
-    scrollView: {
-        paddingBottom: 120,
+  scrollView: {
+    paddingBottom: 120,
+  },
+  btntext: {
+    color: colors.darkGray,
+    fontSize: 13,
+  },
+  btn: {
+    backgroundColor: colors.white,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderWidth: 1,
+    borderColor: colors.lightgray,
+    borderRadius: 8,
+  },
+  tabView: {
+    flexDirection: "row",
+    color: colors.darkGray,
+    alignItems: "center",
+  },
+  tabimg: {
+    width: 20,
+    height: 20,
+  },
+  top: {
+    flexDirection: "row",
+    paddingHorizontal: 21,
+    paddingVertical: 16,
+    backgroundColor: colors.white,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  touchOpacity: {
+    borderColor: colors.darkOrange,
+    position: "absolute",
+    right: 26,
+    bottom: 97,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 55,
+    height: 55,
+    borderRadius: 65,
+    backgroundColor: colors.lightOrange,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    btntext: {
-        color: colors.darkGray,
-        fontSize: 13,
-    },
-    btn: {
-        backgroundColor: colors.white,
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 10,
-        paddingHorizontal: 25,
-        borderWidth: 1,
-        borderColor: colors.lightgray,
-        borderRadius: 8,
-    },
-    tabView: {
-        flexDirection: "row",
-        color: colors.darkGray,
-        alignItems: "center",
-    },
-    tabimg: {
-        width: 20,
-        height: 20,
-    },
-    top: {
-        flexDirection: "row",
-        paddingHorizontal: 21,
-        paddingVertical: 16,
-        backgroundColor: colors.white,
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    header: {
-        marginVertical: 15,
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 5,
-        paddingHorizontal: 16,
-        justifyContent: "space-between",
-    },
-    touchOpacity: {
-        borderColor: colors.darkOrange,
-        position: "absolute",
-        right: 26,
-        bottom: 97,
-        alignItems: "center",
-        justifyContent: "center",
-        width: 55,
-        height: 55,
-        borderRadius: 65,
-        backgroundColor: colors.lightOrange,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
-    },
-    mailtext: {
-        fontSize: 18,
-        color: colors.black,
-        fontWeight: "bold",
-    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  mailText: {
+    fontSize: 18,
+    color: colors.black,
+    fontWeight: "bold",
+  },
 });
 export default Mail;

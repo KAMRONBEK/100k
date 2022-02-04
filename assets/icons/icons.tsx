@@ -5,7 +5,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Icon } from "react-native-paper/lib/typescript/components/Avatar/Avatar";
-import Svg, { Circle, Defs, Ellipse, G, Path, Polygon } from "react-native-svg";
+import Svg, {
+  Circle,
+  Defs,
+  Ellipse,
+  G,
+  LinearGradient,
+  Path,
+  Polygon,
+  Stop,
+} from "react-native-svg";
 import { colors } from "../../constants/color";
 
 let AnimatedPath = Animated.createAnimatedComponent(Path);
@@ -589,6 +598,170 @@ export function CameraIcon({
   return (
     <Svg viewBox="0 0 50 50" {...props}>
       <Path d="M 14 4 C 8.4886661 4 4 8.4886661 4 14 L 4 36 C 4 41.511334 8.4886661 46 14 46 L 36 46 C 41.511334 46 46 41.511334 46 36 L 46 14 C 46 8.4886661 41.511334 4 36 4 L 14 4 z M 14 6 L 36 6 C 40.430666 6 44 9.5693339 44 14 L 44 36 C 44 40.430666 40.430666 44 36 44 L 14 44 C 9.5693339 44 6 40.430666 6 36 L 6 14 C 6 9.5693339 9.5693339 6 14 6 z M 21.132812 12 C 20.079884 12 19.101556 12.55485 18.560547 13.457031 L 16.724609 16.513672 C 16.542289 16.815645 16.218154 17 15.867188 17 L 11 17 C 9.9069372 17 9 17.906937 9 19 L 9 35 C 9 36.093063 9.9069372 37 11 37 L 39 37 C 40.093063 37 41 36.093063 41 35 L 41 19 C 41 17.906937 40.093063 17 39 17 L 34.132812 17 C 33.779742 17 33.456382 16.817444 33.275391 16.515625 A 1.0001 1.0001 0 0 0 33.275391 16.513672 L 31.439453 13.457031 C 30.898444 12.55485 29.919615 12 28.867188 12 L 21.132812 12 z M 12 14 C 11.448 14 11 14.448 11 15 L 11 16 L 15 16 L 15 15 C 15 14.448 14.552 14 14 14 L 12 14 z M 21.132812 14 L 28.867188 14 C 29.21876 14 29.543618 14.182556 29.724609 14.484375 A 1.0001 1.0001 0 0 0 29.724609 14.486328 L 31.558594 17.542969 C 32.099603 18.445103 33.079884 19 34.132812 19 L 39 19 L 39 35 L 11 35 L 11 19 L 15.867188 19 C 16.919615 19 17.897599 18.446016 18.439453 17.544922 A 1.0001 1.0001 0 0 0 18.441406 17.542969 L 20.275391 14.486328 A 1.0001 1.0001 0 0 0 20.275391 14.484375 C 20.456335 14.18265 20.779742 14 21.132812 14 z M 25 20 C 21.145849 20 18 23.145852 18 27 C 18 30.854148 21.145849 34 25 34 C 28.854151 34 32 30.854148 32 27 C 32 23.145852 28.854151 20 25 20 z M 34 20 A 1 1 0 0 0 34 22 A 1 1 0 0 0 34 20 z M 25 22 C 27.773271 22 30 24.226731 30 27 C 30 29.773269 27.773271 32 25 32 C 22.226729 32 20 29.773269 20 27 C 20 24.226731 22.226729 22 25 22 z" />
+    </Svg>
+  );
+}
+export function SearchIcon({
+  color = colors.black,
+  active,
+  size = 20,
+  style,
+}: IconProps) {
+  let props = { fill: color, stroke: color, height: size, width: size };
+  return (
+    <Svg viewBox="0 0 487.95 487.95" {...props}>
+      <G>
+        <G>
+          <Path
+            d="M481.8,453l-140-140.1c27.6-33.1,44.2-75.4,44.2-121.6C386,85.9,299.5,0.2,193.1,0.2S0,86,0,191.4s86.5,191.1,192.9,191.1
+			c45.2,0,86.8-15.5,119.8-41.4l140.5,140.5c8.2,8.2,20.4,8.2,28.6,0C490,473.4,490,461.2,481.8,453z M41,191.4
+			c0-82.8,68.2-150.1,151.9-150.1s151.9,67.3,151.9,150.1s-68.2,150.1-151.9,150.1S41,274.1,41,191.4z"
+          />
+        </G>
+      </G>
+    </Svg>
+  );
+}
+export function DeleteIcon({
+  color = colors.black,
+  active,
+  size = 20,
+  style,
+}: IconProps) {
+  let props = { fill: color, stroke: color, height: size, width: size };
+  return (
+    <Svg viewBox="0 0 24 24" {...props}>
+      <Path
+        d="M5 5L19 19M5 19L19 5"
+        stroke="black"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+}
+export function FaceBookIcon({
+  color = colors.black,
+  active,
+  size = 20,
+  style,
+}: IconProps) {
+  let props = { fill: color, stroke: color, height: size, width: size };
+  return (
+    <Svg viewBox="0 0 112.196 112.196" {...props}>
+      <G>
+        <Circle
+          fill={colors.navyBlue}
+          strokeWidth={0.1}
+          cx="56.098"
+          cy="56.098"
+          r="56.098"
+        />
+        <Path
+          d="M70.201,58.294h-10.01v36.672H45.025V58.294h-7.213V45.406h7.213v-8.34
+        c0-5.964,2.833-15.303,15.301-15.303L71.56,21.81v12.51h-8.151c-1.337,0-3.217,0.668-3.217,3.513v7.585h11.334L70.201,58.294z"
+          fill={colors.white}
+          strokeWidth={0.1}
+        />
+      </G>
+    </Svg>
+  );
+}
+export function InstagramIcon({
+  color = colors.black,
+  active,
+  size = 20,
+  style,
+}: IconProps) {
+  let props = { fill: color, stroke: color, height: size, width: size };
+  return (
+    <Svg viewBox="0 0 551.034 551.034" {...props}>
+      <G id="XMLID_13_">
+        <LinearGradient
+          id="XMLID_2_"
+          gradientUnits="userSpaceOnUse"
+          x1="275.517"
+          y1="4.5714"
+          x2="275.517"
+          y2="549.7202"
+          gradientTransform="matrix(1 0 0 -1 0 554)"
+        >
+          <Stop offset="0" style="stop-color:#E09B3D" />
+          <Stop offset="0.3" style="stop-color:#C74C4D" />
+          <Stop offset="0.6" style="stop-color:#C21975" />
+          <Stop offset="1" style="stop-color:#7024C4" />
+        </LinearGradient>
+        <Path
+          id="XMLID_17_"
+          style="fill:url(#XMLID_2_);"
+          d="M386.878,0H164.156C73.64,0,0,73.64,0,164.156v222.722
+		c0,90.516,73.64,164.156,164.156,164.156h222.722c90.516,0,164.156-73.64,164.156-164.156V164.156
+		C551.033,73.64,477.393,0,386.878,0z M495.6,386.878c0,60.045-48.677,108.722-108.722,108.722H164.156
+		c-60.045,0-108.722-48.677-108.722-108.722V164.156c0-60.046,48.677-108.722,108.722-108.722h222.722
+		c60.045,0,108.722,48.676,108.722,108.722L495.6,386.878L495.6,386.878z"
+        />
+
+        <LinearGradient
+          id="XMLID_3_"
+          gradientUnits="userSpaceOnUse"
+          x1="275.517"
+          y1="4.5714"
+          x2="275.517"
+          y2="549.7202"
+          gradientTransform="matrix(1 0 0 -1 0 554)"
+        >
+          <Stop offset="0" style="stop-color:#E09B3D" />
+          <Stop offset="0.3" style="stop-color:#C74C4D" />
+          <Stop offset="0.6" style="stop-color:#C21975" />
+          <Stop offset="1" style="stop-color:#7024C4" />
+        </LinearGradient>
+        <Path
+          id="XMLID_81_"
+          style="fill:url(#XMLID_3_);"
+          d="M275.517,133C196.933,133,133,196.933,133,275.516
+		s63.933,142.517,142.517,142.517S418.034,354.1,418.034,275.516S354.101,133,275.517,133z M275.517,362.6
+		c-48.095,0-87.083-38.988-87.083-87.083s38.989-87.083,87.083-87.083c48.095,0,87.083,38.988,87.083,87.083
+		C362.6,323.611,323.611,362.6,275.517,362.6z"
+        />
+
+        <LinearGradient
+          id="XMLID_4_"
+          gradientUnits="userSpaceOnUse"
+          x1="418.306"
+          y1="4.5714"
+          x2="418.306"
+          y2="549.7202"
+          gradientTransform="matrix(1 0 0 -1 0 554)"
+        >
+          <Stop offset="0" style="stop-color:#E09B3D" />
+          <Stop offset="0.3" style="stop-color:#C74C4D" />
+          <Stop offset="0.6" style="stop-color:#C21975" />
+          <Stop offset="1" style="stop-color:#7024C4" />
+        </LinearGradient>
+        <Circle
+          id="XMLID_83_"
+          style="fill:url(#XMLID_4_);"
+          cx="418.306"
+          cy="134.072"
+          r="34.149"
+        />
+      </G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
+      <G></G>
     </Svg>
   );
 }

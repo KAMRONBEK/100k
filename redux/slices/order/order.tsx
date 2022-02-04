@@ -5,142 +5,144 @@ import { Image } from "react-native";
 export type ImageSourcePropType = React.ComponentProps<typeof Image>["source"];
 
 export interface ICreateOrder {
-    fromRegionId?: number;
-    fromRegionName?: string;
+  fromRegionId?: number;
+  fromRegionName?: string;
 
-    fromDistrictId?: number;
-    fromDistrictName?: string;
+  fromDistrictId?: number;
+  fromDistrictName?: string;
 
-    fromAddress?: string;
-    fromFullAddress?: string;
-    fromNumber?: string;
+  fromAddress?: string;
+  fromFullAddress?: string;
+  fromNumber?: string;
 
-    toRegionId?: number;
-    toRegionName?: string;
+  toRegionId?: number;
+  toRegionName?: string;
 
-    toDistrictId?: number;
-    toDistrictName?: string;
+  toDistrictId?: number;
+  toDistrictName?: string;
 
-    toAddress?: string;
-    toNumber?: string;
+  toAddress?: string;
+  toNumber?: string;
 
-    cost?: number;
-    costType?: boolean;
-    deliveryFeeAmount?: number;
-    cashAmount?: number;
+  cost?: number;
+  costType?: string;
+  deliveryFeeAmount?: number;
+  cashAmount?: number;
 
-    seatCount?: number;
+  seatCount?: number;
 
-    info?: string;
+  info?: string;
 
-    frontSeat?: boolean;
+  frontSeat?: boolean;
 
-    otherPerson?: boolean;
+  otherPerson?: boolean;
 
-    otherNumber?: string;
+  otherNumber?: string;
 
-    otherName?: string;
+  otherName?: string;
 
-    name?: string;
+  name?: string;
 
-    note?: string;
+  note?: string;
 
-    customerName?: string;
+  customerName?: string;
 
-    customerPhone?: number;
+  customerPhone?: number;
 
-    recipientPhone?: boolean;
-    recipientName?: string;
+  recipientPhone?: boolean;
+  recipientName?: string;
 
-    insurance?: number;
+  insurance?: number;
 
-    matter?: number;
+  matter?: number;
 
-    transportType?: string;
+  transportType?: boolean;
+  transportTypeLabel?: string;
 
-    weight?: boolean;
+  weight?: boolean;
 
-    images?: ImageSourcePropType[];
+  images?: ImageSourcePropType[];
 
-    vehicleType?: string;
+  vehicleType?: string;
 
-    creatorPhone?: number;
-    creatorName?: string;
+  creatorPhone?: number;
+  creatorName?: string;
 
-    carImageId?: string;
+  carImageId?: string;
 
-    isPurchaseble?: number;
+  isPurchaseble?: number;
 }
 
 const initialState: ICreateOrder = {
-    fromRegionId: 1,
-    fromRegionName: "",
+  fromRegionId: 1,
+  fromRegionName: "",
 
-    fromDistrictId: 0,
-    fromDistrictName: "",
+  fromDistrictId: 0,
+  fromDistrictName: "",
 
-    fromAddress: "",
-    fromFullAddress: "",
-    fromNumber: "",
+  fromAddress: "",
+  fromFullAddress: "",
+  fromNumber: "",
 
-    toRegionId: 0,
-    toRegionName: "",
+  toRegionId: 0,
+  toRegionName: "",
 
-    toDistrictId: 0,
-    toDistrictName: "",
+  toDistrictId: 0,
+  toDistrictName: "",
 
-    toAddress: "",
-    toNumber: "",
+  toAddress: "",
+  toNumber: "",
 
-    cost: 0,
-    costType: false,
-    deliveryFeeAmount: 0,
-    cashAmount: 0,
+  cost: 0,
+  costType: "",
+  deliveryFeeAmount: 0,
+  cashAmount: 0,
 
-    seatCount: 0,
+  seatCount: 0,
 
-    info: "",
+  info: "",
 
-    frontSeat: false,
+  frontSeat: false,
 
-    otherPerson: false,
+  otherPerson: false,
 
-    otherNumber: "",
+  otherNumber: "",
 
-    otherName: "",
+  otherName: "",
 
-    transportType: "",
+  transportType: false,
+  transportTypeLabel: "",
 
-    weight: false,
+  weight: false,
 
-    images: [],
+  images: [],
 
-    vehicleType: "",
+  vehicleType: "",
 
-    recipientPhone: false,
-    recipientName: "",
+  recipientPhone: false,
+  recipientName: "",
 
-    creatorPhone: 0,
-    creatorName: "",
+  creatorPhone: 0,
+  creatorName: "",
 
-    insurance: 0,
+  insurance: 0,
 
-    matter: 0,
+  matter: 0,
 
-    carImageId: "",
+  carImageId: "",
 
-    isPurchaseble: 0,
+  isPurchaseble: 0,
 };
 
 const orderSlice = createSlice({
-    name: "order",
-    initialState,
-    reducers: {
-        setOrderData: (state, { payload }) => {
-            state = { ...state, ...payload };
-            return state;
-        },
+  name: "order",
+  initialState,
+  reducers: {
+    setOrderData: (state, { payload }) => {
+      state = { ...state, ...payload };
+      return state;
     },
+  },
 });
 
 export const selectOrderState = (state: IRoot) => state && state.order;

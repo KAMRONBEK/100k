@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { TextInputMask } from "react-native-masked-text";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
 import {
-  Text,
-  View,
+  ActivityIndicator,
   Image,
   StyleSheet,
-  TextInput,
+  Text,
   TouchableOpacity,
-  Alert,
-  ActivityIndicator,
+  View,
 } from "react-native";
-import axios from "axios";
-import Api from "../../../Api";
-import { useRequestPasswordHook } from "../hooks";
+import { TextInputMask } from "react-native-masked-text";
+import { images } from "../../../assets";
 import { colors } from "../../../constants/color";
+import { routes } from "../../../navigation/routes";
+import { useRequestPasswordHook } from "../hooks";
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const [username, changeUsername, loading, onSubmit] =
     useRequestPasswordHook();
+  let navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View>
-        <Image source={require("../../../assets/bee.png")} />
+        <Image source={images.bee} />
       </View>
       <View style={{ marginTop: 50 }}>
         <Text style={{ color: colors.white, fontWeight: "bold", fontSize: 20 }}>
@@ -45,14 +45,6 @@ const Login = ({ navigation }) => {
           placeholder="Telefon"
           placeholderTextColor={colors.white}
         />
-        {/*<TextInput*/}
-        {/*    style={styles.input}*/}
-        {/*    onChangeText={changeUsername}*/}
-        {/*    value={username}*/}
-        {/*    placeholder="Telefon"*/}
-        {/*    placeholderTextColor={'#fff'}*/}
-        {/*    keyboardType="phone-pad"*/}
-        {/*/>*/}
       </View>
       <View style={{ width: "80%", marginTop: 40 }}>
         <TouchableOpacity
@@ -64,6 +56,7 @@ const Login = ({ navigation }) => {
             backgroundColor: colors.brightOrange,
             paddingVertical: 15,
           }}
+          activeOpacity={0.6}
         >
           {loading ? (
             <ActivityIndicator size={"large"} color={"red"} />
